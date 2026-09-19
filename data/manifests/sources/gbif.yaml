@@ -1,0 +1,44 @@
+dataset:
+  id: gbif
+  name: GBIF — Global Biodiversity Information Facility
+  type: aggregator_api
+  status: REMOTE_QUERYABLE
+  status_reason: La API pública responde; la web gbif.org devuelve 403 a clientes automatizados (no necesaria).
+    Se guardaron decenas de instantáneas (conteos, facetas por dataset/licencia/base del registro, 900 registros
+    de muestra). No se descargaron imágenes ni descargas masivas (requieren cuenta).
+source:
+  official_urls:
+  - https://www.gbif.org/
+  - https://api.gbif.org/v1/occurrence/search
+  version: API v1 (consultas del 2026-09-18)
+accessed: '2026-09-18'
+download_method: GET /v1/occurrence/search (kingdomKey=5, country=CO, mediaType=StillImage; facetas); descarga oficial
+  por API requiere autenticación
+parameters:
+  modalities_downloaded:
+  - respuestas JSON de la API de ocurrencias y del registro
+  images_downloaded: false
+  filters:
+    kingdomKey: 5
+    country: CO
+    mediaType: StillImage
+  command: python scripts/data/acquire_datasets.py gbif
+local_files: ninguno (ver remote_queries)
+api_snapshots:
+  count: 73
+  manifest: data/manifests/remote_queries.csv
+  folder: data/raw/gbif/api/
+counts:
+  images_reported: NA
+  images_verified: NA
+  observations_reported: 21638
+  observations_verified: NA
+license: 'Licencia por registro/medio. Hongos de Colombia con imagen: {''CC_BY_NC_4_0'': 10749, ''CC0_1_0'': 7594,
+  ''CC_BY_4_0'': 3295}. Conservar URL original, autoría (creator/rightsHolder) y licencia.'
+known_relationships: 'Agregador: incluye iNaturalist Research-grade (44.7% de hongos con imagen en Colombia), Mushroom
+  Observer y herbarios. También aloja la fuente de DF20/FungiTastic (Danish Mycological Society).'
+next_step: 'Semana 3: si se usa GBIF, generar una descarga oficial con DOI (requiere cuenta) filtrada por país=CO,
+  Fungi y mediaType=StillImage, y conservar URL/licencia/autor por imagen; excluir los datasets que ya se audite
+  aparte (iNaturalist, Mushroom Observer).'
+notes: 'observations_reported = registros GBIF de hongos con StillImage en Colombia (21638 según la consulta del
+  2026-09-18); mundo: 11505077 con imagen de 60740476 registros de hongos. ''Registro'' ≠ observación única ≠ imagen.'

@@ -1,0 +1,41 @@
+dataset:
+  id: inaturalist_api
+  name: iNaturalist — plataforma y API v1
+  type: platform_api
+  status: REMOTE_QUERYABLE
+  status_reason: Se ejecutaron decenas de consultas pequeñas (conteos, licencias, conteos por especie y una muestra
+    aleatoria de 200 observaciones) guardadas como instantáneas. No se descargaron fotos.
+source:
+  official_urls:
+  - https://www.inaturalist.org/
+  - https://api.inaturalist.org/v1/docs/
+  version: API v1 (consultas del 2026-09-18)
+accessed: '2026-09-18'
+download_method: GET /observations, /observations/species_counts (place_id=7196 Colombia, taxon_id=47170 Fungi);
+  límite recomendado ~60 solicitudes/min
+parameters:
+  modalities_downloaded:
+  - respuestas JSON de la API
+  images_downloaded: false
+  taxon_id: 47170
+  place_id: 7196
+  command: python scripts/data/acquire_datasets.py inaturalist_api
+local_files: ninguno (ver remote_queries)
+api_snapshots:
+  count: 24
+  manifest: data/manifests/remote_queries.csv
+  folder: data/raw/inaturalist_api/api/
+counts:
+  images_reported: NA
+  images_verified: NA
+  observations_reported: 127886
+  observations_verified: NA
+license: 'Licencia por foto (CC0, CC BY, CC BY-NC, CC BY-SA, CC BY-ND, CC BY-NC-SA, CC BY-NC-ND o todos los derechos
+  reservados). Fungi Colombia grado de investigación: 16480 observaciones, de las cuales 10600 con fotos con licencia
+  abierta (photo_licensed=true).'
+known_relationships: Misma plataforma que inaturalist_open_data; 44.7% de los registros de GBIF con imagen de hongos
+  en Colombia provienen de este dataset.
+next_step: 'Semana 3: para construir un subconjunto colombiano usar Open Data/AWS (no la API) o exportaciones; filtrar
+  por licencia de la foto y grado de calidad.'
+notes: 'observations_reported = TODAS las calidades (hongos, Colombia). Muestra: 200 observaciones aleatorias grado
+  de investigación con fotos, NO representativa del total.'

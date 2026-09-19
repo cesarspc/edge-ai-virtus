@@ -1,0 +1,775 @@
+{
+ "_generated_utc": "2026-09-19T00:14:21Z",
+ "fungitastic": {
+  "facts": {
+   "csv_columns_full_train": [
+    "eventDate",
+    "year",
+    "month",
+    "day",
+    "habitat",
+    "countryCode",
+    "scientificName",
+    "kingdom",
+    "phylum",
+    "class",
+    "order",
+    "family",
+    "genus",
+    "specificEpithet",
+    "hasCoordinate",
+    "species",
+    "iucnRedListCategory",
+    "substrate",
+    "latitude",
+    "longitude",
+    "coorUncert",
+    "observationID",
+    "region",
+    "district",
+    "filename",
+    "category_id",
+    "metaSubstrate",
+    "poisonous",
+    "elevation",
+    "landcover",
+    "biogeographicalRegion"
+   ],
+   "caption_column_present": true,
+   "ClosedSet-Val_rows_species_not_in_train": 0,
+   "ClosedSet-Val_rows": 89659,
+   "ClosedSet-Test_rows_species_not_in_train": 0,
+   "ClosedSet-Test_rows": 91832,
+   "DNA-Test_rows_species_not_in_train": 0,
+   "DNA-Test_rows": 5105,
+   "OpenSet-Val_rows_species_not_in_train": 7013,
+   "OpenSet-Val_rows": 96756,
+   "OpenSet-Test_rows_species_not_in_train": 5572,
+   "OpenSet-Test_rows": 97551,
+   "n_category_id_known_full_union": 2829,
+   "n_species_known_full_union": 2786,
+   "n_species_with_multiple_category_ids": 39,
+   "n_species_train": 2786,
+   "year_range_by_file": {
+    "Train": [
+     1861,
+     2021
+    ],
+    "ClosedSet-Val": [
+     2022,
+     2022
+    ],
+    "ClosedSet-Test": [
+     2023,
+     2023
+    ],
+    "DNA-Test": [
+     1988,
+     2023
+    ],
+    "OpenSet-Val": [
+     2022,
+     2022
+    ],
+    "OpenSet-Test": [
+     2023,
+     2023
+    ]
+   },
+   "n_category_id_by_file": {
+    "Train": 2829,
+    "ClosedSet-Val": 2306,
+    "ClosedSet-Test": 2336,
+    "DNA-Test": 725,
+    "OpenSet-Val": 2307,
+    "OpenSet-Test": 2337
+   },
+   "n_scientificName_by_file": {
+    "Train": 2829,
+    "ClosedSet-Val": 2306,
+    "ClosedSet-Test": 2336,
+    "DNA-Test": 725,
+    "OpenSet-Val": 3360,
+    "OpenSet-Test": 3349
+   },
+   "n_species_by_file": {
+    "Train": 2786,
+    "ClosedSet-Val": 2275,
+    "ClosedSet-Test": 2301,
+    "DNA-Test": 714,
+    "OpenSet-Val": 3308,
+    "OpenSet-Test": 3285
+   },
+   "category_id_minus1_rows_full_union": 12816,
+   "category_id_minus1_by_file": {
+    "Train": 0,
+    "ClosedSet-Val": 0,
+    "ClosedSet-Test": 0,
+    "DNA-Test": 0,
+    "OpenSet-Val": 7097,
+    "OpenSet-Test": 5719
+   },
+   "countryCode_counts": {
+    "DK": 624608,
+    "SE": 4057,
+    "GR": 862,
+    "GB": 438,
+    "DE": 428,
+    "RU": 341,
+    "NO": 334,
+    "PL": 292,
+    "ES": 282,
+    "CZ": 275,
+    "FO": 262,
+    "FR": 134,
+    "IS": 133,
+    "GL": 118,
+    "IT": 101,
+    "FI": 69,
+    "US": 68,
+    "RO": 65,
+    "PT": 46,
+    "NL": 44,
+    "AT": 22,
+    "BE": 13,
+    "AU": 12,
+    "CA": 12,
+    "SJ": 11,
+    "EE": 11,
+    "CH": 10,
+    "LV": 9,
+    "HU": 7,
+    "BA": 7,
+    "HR": 6,
+    "IE": 5,
+    "CR": 5,
+    "JP": 4,
+    "EC": 4,
+    "MT": 4,
+    "ID": 4,
+    "GA": 2,
+    "CY": 2,
+    "LI": 2,
+    "TR": 1,
+    "NP": 1,
+    "AL": 1,
+    "KR": 1,
+    "GF": 1
+   },
+   "year_min": 1861,
+   "year_max": 2023,
+   "rows_per_file": {
+    "full/Train": 433702,
+    "full/ClosedSet-Val": 89659,
+    "full/ClosedSet-Test": 91832,
+    "full/DNA-Test": 5105,
+    "full/OpenSet-Val": 96756,
+    "full/OpenSet-Test": 97551,
+    "mini/Train": 46842,
+    "mini/Val": 9412,
+    "mini/Test": 10738,
+    "mini/DNA-Test": 642,
+    "fewshot/Train": 7819,
+    "fewshot/Val": 2285,
+    "fewshot/Test": 1911
+   },
+   "filename_repeated_across_files": 181491,
+   "filename_duplicates_within_each_file": {
+    "Train": 0,
+    "ClosedSet-Val": 0,
+    "ClosedSet-Test": 0,
+    "DNA-Test": 0,
+    "OpenSet-Val": 0,
+    "OpenSet-Test": 0
+   }
+  },
+  "problems": []
+ },
+ "df20": {
+  "facts": {
+   "rows": {
+    "train": 266344,
+    "public_test": 29594
+   },
+   "columns": [
+    "gbifID",
+    "eventDate",
+    "year",
+    "month",
+    "day",
+    "countryCode",
+    "locality",
+    "taxonID",
+    "scientificName",
+    "kingdom",
+    "phylum",
+    "class",
+    "order",
+    "family",
+    "genus",
+    "specificEpithet",
+    "infraspecificEpithet",
+    "taxonRank",
+    "species",
+    "level0Gid",
+    "level0Name",
+    "level1Gid",
+    "level1Name",
+    "level2Gid",
+    "level2Name",
+    "ImageUniqueID",
+    "Substrate",
+    "rightsHolder",
+    "Latitude",
+    "Longitude",
+    "CoorUncert",
+    "Habitat",
+    "image_path",
+    "class_id",
+    "_file"
+   ],
+   "countryCode_counts": {
+    "DK": 293430,
+    "SE": 1281,
+    "ES": 159,
+    "DE": 153,
+    "GR": 150,
+    "CZ": 144,
+    "GB": 110,
+    "PL": 109,
+    "NO": 107,
+    "IS": 50,
+    "IT": 41,
+    "FI": 39,
+    "FR": 35,
+    "NL": 32,
+    "GL": 18,
+    "US": 17,
+    "AU": 13,
+    "PT": 8,
+    "SJ": 8,
+    "HU": 7,
+    "HR": 6,
+    "CA": 5,
+    "GA": 3,
+    "FO": 3,
+    "JP": 3,
+    "AT": 2,
+    "RU": 2,
+    "CR": 1,
+    "NP": 1,
+    "AL": 1
+   },
+   "year_min": 1874,
+   "year_max": 2020,
+   "n_rightsHolder": 2077,
+   "n_class_id": 1604,
+   "n_scientificName": 1604,
+   "n_species_binomial": 1577,
+   "n_rows_species_missing": 32,
+   "n_species_with_multiple_class_ids": 25
+  },
+  "problems": []
+ },
+ "mind_funga_v2": {
+  "facts": {
+   "version": 2,
+   "publish_date": "2023-07-11T12:53:51.61Z",
+   "doi": "10.17632/sfrbdjvxcc.2",
+   "license": "CC BY NC 3.0",
+   "total_bytes": 3237347522,
+   "n_files_api": 18023,
+   "n_folders_api": 509,
+   "versions": [
+    [
+     2,
+     "2023-07-11"
+    ],
+    [
+     1,
+     "2022-09-15"
+    ]
+   ],
+   "n_files_zip_central_directory": 18023,
+   "folder_id_to_dir_conflicts": 0,
+   "n_files_without_taxon_dir": 0,
+   "files_api_vs_cd_same_multiset": true,
+   "filenames_with_branco_or_verde": 2141,
+   "n_folders_single_token_genus_only": 0,
+   "n_folders_two_or_more_tokens": 509,
+   "n_folders_uncertain_sp_aff_cf": 163,
+   "n_files_in_uncertain_folders": 3333
+  },
+  "problems": []
+ },
+ "inaturalist_open_data": {
+  "facts": {
+   "s3_object_sizes_bytes": {
+    "metadata/inaturalist-open-data-latest.tar.gz": 35093052336,
+    "observations.csv.gz": 13081305651,
+    "observers.csv.gz": 16962778,
+    "photos.csv.gz": 20147246120,
+    "taxa.csv.gz": 39765976
+   },
+   "s3_last_modified": {
+    "metadata/inaturalist-open-data-latest.tar.gz": "Thu, 27 Aug 2026 17:12:10 GMT",
+    "observations.csv.gz": "Thu, 27 Aug 2026 15:44:36 GMT",
+    "observers.csv.gz": "Thu, 27 Aug 2026 15:49:52 GMT",
+    "photos.csv.gz": "Thu, 27 Aug 2026 16:18:16 GMT",
+    "taxa.csv.gz": "Thu, 27 Aug 2026 16:22:19 GMT"
+   },
+   "taxa_total_rows": 1659638,
+   "taxa_active_total": 1425948,
+   "fungi_taxa_total_rows": 85373,
+   "fungi_taxa_active": 71045,
+   "fungi_active_by_rank": {
+    "species": 59642,
+    "genus": 6054,
+    "variety": 1651,
+    "family": 1064,
+    "section": 706,
+    "form": 563,
+    "complex": 287,
+    "order": 257,
+    "subspecies": 257,
+    "subgenus": 183,
+    "subsection": 162,
+    "class": 94
+   },
+   "observations_columns": [
+    "observation_uuid",
+    "observer_id",
+    "latitude",
+    "longitude",
+    "positional_accuracy",
+    "taxon_id",
+    "quality_grade",
+    "observed_on",
+    "anomaly_score"
+   ],
+   "photos_columns": [
+    "photo_uuid",
+    "photo_id",
+    "observation_uuid",
+    "observer_id",
+    "extension",
+    "license",
+    "width",
+    "height",
+    "position"
+   ],
+   "photos_fragment_license_counts": {
+    "CC-BY": 31317,
+    "CC-BY-NC": 14244,
+    "CC-BY-NC-ND": 9322,
+    "CC-BY-NC-SA": 8814,
+    "CC0": 4424,
+    "CC-BY-SA": 1333,
+    "CC-BY-ND": 1283
+   }
+  },
+  "problems": []
+ },
+ "inaturalist_api": {
+  "facts": {
+   "fungi_world_observations": 22112045,
+   "fungi_colombia_observations": 127886,
+   "fungi_colombia_with_photos": 127632,
+   "fungi_colombia_research_grade": 16480,
+   "fungi_colombia_research_photos_licensed": 10600,
+   "species_colombia_all": 2447,
+   "species_colombia_research": 957,
+   "photo_license_counts_research": {
+    "cc0": 149,
+    "cc-by": 1201,
+    "cc-by-nc": 8443,
+    "cc-by-sa": 114,
+    "cc-by-nd": 104,
+    "cc-by-nc-sa": 319,
+    "cc-by-nc-nd": 271
+   },
+   "colombia_place_id": 7196,
+   "species_counts_research_grade_rows_collected": 957,
+   "species_counts_all_grades_rows_collected": 2447,
+   "sample_photos_per_observation_mean": 2.34,
+   "sample_photos_per_observation_max": 20,
+   "sample_n_obscured": 17,
+   "sample_photo_license_values": {
+    "cc-by-nc": 96,
+    "all-rights-reserved": 75,
+    "cc-by": 14,
+    "cc-by-nc-nd": 4,
+    "cc-by-nc-sa": 4,
+    "cc0": 4,
+    "cc-by-sa": 2,
+    "cc-by-nd": 1
+   }
+  },
+  "problems": []
+ },
+ "sib_macrohongosmitu": {
+  "facts": {
+   "dwc_terms_published": 178,
+   "date_from_year_month_day": 60,
+   "taxon_from_organismName": 60,
+   "verbatimEventDate_disagrees_with_year_month_day": 59,
+   "verbatimEventDate_comparable": 60,
+   "dwc_standard_terms_absent": [],
+   "files_in_archive": [
+    "eml.xml",
+    "meta.xml",
+    "occurrence.txt"
+   ],
+   "n_records": 60,
+   "has_multimedia_extension": false,
+   "n_associatedMedia_nonempty": 0,
+   "basisOfRecord_values": {
+    "PreservedSpecimen": 60
+   },
+   "taxonRank_values": {
+    "": 60
+   },
+   "record_level_license_nonempty": 0,
+   "eml_licence_urls": [
+    "http://creativecommons.org/licenses/by/4.0/legalcode"
+   ],
+   "kingdom_values": {
+    "": 59,
+    "Fungi": 1
+   },
+   "n_genera": 27,
+   "n_species_derived": 25,
+   "country_values": {
+    "Colombia": 60
+   }
+  },
+  "problems": []
+ },
+ "sib_macrohongos_jbb_2023_1": {
+  "facts": {
+   "dwc_terms_published": 180,
+   "date_from_year_month_day": 0,
+   "taxon_from_organismName": 0,
+   "verbatimEventDate_disagrees_with_year_month_day": 0,
+   "verbatimEventDate_comparable": 0,
+   "dwc_standard_terms_absent": [],
+   "files_in_archive": [
+    "eml.xml",
+    "meta.xml",
+    "occurrence.txt"
+   ],
+   "n_records": 184,
+   "has_multimedia_extension": false,
+   "n_associatedMedia_nonempty": 0,
+   "basisOfRecord_values": {
+    "PreservedSpecimen": 184
+   },
+   "taxonRank_values": {
+    "kingdom": 78,
+    "Genus": 70,
+    "Species": 28,
+    "Family": 8
+   },
+   "record_level_license_nonempty": 0,
+   "eml_licence_urls": [
+    "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+   ],
+   "kingdom_values": {
+    "Fungi": 184
+   },
+   "n_genera": 45,
+   "n_species_derived": 56,
+   "country_values": {
+    "Colombia": 184
+   }
+  },
+  "problems": []
+ },
+ "sib_hongos_col2023": {
+  "facts": {
+   "dwc_terms_published": 39,
+   "date_from_year_month_day": 0,
+   "taxon_from_organismName": 0,
+   "verbatimEventDate_disagrees_with_year_month_day": 0,
+   "verbatimEventDate_comparable": 0,
+   "dwc_standard_terms_absent": [
+    "associatedMedia",
+    "catalogNumber",
+    "habitat",
+    "license"
+   ],
+   "files_in_archive": [
+    "eml.xml",
+    "meta.xml",
+    "occurrence.txt"
+   ],
+   "n_records": 1462,
+   "has_multimedia_extension": false,
+   "n_associatedMedia_nonempty": 0,
+   "basisOfRecord_values": {
+    "PreservedSpecimen": 900,
+    "LivingSpecimen": 562
+   },
+   "taxonRank_values": {
+    "genus": 1193,
+    "order": 72,
+    "family": 62,
+    "Phylum": 55,
+    "Kingdom": 41,
+    "specie": 33,
+    "class": 6
+   },
+   "record_level_license_nonempty": 0,
+   "eml_licence_urls": [
+    "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+   ],
+   "kingdom_values": {
+    "Fungi": 1462
+   },
+   "n_genera": 245,
+   "n_species_derived": 24,
+   "country_values": {
+    "Colombia": 1462
+   }
+  },
+  "problems": []
+ },
+ "gbif": {
+  "facts": {
+   "fungi_world_records": 60740476,
+   "fungi_world_with_stillimage": 11505077,
+   "fungi_colombia_records": 548198,
+   "fungi_colombia_stillimage": 21638,
+   "fungi_colombia_stillimage_with_coords": 13704,
+   "fungi_colombia_stillimage_without_coords": 7934,
+   "fungi_colombia_stillimage_from_inaturalist_dataset": 9678,
+   "fungi_published_by_colombia_stillimage": 7853,
+   "license_counts_colombia_stillimage": {
+    "CC_BY_NC_4_0": 10749,
+    "CC0_1_0": 7594,
+    "CC_BY_4_0": 3295
+   },
+   "basis_of_record_colombia_stillimage": {
+    "HUMAN_OBSERVATION": 11637,
+    "PRESERVED_SPECIMEN": 9997,
+    "LIVING_SPECIMEN": 3,
+    "MACHINE_OBSERVATION": 1
+   },
+   "top_datasets_colombia_stillimage": [
+    {
+     "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+     "records": 9678,
+     "title": "iNaturalist Research-grade Observations",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "d415c253-4d61-4459-9d25-4015b9084fb0",
+     "records": 4407,
+     "title": "The New York Botanical Garden Herbarium (NY)",
+     "license": "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    },
+    {
+     "datasetKey": "d714382d-5890-4234-ae81-696eeb53658a",
+     "records": 1828,
+     "title": "Mushroom Observer",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "821cc27a-e3bb-4bc5-ac34-89ada245069d",
+     "records": 1601,
+     "title": "NMNH Extant Specimen Records (USNM, US)",
+     "license": "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    },
+    {
+     "datasetKey": "fea77396-7b26-44cb-8580-aefadc8db276",
+     "records": 679,
+     "title": "The cryptogamy collection (PC) at the Herbarium of the Muséum national d'Histoire Naturelle (MNHN - Paris)",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+     "datasetKey": "81e6cff2-b409-417e-8c72-e1bbafb7c61f",
+     "records": 587,
+     "title": "Field Museum of Natural History (Botany) Fungi Collection",
+     "license": "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    },
+    {
+     "datasetKey": "e4deab67-0998-4140-b573-0ba1f624eb3e",
+     "records": 509,
+     "title": "Fungarium, Oslo (O) UiO",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+     "datasetKey": "5a6538b8-e35c-46c4-8978-6858a657a75f",
+     "records": 418,
+     "title": "Cornell University Plant Pathology Herbarium",
+     "license": "http://creativecommons.org/publicdomain/zero/1.0/legalcode"
+    },
+    {
+     "datasetKey": "2e8ab72b-5931-4e04-b8ff-e1fb61305d17",
+     "records": 313,
+     "title": "Royal Botanic Gardens, Kew - Fungarium Specimens",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+     "datasetKey": "7ba21c92-f762-11e1-a439-00145eb45e9a",
+     "records": 253,
+     "title": "The Lichens Collection at the Botanische Staatssammlung München",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+     "datasetKey": "7ed55b51-4336-4f74-a05a-274afffe771f",
+     "records": 251,
+     "title": "University of Colorado, Museum of Natural History Herbarium Lichen Collection",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "b258e0d8-d282-4d84-898a-655c5375f645",
+     "records": 149,
+     "title": "Herbarium William Nylander (H-NYL)",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    }
+   ],
+   "top_datasets_published_in_colombia_stillimage": [
+    {
+     "datasetKey": "50c9509d-22c7-4a22-a47d-8c48425ef4a7",
+     "records": 7713,
+     "title": "iNaturalist Research-grade Observations",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "239f2462-dbfb-4a47-a5f0-1b7b23b91221",
+     "records": 58,
+     "title": "Biodiversidad Fúngica del Caño Siete Machos: valor ecoturístico en el área de influencia del PNN Sierra de la Macarena, Colombia",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "e0f780e6-1d54-4efa-833d-3562656a2814",
+     "records": 49,
+     "title": "Royas y carbones de la Orinoquia",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    },
+    {
+     "datasetKey": "9f99a46b-d812-45a2-b51a-3f48f65357b5",
+     "records": 31,
+     "title": "Colección de Microorganismos-Pontificia Universidad Javeriana",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "33044985-693e-42ad-93e7-ec3b0b345978",
+     "records": 1,
+     "title": "Microorganismos aislados de plantas útiles para la agricultura urbana",
+     "license": "http://creativecommons.org/licenses/by-nc/4.0/legalcode"
+    },
+    {
+     "datasetKey": "fcb4e601-a1d8-44b6-a9d6-75fd05a280ef",
+     "records": 1,
+     "title": "Herbario Jardín Botánico de Cartagena \"Guillermo Piñeres\"",
+     "license": "http://creativecommons.org/licenses/by/4.0/legalcode"
+    }
+   ],
+   "registry_search_results": {
+    "registry_search_mitu": [],
+    "registry_search_jbb": [],
+    "registry_search_hongos_col": [
+     [
+      "Colección de hongos del Centro de Colecciones Biológicas de la Universidad del Magdalena",
+      "8671abc9-29b8-4bea-9676-311ba892280b"
+     ],
+     [
+      "Hongos formadores de micorrizas arbusculares de la transición Andino-Amazónica del departamento del Caquetá - Proyecto Colombia BIO",
+      "33e5163b-2cb6-46ff-8c2f-2d67b28459ae"
+     ],
+     [
+      "Registros de hongos fitopatógenos y hongos no patogénicos aislados de Tomate en Colombia",
+      "4fbcdcac-29a7-4bcc-9bca-376d92fbc5a5"
+     ],
+     [
+      "Hongos formadores de micorrizas en la Amazonia colombiana",
+      "feb767e5-21e6-4581-ba02-95e2922d1d39"
+     ],
+     [
+      "Colección de Hongos del Museo de Historia Natural Marina de Colombia – Makuriwa (Invemar)",
+      "a3876104-196e-46ab-89d9-b666e61a9e66"
+     ]
+    ]
+   },
+   "sample_records": 900,
+   "sample_images_per_record_mean": 2.154,
+   "sample_images_per_record_max": 20,
+   "sample_records_without_species": 131,
+   "sample_media_license_values": {
+    "http://creativecommons.org/licenses/by-nc/4.0/": 542,
+    "http://creativecommons.org/licenses/by/4.0/": 279,
+    "http://creativecommons.org/publicdomain/zero/1.0/": 24,
+    "Usage Conditions Apply": 22,
+    "nan": 13,
+    "http://creativecommons.org/licenses/by-sa/4.0/": 11,
+    "http://creativecommons.org/licenses/by-nc-sa/4.0/": 3,
+    "Partial images provided by this server are released under the Creative Commons cc-by-sa 3.0 (generic) licence [https://creativecommons.org/licenses/by-sa/3.0/de/]. Please credit images to BGBM following our citation guidelines [https://ww2.bgbm.org/Herbarium/cite.cfm]. If you would like to use images in a format or resolution which is not provided here, please contact us (d.roepert[at]bgbm.org).": 3,
+    "(c) Field Museum of Natural History - CC BY-NC 4.0": 2,
+    "http://creativecommons.org/licenses/by-nd/4.0/": 1
+   }
+  },
+  "problems": []
+ },
+ "mushroom_observer": {
+  "facts": {
+   "n_observations_all": 633707,
+   "n_images_all": 2099078,
+   "n_links_image_observation": 1999569,
+   "n_names": 71063,
+   "n_locations": 28288,
+   "images_columns": [
+    "id",
+    "content_type",
+    "copyright_holder",
+    "license",
+    "ok_for_export",
+    "diagnostic"
+   ],
+   "observations_columns": [
+    "id",
+    "name_id",
+    "when",
+    "location_id",
+    "lat",
+    "lng",
+    "alt",
+    "vote_cache",
+    "is_collection_location",
+    "thumb_image_id"
+   ],
+   "images_license_values": {
+    "Creative Commons Wikipedia Compatible v3.0": 1527662,
+    "Creative Commons Non-commercial v3.0": 254544,
+    "Creative Commons Attribution Non-commercial v4.0": 170211,
+    "Creative Commons Attribution v4.0 (Wikipedia compatible)": 56686,
+    "Creative Commons Attribution ShareAlike v4.0 (Wikipedia compatible)": 47735,
+    "Public Domain (Wikipedia compatible)": 17210,
+    "Creative Commons Attribution Non-commercial ShareAlike v4.0": 15771,
+    "Creative Commons Non-commercial v2.5": 7002,
+    "Creative Commons Attribution Non-commercial NoDerivs v.4.0": 1516,
+    "Creative Commons Attribution NoDerivs v4.0": 741
+   },
+   "images_ok_for_export_0": 40,
+   "n_observations_fungi_kingdom": 608302,
+   "n_observations_kingdom_missing": 14819,
+   "n_observations_deprecated_name": 35741,
+   "kingdom_values_top": {
+    "Fungi": 608302,
+    "<NA>": 14819,
+    "Protozoa": 9673,
+    "Plantae": 664,
+    "Animalia": 142,
+    "Eubacteria": 55
+   },
+   "n_fungi_observations_with_images": 589304,
+   "n_fungi_observations_without_images": 18998,
+   "n_locations_colombia": 218,
+   "n_links_image_fungi_observation": 1925687,
+   "n_colombia_fungi_observations": 21019,
+   "n_colombia_fungi_observations_with_images": 20973
+  },
+  "problems": []
+ }
+}

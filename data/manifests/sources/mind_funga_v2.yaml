@@ -1,0 +1,48 @@
+dataset:
+  id: mind_funga_v2
+  name: MIND.Funga App — dataset de imágenes de macrohongos neotropicales (v2)
+  type: image_dataset
+  status: REQUIRES_REVIEW
+  status_reason: 'Índice completo de archivos (18023 JPG, con SHA-256 publicado por la fuente) y nombres de carpeta
+    (taxón) obtenidos sin descargar imágenes. Discrepancia: 18023 archivos frente a 17.467 imágenes declaradas;
+    sin observación, GPS, fecha ni sustrato; licencia CC BY-NC 3.0; posibles variantes de fondo (''branco''/''verde'').
+    La página de Mendeley y su API responden con un desafío de Cloudflare (HTTP 403) a las solicitudes de Python
+    (requests); curl sí es atendido (ver informe, limitaciones).'
+source:
+  official_urls:
+  - https://data.mendeley.com/datasets/sfrbdjvxcc/2
+  - https://mindfunga.ufsc.br/
+  version: Mendeley Data v2 (2023-07-11), DOI 10.17632/sfrbdjvxcc.2
+accessed: '2026-09-18'
+download_method: 'API pública de Mendeley Data (JSON de la ficha, con curl) + lectura del directorio central del
+  ZIP oficial por HTTP Range (curl). ZIP completo: 3,2 GB (no descargado).'
+parameters:
+  modalities_downloaded:
+  - índice de archivos (JSON) y directorio central del ZIP (CSV)
+  images_downloaded: false
+  resolution_requested: ninguna
+  command: python scripts/data/acquire_datasets.py mind_funga_v2 (usa curl; requests recibe un desafío Cloudflare)
+local_files:
+- path: data/raw/mind_funga_v2/zip_central_directory.csv
+  size_bytes: 4261892
+  sha256: e4d64b5ed2129217cd4a897ac3923a456f0c3890cc6982549988e0c6c2abf589
+  source_url: https://data.mendeley.com/public-api/zip/sfrbdjvxcc/download/2
+  download_date: '2026-09-18'
+api_snapshots:
+  count: 1
+  manifest: data/manifests/remote_queries.csv
+  folder: data/raw/mind_funga_v2/api/
+counts:
+  images_reported: 17467
+  images_verified: 18023
+  observations_reported: NA
+  observations_verified: NA
+license: 'CC BY-NC 3.0 (Mendeley Data): uso no comercial con atribución. Imágenes de fuentes mixtas (grupos de Facebook,
+  ciencia ciudadana, artículos, socios); la procedencia por imagen no está en los metadatos.'
+known_relationships: Independiente de las demás fuentes; puede solapar con iNaturalist/GBIF (fotografías de ciencia
+  ciudadana) — no verificable sin observación/URL.
+next_step: Contactar al proyecto (mind.funga@gmail.com, según su sitio) para aclarar agrupación por observación,
+  variantes de fondo y la discrepancia entre archivos e imágenes declaradas; descargar el ZIP (3,2 GB) manualmente
+  desde el navegador solo si se decide usarlo.
+notes: species_verified/genera_verified se DERIVAN del nombre de carpeta (solo binomios sin 'sp./aff./cf.'); classes
+  = carpetas. Ver adapters.audit_mind_funga.

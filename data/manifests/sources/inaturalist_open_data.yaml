@@ -1,0 +1,54 @@
+dataset:
+  id: inaturalist_open_data
+  name: iNaturalist Open Data (GitHub + AWS Open Data)
+  type: open_data_bucket
+  status: REMOTE_QUERYABLE
+  status_reason: Se descargó solo taxa.csv.gz (40 MB) y fragmentos iniciales (2 y 3 MB) de observations/photos para
+    verificar el esquema. observations.csv.gz (13,1 GB) y photos.csv.gz (20,1 GB) NO se descargaron (magnitud extraordinaria);
+    no contienen país, solo lat/lon.
+source:
+  official_urls:
+  - https://github.com/inaturalist/inaturalist-open-data
+  - https://registry.opendata.aws/inaturalist-open-data/
+  version: instantánea mensual del bucket (objetos con Last-Modified 2026-08-27); s3://inaturalist-open-data
+accessed: '2026-09-18'
+download_method: HTTPS público o `aws s3 ... --no-sign-request` (sin cuenta AWS); imágenes en photos/<id>/{original,large,medium,small,thumb,square}.<ext>
+parameters:
+  modalities_downloaded:
+  - taxa.csv.gz completo
+  - fragmentos iniciales de observations/photos (solo esquema)
+  images_downloaded: false
+  command: python scripts/data/acquire_datasets.py inaturalist_open_data
+local_files:
+- path: data/raw/inaturalist_open_data/observations.csv.gz.head2MB
+  size_bytes: 2000000
+  sha256: 2d1d47f7135a04ddcd83bde413a590dc05207b948db16cc145b9505fde7ed54a
+  source_url: https://inaturalist-open-data.s3.amazonaws.com/observations.csv.gz
+  download_date: '2026-09-18'
+- path: data/raw/inaturalist_open_data/photos.csv.gz.head3MB
+  size_bytes: 3000000
+  sha256: a896878ca68e1eae8dac22515c4b57d9f70fdf6a8b1acc76af0082dae57c49e5
+  source_url: https://inaturalist-open-data.s3.amazonaws.com/photos.csv.gz
+  download_date: '2026-09-18'
+- path: data/raw/inaturalist_open_data/taxa.csv.gz
+  size_bytes: 39765976
+  sha256: e57979d3ac91e81d0596ace7ac2f39b7196160137053229980f78bcb8f6672ec
+  source_url: https://inaturalist-open-data.s3.amazonaws.com/taxa.csv.gz
+  download_date: '2026-09-18'
+api_snapshots:
+  count: 1
+  manifest: data/manifests/remote_queries.csv
+  folder: data/raw/inaturalist_open_data/api/
+counts:
+  images_reported: 70000000
+  images_verified: NA
+  observations_reported: NA
+  observations_verified: NA
+license: Solo fotos con licencia abierta según el registro AWS ('Creative Commons o Dominio Público, varía por imagen');
+  columna license por foto (CC0, CC-BY, CC-BY-NC, …). Mantener autoría (observer) y licencia.
+known_relationships: Subconjunto de iNaturalist con licencia abierta; publicado también en GBIF como 'iNaturalist
+  Research-grade Observations'.
+next_step: 'Semana 3: filtrar por Colombia requiere unir observations+photos+taxa y un polígono/caja de Colombia
+  (sin columna de país) — decidir si se justifica frente a la API o GBIF; no bajar imágenes masivamente.'
+notes: 'Taxones fúngicos en taxa.csv: 85373 filas (71045 activos; 59642 de rango especie). Es taxonomía, NO conteo
+  de observaciones.'

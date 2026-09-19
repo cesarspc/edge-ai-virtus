@@ -1,0 +1,12 @@
+# Dependencias mínimas para adquisición y auditoría de datasets (Semana 2).
+# Probado con Python 3.12; versiones instaladas al ejecutar la auditoría entre paréntesis.
+pandas>=2.2        # (3.0.5)
+numpy>=1.26        # (2.0.0)
+requests>=2.31     # (2.34.2)
+PyYAML>=6.0        # (6.0.3)
+matplotlib>=3.8    # (3.9.0)
+
+# Solo para ejecutar el notebook de auditoría
+nbformat>=5.9      # (5.11.1)
+nbconvert>=7.0     # (7.17.1)
+ipykernel>=6.0     # (7.3.0)

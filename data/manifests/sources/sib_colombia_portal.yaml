@@ -1,0 +1,28 @@
+dataset:
+  id: sib_colombia_portal
+  name: SiB Colombia — portal de datos
+  type: portal
+  status: DOCUMENTED_ONLY
+  status_reason: 'Portal informativo (registros biológicos, listas, fichas, IPT). No se usó una API propia: los
+    datos se auditaron por los tres recursos IPT indicados y, para una visión nacional, por GBIF (publishingCountry=CO).'
+source:
+  official_urls:
+  - https://biodiversidad.co/
+  - https://biodiversidad.co/data/
+  version: NA
+accessed: '2026-09-18'
+download_method: Vía IPT (DwC-A) o vía GBIF
+parameters:
+  modalities_downloaded: []
+local_files: ninguno (ver remote_queries)
+api_snapshots: ninguno
+counts:
+  images_reported: NA
+  images_verified: NA
+  observations_reported: NA
+  observations_verified: NA
+license: NA
+known_relationships: Los recursos publicados por el SiB aparecen en GBIF cuando están registrados allí.
+next_step: 'Semana 3: si hace falta más cobertura, enumerar recursos IPT/GBIF publicados desde Colombia con multimedia
+  (ver gbif) y revisar sus licencias.'
+notes: 'GBIF: registros de hongos con imagen publicados desde Colombia: 7853 (SOURCE_REPORTED).'

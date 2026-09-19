@@ -1,0 +1,36 @@
+dataset:
+  id: sib_hongos_col2023
+  name: SiB Colombia IPT — Hongos de Colombia (proyecto)
+  type: ipt_resource_dwca
+  status: AVAILABLE_LOCAL
+  status_reason: 'Se descargó y auditó el DwC-A completo (1462 registros). El archivo NO incluye extensión multimedia
+    y la columna associatedMedia está vacía en 1462 de 1462 registros: no hay fotografías enlazadas.'
+source:
+  official_urls:
+  - https://ipt.biodiversidad.co/permisos/resource?r=hongos_col2023
+  version: 1.4 (publicada 2024-02-06)
+accessed: '2026-09-18'
+download_method: 'IPT: archive.do?r=<recurso> (Darwin Core Archive)'
+parameters:
+  modalities_downloaded:
+  - DwC-A
+  images_downloaded: false
+  ipt_resource: hongos_col2023
+local_files:
+- path: data/raw/sib_hongos_col2023/hongos_col2023.dwca.zip
+  size_bytes: 54963
+  sha256: dafc32b8a35529754d5a814a460e942796f6261931de54c8766d9bdca03921f6
+  source_url: https://ipt.biodiversidad.co/permisos/archive.do?r=hongos_col2023
+  download_date: '2026-09-18'
+api_snapshots: ninguno
+counts:
+  images_reported: NA
+  images_verified: 0
+  observations_reported: 1462
+  observations_verified: 1462
+license: CC0 1.0 (recurso); sin licencia por registro
+known_relationships: Recurso IPT del SiB Colombia; GBIF ya integra parte del SiB (ver notes).
+next_step: Usar solo como referencia taxonómica/distribución. Si el recurso tiene fotografías, deben solicitarse
+  a la institución (fuera del DwC-A).
+notes: 'Coordenadas corruptas por separadores decimales/de miles (ver missing_values.csv) y fechas d/m/aaaa. Registro
+  en GBIF: la página IPT indica ''no registrado en GBIF''.'

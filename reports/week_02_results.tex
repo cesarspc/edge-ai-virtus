@@ -1,0 +1,280 @@
+\documentclass[11pt,a4paper]{article}
+
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{geometry}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{longtable}
+\usepackage{array}
+\usepackage{enumitem}
+\usepackage{hyperref}
+\usepackage{amsmath}
+
+\geometry{
+    top=2.3cm,
+    bottom=2.3cm,
+    left=2.4cm,
+    right=2.4cm
+}
+
+\hypersetup{
+    colorlinks=true,
+    urlcolor=blue,
+    linkcolor=black
+}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.6em}
+\renewcommand{\arraystretch}{1.2}
+\urlstyle{same}
+
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+
+\title{
+    \textbf{Exploración de modelos de Inteligencia Artificial multimodal\\
+    para la identificación de macromicetos mediante dispositivos móviles}\\[0.6em]
+    \normalsize Resultados de la Semana 2: auditoría y curaduría de datasets
+}
+
+\author{
+    Daniel Esteban Camacho Ospina\\
+    Cesar Augusto Pulido Cuervo
+}
+
+\date{}
+
+\begin{document}
+
+\maketitle
+
+% =========================================================
+\section{Objetivo de la semana}
+% =========================================================
+
+Esta semana se realizó el inventario y la auditoría inicial de las fuentes de
+datos de hongos disponibles para el proyecto: cuántas imágenes y observaciones
+existen, qué metadatos ofrece cada fuente, cuántos valores faltan, qué
+duplicados aparecen, cómo es el desbalance entre clases y qué riesgos presenta
+cada fuente.
+
+% =========================================================
+\section{Qué se hizo en el repositorio}
+% =========================================================
+
+\begin{itemize}
+    \item Se estructuró el repositorio para que los datos originales vivan
+    solamente en local y no se versionen, por su tamaño y por las licencias de
+    las fotografías.
+
+    \item Se automatizó la adquisición de datos descargando únicamente metadatos, índices, taxonomías y
+    respuestas de las interfaces de consulta (unos 0,7 GB en total). No
+    se descargó ninguna imagen. El procedimiento es repetible y registra origen,
+    fecha, tamaño y huella de verificación de cada archivo.
+
+    \item Se programó una auditoría común para todas las fuentes, con un
+    adaptador por dataset, que calcula tamaños, valores faltantes, duplicados y
+    desbalance de clases.
+
+    \item Se construyó un inventario con una fila por fuente. Toda cifra se
+    etiqueta según su origen: \textit{reportada por la fuente}, \textit{calculada
+    por nosotros sobre archivos locales}, \textit{derivada} o \textit{no
+    verificada}. Así no se presentan como comprobadas cifras que solo provienen
+    de una descripción.
+
+    \item Se redactaron un informe técnico detallado y un cuaderno de análisis
+    que permiten repetir la auditoría desde cero.
+\end{itemize}
+
+Se distingue siempre entre imagen y observación (un mismo
+hallazgo puede tener varias fotografías), para no inflar el tamaño efectivo de
+los datos ni contaminar las particiones futuras.
+
+% =========================================================
+\section{Fuentes revisadas}
+% =========================================================
+
+Se revisaron siete fuentes enfocandonos en la disponibilidad de los metadatos.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{3.1cm}
+>{\raggedright\arraybackslash}p{3.6cm}
+Y}
+\toprule
+\textbf{Fuente} &
+\textbf{Estado} &
+\textbf{Hallazgo principal}\\
+\midrule
+
+FungiTastic &
+Metadatos completos en local. &
+Los datos de clima no fueron accesibles.\\
+
+DF20 &
+Metadatos completos en local &
+Casi todo su contenido ya está incluido en FungiTastic.\\
+
+MIND.Funga v2 &
+Índice de archivos en local; requiere revisión &
+Contexto neotropical, pero sin agrupación por observación, sin coordenadas ni
+fecha, con posibles imágenes repetidas y licencia no comercial.\\
+
+iNaturalist (API y Open Data) &
+Consultable de forma remota &
+Fotografías con licencia por imagen. La tabla de observaciones no incluye el
+país, por lo que Colombia debe filtrarse por coordenadas.\\
+
+SiB Colombia (tres recursos) &
+Recursos completos en local &
+Ninguno de los tres contiene fotografías enlazadas.\\
+
+GBIF &
+Consultable de forma remota &
+Cerca de la mitad de los registros colombianos con imagen provienen de
+iNaturalist.\\
+
+Mushroom Observer &
+Metadatos completos en local &
+Amplia cobertura; identificación comunitaria y licencia por imagen.\\
+
+\bottomrule
+\end{tabularx}
+\end{table}
+
+
+% =========================================================
+\section{Resultados principales}
+% =========================================================
+
+\subsection{Tamaño: observaciones e imágenes}
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{5.4cm}
+>{\raggedleft\arraybackslash}p{2.6cm}
+>{\raggedleft\arraybackslash}p{2.6cm}
+>{\raggedleft\arraybackslash}p{2.4cm}
+}
+\toprule
+\textbf{Fuente} &
+\textbf{Observaciones} &
+\textbf{Imágenes} &
+\textbf{Especies}\\
+\midrule
+FungiTastic & 346\,459 & 633\,114 & 4\,418\\
+DF20 & 177\,170 & 295\,938 & 1\,577\\
+MIND.Funga v2 & sin dato & 18\,023 & 509 carpetas\\
+Mushroom Observer (hongos) & 608\,302 & 1\,924\,184 & 17\,986\\
+Mushroom Observer (Colombia) & 21\,019 & 61\,351 & 592\\
+iNaturalist (Colombia)\textsuperscript{a} & 127\,886 & no calculado & 2\,447\\
+GBIF (Colombia, con imagen)\textsuperscript{a} & 21\,638 registros & no calculado & no calculado\\
+SiB Colombia (tres recursos) & 1\,706 registros & 0 & ---\\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3em}
+
+\end{table}
+
+
+\subsection{Valores faltantes}
+
+\begin{itemize}
+    \item \textbf{FungiTastic y DF20:} muy completos. El sustrato falta en 4,85\,\%
+    de las imágenes de FungiTastic y en 0,52\,\% de las de DF20; especie, género,
+    fecha y coordenadas casi no presentan ausencias. Se tiene la limitación de imposibilidad de descarga de climate.zip pues no existe en los servidores en la fecha consultada.
+    \item \textbf{Mushroom Observer (Colombia):} 88\,\% de las observaciones no
+    llega a especie, 46\,\% no llega a género y 47\,\% no tiene coordenadas.
+    \item \textbf{SiB Colombia:} un recurso presenta coordenadas corruptas por
+    separadores decimales mal aplicados (más de 900 valores fuera de rango), otro
+    no trae coordenadas y sus fechas son internamente contradictorias, y dos de
+    los tres usan fechas en formato no estándar.
+    \item \textbf{MIND.Funga:} no incluye observación, coordenadas, fecha,
+    sustrato ni hábitat; solo la imagen y su carpeta de taxón.
+\end{itemize}
+
+
+\subsection{Disponibilidad de los diez géneros propuestos}
+
+Como verificación complementaria, se consultó cuántos datos existen para los
+diez géneros de la selección inicial.
+
+\begin{table}[ht]
+\centering
+\small
+\begin{tabularx}{\textwidth}{
+>{\raggedright\arraybackslash}p{2.6cm}
+>{\raggedleft\arraybackslash}Y
+>{\raggedleft\arraybackslash}Y
+>{\raggedleft\arraybackslash}Y
+>{\raggedleft\arraybackslash}Y
+>{\raggedleft\arraybackslash}Y
+}
+\toprule
+\textbf{Género} &
+\textbf{FungiTastic (entren.)} &
+\textbf{DF20} &
+\textbf{MIND.Funga} &
+\textbf{Mushroom Observer (Col.)} &
+\textbf{iNaturalist (Col.)\textsuperscript{b}}\\
+\midrule
+\textit{Trametes}    & 6\,626 & 4\,264 & 318 & 460   & 785\\
+\textit{Ganoderma}   & 3\,567 & 2\,499 & 140 & 840   & 119\\
+\textit{Hericium}    & 826    & 679    & 0   & 6     & 7\\
+\textit{Auricularia} & 2\,106 & 1\,387 & 389 & 748   & 213\\
+\textit{Lycoperdon}  & 3\,336 & 2\,779 & 20  & 226   & 95\\
+\textit{Geastrum}    & 1\,350 & 1\,011 & 346 & 434   & 29\\
+\textit{Morchella}   & 405    & 173    & 0   & 14    & 182\\
+\textit{Xylaria}     & 2\,758 & 1\,641 & 261 & 1\,049 & 117\\
+\textit{Pleurotus}   & 2\,690 & 1\,704 & 166 & 888   & 31\\
+\textit{Amanita}     & 6\,508 & 5\,370 & 130 & 669   & 2\,288\\
+\bottomrule
+\end{tabularx}
+
+\vspace{0.3em}
+{\footnotesize Imágenes por género, salvo \textsuperscript{b} observaciones de
+grado de investigación (no imágenes). FungiTastic y DF20 son de origen europeo.}
+\end{table}
+
+Los diez géneros están bien representados en las fuentes europeas, pero
+\textit{Hericium} y \textit{Morchella} son casi inexistentes en las fuentes
+colombianas con imágenes, y \textit{Amanita} domina de forma desproporcionada en
+iNaturalist Colombia. Esto deberá considerarse al decidir con qué datos se evalúa
+el contexto colombiano.
+
+% =========================================================
+\section{Limitaciones}
+% =========================================================
+
+\begin{itemize}
+    \item \textbf{Licencias:} FungiTastic declara tres licencias distintas;
+    MIND.Funga es de uso no comercial; iNaturalist, GBIF y Mushroom Observer
+    tienen licencia por imagen, con variantes que limitan el uso.
+    \item \textbf{Alcance:} los datasets grandes son casi exclusivamente daneses;
+    el reino Fungi incluye líquenes y otros hongos no macroscópicos; muchos
+    registros colombianos son especímenes de colección y no fotografías de campo.
+    \item \textbf{Clima:} Algo muy importante que podría afectar al ultimo modelo que se pretendía evaluar es no tener data exacta de clima como se preveía que tenía FungiTastic, ante la ausencia de esta en el servidor.
+\end{itemize}
+
+
+% =========================================================
+\section{Conclusiones}
+% =========================================================
+
+
+
+    Los dataset técnicamente utilizables son: FungiTastic y, en menor medida, DF20. Estos tienen 
+    metadatos completos y consistentes, pero de contexto europeo y solapados
+    entre sí. iNaturalist, GBIF y Mushroom Observer como vías para datos
+    colombianos. Además, los tres recursos de SiB
+    Colombia que fueron revisados son descartados para entrenamiento, por no contener fotografías.
+
+
+\end{document}

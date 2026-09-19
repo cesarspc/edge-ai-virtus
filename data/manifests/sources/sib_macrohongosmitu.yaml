@@ -1,0 +1,36 @@
+dataset:
+  id: sib_macrohongosmitu
+  name: SiB Colombia IPT — Exploración y Valoración de la Diversidad Fúngica en cercanías de la comunidad Mitú-Cachivera
+  type: ipt_resource_dwca
+  status: AVAILABLE_LOCAL
+  status_reason: 'Se descargó y auditó el DwC-A completo (60 registros). El archivo NO incluye extensión multimedia
+    y la columna associatedMedia está vacía en 60 de 60 registros: no hay fotografías enlazadas.'
+source:
+  official_urls:
+  - https://ipt.biodiversidad.co/permisos/resource?r=macrohongosmitu
+  version: 1.1 (publicada 2026-01-01)
+accessed: '2026-09-18'
+download_method: 'IPT: archive.do?r=<recurso> (Darwin Core Archive)'
+parameters:
+  modalities_downloaded:
+  - DwC-A
+  images_downloaded: false
+  ipt_resource: macrohongosmitu
+local_files:
+- path: data/raw/sib_macrohongosmitu/macrohongosmitu.dwca.zip
+  size_bytes: 17375
+  sha256: caf50b4e4c5c5dd29c483de6825dcf3391fa0f118fef1d13fba6f8927818eb09
+  source_url: https://ipt.biodiversidad.co/permisos/archive.do?r=macrohongosmitu
+  download_date: '2026-09-18'
+api_snapshots: ninguno
+counts:
+  images_reported: NA
+  images_verified: 0
+  observations_reported: 60
+  observations_verified: 60
+license: CC BY 4.0 (recurso); sin licencia por registro
+known_relationships: Recurso IPT del SiB Colombia; GBIF ya integra parte del SiB (ver notes).
+next_step: Usar solo como referencia taxonómica/distribución. Si el recurso tiene fotografías, deben solicitarse
+  a la institución (fuera del DwC-A).
+notes: 'Sin coordenadas; taxón solo en texto libre (organismName) y fecha en year/month/day; verbatimEventDate contradice
+  year/month/day en 59 de 60 registros. Especie/género/familia/fecha DERIVADOS. Registro en GBIF: ver gbif.registry_search_results.'

@@ -1,0 +1,64 @@
+dataset:
+  id: mushroom_observer
+  name: Mushroom Observer
+  type: platform_csv_dumps
+  status: METADATA_AVAILABLE
+  status_reason: Se descargaron los 6 CSV oficiales (observations, images_observations, images, names, name_classifications,
+    locations; ~250 MB) que MO recomienda usar en lugar de la API para grandes volúmenes. Imágenes NO descargadas.
+source:
+  official_urls:
+  - https://mushroomobserver.org/
+  - https://github.com/MushroomObserver/mushroom-observer/blob/main/README_API.md
+  version: volcados CSV nocturnos (Last-Modified 2026-09-18)
+accessed: '2026-09-18'
+download_method: https://mushroomobserver.org/<tabla>.csv (dump nocturno oficial); la API no está pensada para extracción
+  masiva y limita a ~20 solicitudes/min
+parameters:
+  modalities_downloaded:
+  - volcados CSV nocturnos
+  images_downloaded: false
+  command: python scripts/data/acquire_datasets.py mushroom_observer
+local_files:
+- path: data/raw/mushroom_observer/images.csv
+  size_bytes: 175157554
+  sha256: 34609775daaa492f739aadab116b6ae7a683a2f36362ebdd9ee68637ecf2ef00
+  source_url: https://mushroomobserver.org/images.csv
+  download_date: '2026-09-18'
+- path: data/raw/mushroom_observer/images_observations.csv
+  size_bytes: 28730531
+  sha256: 1942cc5cd2771e97394db21269afdc7b60ce39366fd59b17838e375c335df634
+  source_url: https://mushroomobserver.org/images_observations.csv
+  download_date: '2026-09-18'
+- path: data/raw/mushroom_observer/locations.csv
+  size_bytes: 3376429
+  sha256: aa5881a5e20f0c8b7146f7f3465195260f3c2e808f96360be1c500b81a2116f0
+  source_url: https://mushroomobserver.org/locations.csv
+  download_date: '2026-09-18'
+- path: data/raw/mushroom_observer/name_classifications.csv
+  size_bytes: 4825895
+  sha256: fd6522b4a9950badc485b6a988c76e34cec4e2358651ccdc4e612b61ff8bd848
+  source_url: https://mushroomobserver.org/name_classifications.csv
+  download_date: '2026-09-18'
+- path: data/raw/mushroom_observer/names.csv
+  size_bytes: 3967611
+  sha256: da20c29f96ccfc8887cd2889cb4a64788e66e97ad7aef3a8fa967e1d281e5bd0
+  source_url: https://mushroomobserver.org/names.csv
+  download_date: '2026-09-18'
+- path: data/raw/mushroom_observer/observations.csv
+  size_bytes: 41983562
+  sha256: 7a37dc352b5115afbc67ef51adb72a5884917aad99b0227f3556989088e37fe2
+  source_url: https://mushroomobserver.org/observations.csv
+  download_date: '2026-09-18'
+api_snapshots: ninguno
+counts:
+  images_reported: NA
+  images_verified: 1924184
+  observations_reported: NA
+  observations_verified: 608302
+license: 'Licencia y titular por imagen en images.csv (Creative Commons: Wikipedia-compatible, NC, BY, BY-SA, etc.);
+  imágenes con ok_for_export=0 no deben usarse. Los registros de MO en GBIF figuran como CC BY-NC 4.0.'
+known_relationships: Publicado también en GBIF ('Mushroom Observer', 1828 registros con imagen en Colombia al 2026-09-18).
+next_step: 'Semana 3: reconciliar nombres (sinónimos/deprecated) y, si se usa, descargar solo las imágenes necesarias
+  respetando los límites de MO.'
+notes: 'Especie = nombres con rank 400; género/país DERIVADOS. Calidad de identificación: vote_cache (consenso),
+  no verificable como verdad terreno. Sustrato/hábitat no están en los CSV.'

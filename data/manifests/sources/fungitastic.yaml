@@ -1,0 +1,50 @@
+dataset:
+  id: fungitastic
+  name: FungiTastic
+  type: benchmark_dataset
+  status: METADATA_AVAILABLE
+  status_reason: 'Se descargó y auditó localmente el metadata.zip oficial completo (13 CSV: completo, Mini y FewShot).
+    Las imágenes (≈50 GB a 500 px en Kaggle) NO se descargaron.'
+source:
+  official_urls:
+  - https://bohemianvra.github.io/FungiTastic/
+  - https://github.com/BohemianVRA/FungiTastic
+  - https://www.kaggle.com/datasets/picekl/fungitastic
+  version: Kaggle v15 (2025-12-03); metadata.zip oficial Last-Modified 2025-12-05; repositorio commit fb65b7e (2025-10-15)
+accessed: '2026-09-18'
+download_method: 'Metadatos: URL oficial del script dataset/download.py (metadata.zip) descargada con requests (el
+  script oficial requiere wget). Imágenes: script oficial (--subset m|fs|full --size 300|500|720|fullsize) o Kaggle
+  (~50 GB).'
+parameters:
+  modalities_downloaded:
+  - metadata
+  images_downloaded: false
+  resolution_requested: ninguna
+  subset_requested: todos los CSV de metadata.zip (completo, Mini, FewShot)
+  command: python scripts/data/acquire_datasets.py fungitastic
+local_files:
+- path: data/raw/fungitastic/metadata.zip
+  size_bytes: 327493894
+  sha256: b1dc1d24714d9522c545d8cdd8f7e6dd9999afe2620d271aeb761f1def0719ac
+  source_url: https://cmp.felk.cvut.cz/datagrid/FungiTastic/shared/download/metadata.zip
+  download_date: '2026-09-18'
+api_snapshots:
+  count: 2
+  manifest: data/manifests/remote_queries.csv
+  folder: data/raw/fungitastic/api/
+counts:
+  images_reported: 630000
+  images_verified: 633114
+  observations_reported: 350000
+  observations_verified: 346459
+license: 'Tres afirmaciones distintas: página del artículo arXiv ''CC BY 4.0'' (no aclara si aplica al dataset);
+  ficha de Kaggle ''CC BY-NC-SA 4.0''; repositorio (código) BSD-3-Clause. Los CSV no traen licencia ni autor por
+  imagen. Los registros de origen en GBIF (Danish Mycological Society) declaran CC BY-NC 4.0. REQUIERE REVISIÓN
+  antes de usar imágenes.'
+known_relationships: Amplía la colección de la que procede DF20 (Atlas de hongos daneses / GBIF). Ambos usan claves
+  de ocurrencia de GBIF del dataset 'Danish Mycological Society, fungal records database' (verificado con 1 ID de
+  cada CSV). Ver overlaps.csv.
+next_step: 'Semana 3: decidir subconjunto/resolución mínimos y descargar con dataset/download.py (requiere wget)
+  solo lo necesario; resolver la licencia antes de usar las imágenes.'
+notes: Columna 'captions' (texto generado) presente, no auditada. elevation/landcover/biogeographicalRegion vienen
+  en los CSV; clima y satélite son archivos aparte. category_id=-1 marca especies desconocidas en OpenSet.

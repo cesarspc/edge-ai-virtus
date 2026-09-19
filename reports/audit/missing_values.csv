@@ -1,0 +1,341 @@
+dataset_id,table,role,column,column_present,n_rows,n_null,n_empty_string,n_special_token,n_missing_total,pct_missing,n_suspicious,suspicious_rule,n_nonstandard_format
+fungitastic,full/Train,observation_id,observationID,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full/Train,image_id,,False,433702,,,,,,,,
+fungitastic,full/Train,image_file,filename,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full/Train,url,,False,433702,,,,,,,,
+fungitastic,full/Train,taxon_label,,False,433702,,,,,,,,
+fungitastic,full/Train,species,species,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full/Train,genus,genus,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full/Train,family,family,True,433702,3547.0,0.0,0.0,3547.0,0.818,0.0,,0.0
+fungitastic,full/Train,order,order,True,433702,422.0,0.0,0.0,422.0,0.097,0.0,,0.0
+fungitastic,full/Train,date,eventDate,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+fungitastic,full/Train,latitude,latitude,True,433702,1.0,0.0,0.0,1.0,0.0,6.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+fungitastic,full/Train,longitude,longitude,True,433702,1.0,0.0,0.0,1.0,0.0,0.0,"lon outside [-180,180] or unparsable",0.0
+fungitastic,full/Train,country,countryCode,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full/Train,region,region,True,433702,1710.0,0.0,0.0,1710.0,0.394,0.0,,0.0
+fungitastic,full/Train,substrate,substrate,True,433702,30623.0,0.0,0.0,30623.0,7.061,0.0,,0.0
+fungitastic,full/Train,habitat,habitat,True,433702,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full/Train,climate,,False,433702,,,,,,,,
+fungitastic,full/Train,license,,False,433702,,,,,,,,
+fungitastic,full/Train,author,,False,433702,,,,,,,,
+fungitastic,full/Train,provider,,False,433702,,,,,,,,
+fungitastic,full_union,observation_id,observationID,True,633114,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full_union,image_id,,False,633114,,,,,,,,
+fungitastic,full_union,image_file,filename,True,633114,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full_union,url,,False,633114,,,,,,,,
+fungitastic,full_union,taxon_label,,False,633114,,,,,,,,
+fungitastic,full_union,species,species,True,633114,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full_union,genus,genus,True,633114,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full_union,family,family,True,633114,5696.0,0.0,0.0,5696.0,0.9,0.0,,0.0
+fungitastic,full_union,order,order,True,633114,842.0,0.0,0.0,842.0,0.133,0.0,,0.0
+fungitastic,full_union,date,eventDate,True,633114,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+fungitastic,full_union,latitude,latitude,True,633114,7.0,0.0,0.0,7.0,0.001,6.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+fungitastic,full_union,longitude,longitude,True,633114,7.0,0.0,0.0,7.0,0.001,0.0,"lon outside [-180,180] or unparsable",0.0
+fungitastic,full_union,country,countryCode,True,633114,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,full_union,region,region,True,633114,2253.0,0.0,0.0,2253.0,0.356,0.0,,0.0
+fungitastic,full_union,substrate,substrate,True,633114,30686.0,0.0,0.0,30686.0,4.847,0.0,,0.0
+fungitastic,full_union,habitat,habitat,True,633114,7.0,0.0,0.0,7.0,0.001,0.0,,0.0
+fungitastic,full_union,climate,,False,633114,,,,,,,,
+fungitastic,full_union,license,,False,633114,,,,,,,,
+fungitastic,full_union,author,,False,633114,,,,,,,,
+fungitastic,full_union,provider,,False,633114,,,,,,,,
+fungitastic,mini_union,observation_id,observationID,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,image_id,,False,67634,,,,,,,,
+fungitastic,mini_union,image_file,filename,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,url,,False,67634,,,,,,,,
+fungitastic,mini_union,taxon_label,,False,67634,,,,,,,,
+fungitastic,mini_union,species,species,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,genus,genus,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,family,family,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,order,order,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,date,eventDate,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+fungitastic,mini_union,latitude,latitude,True,67634,1.0,0.0,0.0,1.0,0.001,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+fungitastic,mini_union,longitude,longitude,True,67634,1.0,0.0,0.0,1.0,0.001,0.0,"lon outside [-180,180] or unparsable",0.0
+fungitastic,mini_union,country,countryCode,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,region,region,True,67634,161.0,0.0,0.0,161.0,0.238,0.0,,0.0
+fungitastic,mini_union,substrate,substrate,True,67634,1520.0,0.0,0.0,1520.0,2.247,0.0,,0.0
+fungitastic,mini_union,habitat,habitat,True,67634,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,mini_union,climate,,False,67634,,,,,,,,
+fungitastic,mini_union,license,,False,67634,,,,,,,,
+fungitastic,mini_union,author,,False,67634,,,,,,,,
+fungitastic,mini_union,provider,,False,67634,,,,,,,,
+fungitastic,fewshot_union,observation_id,observationID,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,fewshot_union,image_id,,False,12015,,,,,,,,
+fungitastic,fewshot_union,image_file,filename,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,fewshot_union,url,,False,12015,,,,,,,,
+fungitastic,fewshot_union,taxon_label,,False,12015,,,,,,,,
+fungitastic,fewshot_union,species,species,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,fewshot_union,genus,genus,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,fewshot_union,family,family,True,12015,281.0,0.0,0.0,281.0,2.339,0.0,,0.0
+fungitastic,fewshot_union,order,order,True,12015,148.0,0.0,0.0,148.0,1.232,0.0,,0.0
+fungitastic,fewshot_union,date,eventDate,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+fungitastic,fewshot_union,latitude,latitude,True,12015,3.0,0.0,0.0,3.0,0.025,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+fungitastic,fewshot_union,longitude,longitude,True,12015,3.0,0.0,0.0,3.0,0.025,0.0,"lon outside [-180,180] or unparsable",0.0
+fungitastic,fewshot_union,country,countryCode,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,fewshot_union,region,region,True,12015,91.0,0.0,0.0,91.0,0.757,0.0,,0.0
+fungitastic,fewshot_union,substrate,substrate,True,12015,399.0,0.0,0.0,399.0,3.321,0.0,,0.0
+fungitastic,fewshot_union,habitat,habitat,True,12015,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+fungitastic,fewshot_union,climate,,False,12015,,,,,,,,
+fungitastic,fewshot_union,license,,False,12015,,,,,,,,
+fungitastic,fewshot_union,author,,False,12015,,,,,,,,
+fungitastic,fewshot_union,provider,,False,12015,,,,,,,,
+mind_funga_v2,files_v2,observation_id,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,image_id,file_id,True,18023,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mind_funga_v2,files_v2,image_file,filename,True,18023,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mind_funga_v2,files_v2,url,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,taxon_label,class_id,True,18023,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mind_funga_v2,files_v2,species,species_derived,True,18023,3333.0,0.0,0.0,3333.0,18.493,0.0,,0.0
+mind_funga_v2,files_v2,genus,genus_derived,True,18023,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mind_funga_v2,files_v2,family,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,order,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,date,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,latitude,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,longitude,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,country,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,region,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,substrate,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,habitat,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,climate,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,license,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,author,,False,18023,,,,,,,,
+mind_funga_v2,files_v2,provider,,False,18023,,,,,,,,
+inaturalist_open_data,observations_head_fragment,observation_id,observation_uuid,True,43784,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_open_data,observations_head_fragment,image_id,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,image_file,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,url,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,taxon_label,taxon_id,True,43784,0.0,3.0,0.0,3.0,0.007,0.0,,0.0
+inaturalist_open_data,observations_head_fragment,species,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,genus,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,family,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,order,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,date,observed_on,True,43784,0.0,180.0,0.0,180.0,0.411,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+inaturalist_open_data,observations_head_fragment,latitude,latitude,True,43784,0.0,472.0,0.0,472.0,1.078,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+inaturalist_open_data,observations_head_fragment,longitude,longitude,True,43784,0.0,472.0,0.0,472.0,1.078,0.0,"lon outside [-180,180] or unparsable",0.0
+inaturalist_open_data,observations_head_fragment,country,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,region,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,substrate,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,habitat,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,climate,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,license,,False,43784,,,,,,,,
+inaturalist_open_data,observations_head_fragment,author,observer_id,True,43784,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_open_data,observations_head_fragment,provider,,False,43784,,,,,,,,
+inaturalist_open_data,photos_head_fragment,observation_id,observation_uuid,True,70737,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_open_data,photos_head_fragment,image_id,photo_id,True,70737,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_open_data,photos_head_fragment,image_file,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,url,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,taxon_label,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,species,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,genus,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,family,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,order,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,date,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,latitude,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,longitude,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,country,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,region,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,substrate,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,habitat,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,climate,,False,70737,,,,,,,,
+inaturalist_open_data,photos_head_fragment,license,license,True,70737,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_open_data,photos_head_fragment,author,observer_id,True,70737,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_open_data,photos_head_fragment,provider,,False,70737,,,,,,,,
+inaturalist_api,random_sample200_research_photos,observation_id,observation_id,True,200,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_api,random_sample200_research_photos,image_id,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,image_file,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,url,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,taxon_label,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,species,species_name,True,200,4.0,0.0,0.0,4.0,2.0,0.0,,0.0
+inaturalist_api,random_sample200_research_photos,genus,genus_name,True,200,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_api,random_sample200_research_photos,family,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,order,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,date,observed_on,True,200,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+inaturalist_api,random_sample200_research_photos,latitude,lat,True,200,0.0,0.0,0.0,0.0,0.0,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+inaturalist_api,random_sample200_research_photos,longitude,lon,True,200,0.0,0.0,0.0,0.0,0.0,0.0,"lon outside [-180,180] or unparsable",0.0
+inaturalist_api,random_sample200_research_photos,country,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,region,place_guess,True,200,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_api,random_sample200_research_photos,substrate,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,habitat,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,climate,,False,200,,,,,,,,
+inaturalist_api,random_sample200_research_photos,license,photo_license,True,200,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_api,random_sample200_research_photos,author,user,True,200,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+inaturalist_api,random_sample200_research_photos,provider,,False,200,,,,,,,,
+sib_macrohongosmitu,occurrence,observation_id,occurrenceID,True,60,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,image_id,,False,60,,,,,,,,
+sib_macrohongosmitu,occurrence,image_file,associatedMedia,True,60,0.0,60.0,0.0,60.0,100.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,url,,False,60,,,,,,,,
+sib_macrohongosmitu,occurrence,taxon_label,taxon_label_derived,True,60,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,species,species_derived,True,60,0.0,33.0,0.0,33.0,55.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,genus,genus_derived,True,60,0.0,1.0,0.0,1.0,1.667,0.0,,0.0
+sib_macrohongosmitu,occurrence,family,family_derived,True,60,0.0,1.0,0.0,1.0,1.667,0.0,,0.0
+sib_macrohongosmitu,occurrence,order,order,True,60,0.0,59.0,0.0,59.0,98.333,0.0,,0.0
+sib_macrohongosmitu,occurrence,date,date_derived,True,60,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+sib_macrohongosmitu,occurrence,latitude,decimalLatitude_num,True,60,60.0,0.0,0.0,60.0,100.0,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+sib_macrohongosmitu,occurrence,longitude,decimalLongitude_num,True,60,60.0,0.0,0.0,60.0,100.0,0.0,"lon outside [-180,180] or unparsable",0.0
+sib_macrohongosmitu,occurrence,country,country,True,60,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,region,stateProvince,True,60,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,substrate,,False,60,,,,,,,,
+sib_macrohongosmitu,occurrence,habitat,habitat,True,60,0.0,60.0,0.0,60.0,100.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,climate,,False,60,,,,,,,,
+sib_macrohongosmitu,occurrence,license,license,True,60,0.0,60.0,0.0,60.0,100.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,author,recordedBy,True,60,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongosmitu,occurrence,provider,institutionCode,True,60,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,observation_id,occurrenceID,True,184,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,image_id,,False,184,,,,,,,,
+sib_macrohongos_jbb_2023_1,occurrence,image_file,associatedMedia,True,184,0.0,184.0,0.0,184.0,100.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,url,,False,184,,,,,,,,
+sib_macrohongos_jbb_2023_1,occurrence,taxon_label,taxon_label_derived,True,184,0.0,0.0,78.0,78.0,42.391,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,species,species_derived,True,184,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,genus,genus_derived,True,184,0.0,0.0,86.0,86.0,46.739,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,family,family_derived,True,184,0.0,0.0,78.0,78.0,42.391,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,order,order,True,184,0.0,0.0,78.0,78.0,42.391,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,date,date_derived,True,184,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",184.0
+sib_macrohongos_jbb_2023_1,occurrence,latitude,decimalLatitude_num,True,184,0.0,0.0,0.0,0.0,0.0,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+sib_macrohongos_jbb_2023_1,occurrence,longitude,decimalLongitude_num,True,184,0.0,0.0,0.0,0.0,0.0,0.0,"lon outside [-180,180] or unparsable",0.0
+sib_macrohongos_jbb_2023_1,occurrence,country,country,True,184,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,region,stateProvince,True,184,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,substrate,,False,184,,,,,,,,
+sib_macrohongos_jbb_2023_1,occurrence,habitat,habitat,True,184,0.0,184.0,0.0,184.0,100.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,climate,,False,184,,,,,,,,
+sib_macrohongos_jbb_2023_1,occurrence,license,license,True,184,0.0,184.0,0.0,184.0,100.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,author,recordedBy,True,184,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_macrohongos_jbb_2023_1,occurrence,provider,institutionCode,True,184,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_hongos_col2023,occurrence,observation_id,occurrenceID,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_hongos_col2023,occurrence,image_id,,False,1462,,,,,,,,
+sib_hongos_col2023,occurrence,image_file,associatedMedia,True,1462,0.0,1462.0,0.0,1462.0,100.0,0.0,,0.0
+sib_hongos_col2023,occurrence,url,,False,1462,,,,,,,,
+sib_hongos_col2023,occurrence,taxon_label,taxon_label_derived,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_hongos_col2023,occurrence,species,species_derived,True,1462,0.0,1429.0,0.0,1429.0,97.743,0.0,,0.0
+sib_hongos_col2023,occurrence,genus,genus_derived,True,1462,0.0,237.0,0.0,237.0,16.211,0.0,,0.0
+sib_hongos_col2023,occurrence,family,family_derived,True,1462,0.0,175.0,0.0,175.0,11.97,0.0,,0.0
+sib_hongos_col2023,occurrence,order,order,True,1462,0.0,103.0,0.0,103.0,7.045,0.0,,0.0
+sib_hongos_col2023,occurrence,date,date_derived,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",1460.0
+sib_hongos_col2023,occurrence,latitude,decimalLatitude_num,True,1462,171.0,0.0,0.0,171.0,11.696,798.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+sib_hongos_col2023,occurrence,longitude,decimalLongitude_num,True,1462,952.0,0.0,0.0,952.0,65.116,114.0,"lon outside [-180,180] or unparsable",0.0
+sib_hongos_col2023,occurrence,country,country,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_hongos_col2023,occurrence,region,stateProvince,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_hongos_col2023,occurrence,substrate,,False,1462,,,,,,,,
+sib_hongos_col2023,occurrence,habitat,,False,1462,,,,,,,,
+sib_hongos_col2023,occurrence,climate,,False,1462,,,,,,,,
+sib_hongos_col2023,occurrence,license,license,True,1462,0.0,1462.0,0.0,1462.0,100.0,0.0,,0.0
+sib_hongos_col2023,occurrence,author,recordedBy,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+sib_hongos_col2023,occurrence,provider,institutionCode,True,1462,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+gbif,colombia_stillimage_sample900,observation_id,gbifID,True,900,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+gbif,colombia_stillimage_sample900,image_id,,False,900,,,,,,,,
+gbif,colombia_stillimage_sample900,image_file,,False,900,,,,,,,,
+gbif,colombia_stillimage_sample900,url,media_url,True,900,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+gbif,colombia_stillimage_sample900,taxon_label,,False,900,,,,,,,,
+gbif,colombia_stillimage_sample900,species,species,True,900,131.0,0.0,0.0,131.0,14.556,0.0,,0.0
+gbif,colombia_stillimage_sample900,genus,genus,True,900,36.0,0.0,0.0,36.0,4.0,0.0,,0.0
+gbif,colombia_stillimage_sample900,family,family,True,900,1.0,0.0,0.0,1.0,0.111,0.0,,0.0
+gbif,colombia_stillimage_sample900,order,order,True,900,2.0,0.0,0.0,2.0,0.222,0.0,,0.0
+gbif,colombia_stillimage_sample900,date,eventDate,True,900,0.0,0.0,0.0,0.0,0.0,10.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+gbif,colombia_stillimage_sample900,latitude,lat,True,900,134.0,0.0,0.0,134.0,14.889,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+gbif,colombia_stillimage_sample900,longitude,lon,True,900,134.0,0.0,0.0,134.0,14.889,0.0,"lon outside [-180,180] or unparsable",0.0
+gbif,colombia_stillimage_sample900,country,country,True,900,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+gbif,colombia_stillimage_sample900,region,region,True,900,21.0,0.0,0.0,21.0,2.333,0.0,,0.0
+gbif,colombia_stillimage_sample900,substrate,,False,900,,,,,,,,
+gbif,colombia_stillimage_sample900,habitat,habitat,True,900,713.0,0.0,0.0,713.0,79.222,0.0,,0.0
+gbif,colombia_stillimage_sample900,climate,,False,900,,,,,,,,
+gbif,colombia_stillimage_sample900,license,media_license,True,900,13.0,0.0,0.0,13.0,1.444,0.0,,0.0
+gbif,colombia_stillimage_sample900,author,media_creator,True,900,6.0,0.0,0.0,6.0,0.667,0.0,,0.0
+gbif,colombia_stillimage_sample900,provider,datasetKey,True,900,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_observations,observation_id,observation_id,True,608302,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_observations,image_id,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,image_file,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,url,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,taxon_label,name_text,True,608302,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_observations,species,species_derived,True,608302,237019.0,0.0,0.0,237019.0,38.964,0.0,,0.0
+mushroom_observer,fungi_all_observations,genus,genus_derived,True,608302,61923.0,0.0,0.0,61923.0,10.18,0.0,,0.0
+mushroom_observer,fungi_all_observations,family,family_derived,True,608302,66586.0,0.0,0.0,66586.0,10.946,0.0,,0.0
+mushroom_observer,fungi_all_observations,order,order,True,608302,34753.0,0.0,0.0,34753.0,5.713,0.0,,0.0
+mushroom_observer,fungi_all_observations,date,obs_date,True,608302,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+mushroom_observer,fungi_all_observations,latitude,lat,True,608302,408914.0,0.0,0.0,408914.0,67.222,88.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+mushroom_observer,fungi_all_observations,longitude,lng,True,608302,408914.0,0.0,0.0,408914.0,67.222,0.0,"lon outside [-180,180] or unparsable",0.0
+mushroom_observer,fungi_all_observations,country,country_derived,True,608302,2.0,0.0,0.0,2.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_observations,region,location_name,True,608302,2.0,0.0,0.0,2.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_observations,substrate,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,habitat,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,climate,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,license,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,author,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_observations,provider,,False,608302,,,,,,,,
+mushroom_observer,fungi_all_images,observation_id,observation_id,True,1925687,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_images,image_id,image_id,True,1925687,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_images,image_file,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,url,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,taxon_label,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,species,species_derived,True,1925687,746967.0,0.0,0.0,746967.0,38.79,0.0,,0.0
+mushroom_observer,fungi_all_images,genus,genus_derived,True,1925687,195875.0,0.0,0.0,195875.0,10.172,0.0,,0.0
+mushroom_observer,fungi_all_images,family,family_derived,True,1925687,200249.0,0.0,0.0,200249.0,10.399,0.0,,0.0
+mushroom_observer,fungi_all_images,order,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,date,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,latitude,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,longitude,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,country,country_derived,True,1925687,3.0,0.0,0.0,3.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_images,region,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,substrate,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,habitat,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,climate,,False,1925687,,,,,,,,
+mushroom_observer,fungi_all_images,license,license,True,1925687,2.0,0.0,0.0,2.0,0.0,0.0,,0.0
+mushroom_observer,fungi_all_images,author,author,True,1925687,1601.0,1.0,38.0,1640.0,0.085,0.0,,0.0
+mushroom_observer,fungi_all_images,provider,,False,1925687,,,,,,,,
+mushroom_observer,fungi_colombia_observations,observation_id,observation_id,True,21019,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,image_id,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,image_file,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,url,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,taxon_label,name_text,True,21019,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,species,species_derived,True,21019,18534.0,0.0,0.0,18534.0,88.177,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,genus,genus_derived,True,21019,9755.0,0.0,0.0,9755.0,46.41,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,family,family_derived,True,21019,9914.0,0.0,0.0,9914.0,47.167,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,order,order,True,21019,7400.0,0.0,0.0,7400.0,35.206,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,date,obs_date,True,21019,0.0,0.0,0.0,0.0,0.0,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+mushroom_observer,fungi_colombia_observations,latitude,lat,True,21019,9926.0,0.0,0.0,9926.0,47.224,0.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+mushroom_observer,fungi_colombia_observations,longitude,lng,True,21019,9926.0,0.0,0.0,9926.0,47.224,0.0,"lon outside [-180,180] or unparsable",0.0
+mushroom_observer,fungi_colombia_observations,country,country_derived,True,21019,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,region,location_name,True,21019,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_observations,substrate,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,habitat,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,climate,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,license,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,author,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_observations,provider,,False,21019,,,,,,,,
+mushroom_observer,fungi_colombia_images,observation_id,observation_id,True,61359,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_images,image_id,image_id,True,61359,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_images,image_file,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,url,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,taxon_label,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,species,species_derived,True,61359,52742.0,0.0,0.0,52742.0,85.956,0.0,,0.0
+mushroom_observer,fungi_colombia_images,genus,genus_derived,True,61359,27213.0,0.0,0.0,27213.0,44.35,0.0,,0.0
+mushroom_observer,fungi_colombia_images,family,family_derived,True,61359,27635.0,0.0,0.0,27635.0,45.038,0.0,,0.0
+mushroom_observer,fungi_colombia_images,order,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,date,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,latitude,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,longitude,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,country,country_derived,True,61359,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_images,region,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,substrate,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,habitat,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,climate,,False,61359,,,,,,,,
+mushroom_observer,fungi_colombia_images,license,license,True,61359,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_images,author,author,True,61359,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+mushroom_observer,fungi_colombia_images,provider,,False,61359,,,,,,,,
+df20,train+public_test,observation_id,gbifID,True,295938,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+df20,train+public_test,image_id,ImageUniqueID,True,295938,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+df20,train+public_test,image_file,image_path,True,295938,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+df20,train+public_test,url,,False,295938,,,,,,,,
+df20,train+public_test,taxon_label,,False,295938,,,,,,,,
+df20,train+public_test,species,species,True,295938,32.0,0.0,0.0,32.0,0.011,0.0,,0.0
+df20,train+public_test,genus,genus,True,295938,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+df20,train+public_test,family,family,True,295938,2633.0,0.0,0.0,2633.0,0.89,0.0,,0.0
+df20,train+public_test,order,order,True,295938,174.0,0.0,0.0,174.0,0.059,0.0,,0.0
+df20,train+public_test,date,eventDate,True,295938,17.0,0.0,0.0,17.0,0.006,0.0,"date unparsable or year outside [1800, current]; non-standard = not ISO 8601",0.0
+df20,train+public_test,latitude,Latitude,True,295938,1.0,0.0,0.0,1.0,0.0,9.0,"lat outside [-90,90], unparsable, or (lat,lon)==(0,0)",0.0
+df20,train+public_test,longitude,Longitude,True,295938,1.0,0.0,0.0,1.0,0.0,0.0,"lon outside [-180,180] or unparsable",0.0
+df20,train+public_test,country,level0Name,True,295938,1206.0,0.0,0.0,1206.0,0.408,0.0,,0.0
+df20,train+public_test,region,level1Name,True,295938,1206.0,0.0,0.0,1206.0,0.408,0.0,,0.0
+df20,train+public_test,substrate,Substrate,True,295938,1526.0,0.0,0.0,1526.0,0.516,0.0,,0.0
+df20,train+public_test,habitat,Habitat,True,295938,1092.0,0.0,0.0,1092.0,0.369,0.0,,0.0
+df20,train+public_test,climate,,False,295938,,,,,,,,
+df20,train+public_test,license,,False,295938,,,,,,,,
+df20,train+public_test,author,rightsHolder,True,295938,0.0,0.0,0.0,0.0,0.0,0.0,,0.0
+df20,train+public_test,provider,,False,295938,,,,,,,,

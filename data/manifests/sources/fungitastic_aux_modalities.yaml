@@ -1,0 +1,31 @@
+dataset:
+  id: fungitastic_aux_modalities
+  name: FungiTastic — clima, satélite y máscaras
+  type: benchmark_dataset_component
+  status: ACCESS_PROBLEM
+  status_reason: 'climatic.zip responde HTTP 403 en el servidor oficial (satellite_RGB/NIR y masks.zip responden
+    200 pero no se descargaron: 4,1 GB, 3,6 GB y 0,7 GB). Según el repositorio, el clima también está en la versión
+    de Kaggle (requiere cuenta).'
+source:
+  official_urls:
+  - https://cmp.felk.cvut.cz/datagrid/FungiTastic/shared/download/
+  version: archivos oficiales (Last-Modified 2024-09-02 satélite; 2025-10-15 máscaras)
+accessed: '2026-09-18'
+download_method: 'Script oficial: --climatic / --satellite / --masks'
+parameters:
+  modalities_downloaded: []
+  images_downloaded: false
+  resolution_requested: ninguna
+  probes: HEAD a climatic.zip, masks.zip, satellite_RGB.zip, satellite_NIR.zip
+local_files: ninguno (ver remote_queries)
+api_snapshots: ninguno
+counts:
+  images_reported: NA
+  images_verified: NA
+  observations_reported: NA
+  observations_verified: NA
+license: NA
+known_relationships: NA
+next_step: 'No se intenta eludir el 403. Semana 3: obtener climaticData vía Kaggle con cuenta propia o solicitarlo
+  a los autores; decidir si el clima de FungiTastic o ERA5-Land (Semana posterior).'
+notes: Estado de los enlaces registrado en data/raw/fungitastic/api/official_download_head_probes.json.

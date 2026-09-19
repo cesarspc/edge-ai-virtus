@@ -1,0 +1,81 @@
+# ---------------------------------------------------------------
+# Datos: viven solo en local (tamaño y licencias). Ver data/raw/README.md
+# ---------------------------------------------------------------
+data/raw/*
+!data/raw/README.md
+data/interim/
+data/processed/
+
+# Imágenes (no versionar fotografías de los datasets)
+*.jpg
+*.jpeg
+*.JPG
+*.JPEG
+*.png
+*.tif
+*.tiff
+*.webp
+# ...salvo las figuras pequeñas generadas para los informes
+!reports/figures/*.png
+
+# Archivos comprimidos / pesados
+*.zip
+*.tar
+*.tar.gz
+*.tgz
+*.gz
+*.7z
+*.rar
+*.part
+
+# Modelos y checkpoints (fases posteriores)
+*.pt
+*.pth
+*.ckpt
+*.onnx
+*.tflite
+*.h5
+*.safetensors
+checkpoints/
+models/
+
+# Cachés y temporales
+__pycache__/
+*.py[cod]
+.ipynb_checkpoints/
+.cache/
+.pytest_cache/
+.mypy_cache/
+*.tmp
+tmp/
+
+# Entornos virtuales
+.venv/
+venv/
+env/
+
+# Sistema operativo / editores
+.DS_Store
+Thumbs.db
+desktop.ini
+.vscode/
+.idea/
+
+# ---------------------------------------------------------------
+# LaTeX: solo se versiona el PDF compilado (se ignoran las fuentes .tex y los auxiliares)
+# ---------------------------------------------------------------
+
+*.aux
+*.log
+*.out
+*.toc
+*.lof
+*.lot
+*.bbl
+*.blg
+*.fls
+*.fdb_latexmk
+*.synctex*
+*.nav
+*.snm
+*.vrb

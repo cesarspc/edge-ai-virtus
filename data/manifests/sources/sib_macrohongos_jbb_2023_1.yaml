@@ -1,0 +1,36 @@
+dataset:
+  id: sib_macrohongos_jbb_2023_1
+  name: 'SiB Colombia IPT — Organismos asociados a las plantas: Fungario del Jardín Botánico José Celestino Mutis
+    2023-1'
+  type: ipt_resource_dwca
+  status: AVAILABLE_LOCAL
+  status_reason: 'Se descargó y auditó el DwC-A completo (184 registros). El archivo NO incluye extensión multimedia
+    y la columna associatedMedia está vacía en 184 de 184 registros: no hay fotografías enlazadas.'
+source:
+  official_urls:
+  - https://ipt.biodiversidad.co/permisos/resource?r=macrohongos_2023-1
+  version: 1.0 (publicada 2023-12-22)
+accessed: '2026-09-18'
+download_method: 'IPT: archive.do?r=<recurso> (Darwin Core Archive)'
+parameters:
+  modalities_downloaded:
+  - DwC-A
+  images_downloaded: false
+  ipt_resource: macrohongos_2023-1
+local_files:
+- path: data/raw/sib_macrohongos_jbb_2023_1/macrohongos_2023-1.dwca.zip
+  size_bytes: 18022
+  sha256: 87c681a36b23c86e44f4811e455e072fb43fb31427435783c3e80792ddd68ef4
+  source_url: https://ipt.biodiversidad.co/permisos/archive.do?r=macrohongos_2023-1
+  download_date: '2026-09-18'
+api_snapshots: ninguno
+counts:
+  images_reported: NA
+  images_verified: 0
+  observations_reported: 184
+  observations_verified: 184
+license: CC BY-NC 4.0 (recurso); sin licencia por registro
+known_relationships: Recurso IPT del SiB Colombia; GBIF ya integra parte del SiB (ver notes).
+next_step: Usar solo como referencia taxonómica/distribución. Si el recurso tiene fotografías, deben solicitarse
+  a la institución (fuera del DwC-A).
+notes: 'Coordenadas con coma decimal (ver duplicates.csv) y fechas no ISO. Registro en GBIF: ver gbif.registry_search_results.'

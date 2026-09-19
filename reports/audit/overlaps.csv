@@ -1,0 +1,30 @@
+dataset_id,scope,set_a,set_b,key,n_a,n_b,n_intersection,note
+fungitastic,within FungiTastic (full),fungitastic:Train,fungitastic:ClosedSet-Val,observationID,246884,45613,0,sin observaciones compartidas entre particiones distintas (0 esperado)
+fungitastic,within FungiTastic (full),fungitastic:Train,fungitastic:ClosedSet-Test,observationID,246884,48378,0,sin observaciones compartidas entre particiones distintas (0 esperado)
+fungitastic,within FungiTastic (full),fungitastic:ClosedSet-Val,fungitastic:ClosedSet-Test,observationID,45613,48378,0,sin observaciones compartidas entre particiones distintas (0 esperado)
+fungitastic,within FungiTastic (full),fungitastic:Train,fungitastic:DNA-Test,observationID,246884,2041,0,sin observaciones compartidas entre particiones distintas (0 esperado)
+fungitastic,within FungiTastic (full),fungitastic:ClosedSet-Test,fungitastic:DNA-Test,observationID,48378,2041,0,sin observaciones compartidas entre particiones distintas (0 esperado)
+fungitastic,within FungiTastic (full),fungitastic:ClosedSet-Val,fungitastic:OpenSet-Val,observationID,45613,47450,45613,estructura oficial: el conjunto cerrado está contenido en el abierto
+fungitastic,within FungiTastic (full),fungitastic:ClosedSet-Test,fungitastic:OpenSet-Test,observationID,48378,50084,48378,estructura oficial: el conjunto cerrado está contenido en el abierto
+fungitastic,within FungiTastic (subsets),fungitastic:mini_union,fungitastic:full_union,observationID,36215,346459,36201,subconjunto oficial contenido en el completo
+fungitastic,within FungiTastic (subsets),fungitastic:fewshot_union,fungitastic:full_union,observationID,6391,346459,2098,subconjunto oficial contenido en el completo
+fungitastic,within FungiTastic (subsets),fungitastic:mini_union,fungitastic:fewshot_union,observationID,36215,6391,0,Mini y FewShot son subconjuntos independientes
+gbif,aggregator overlap (GBIF),gbif: Fungi+StillImage+country=CO,gbif dataset 'iNaturalist Research-grade Observations',GBIF datasetKey facet,21638,9678,9678,SOURCE_REPORTED: registros de GBIF que provienen de otra plataforma auditada aparte (riesgo de doble conteo)
+gbif,aggregator overlap (GBIF),gbif: Fungi+StillImage+country=CO,gbif dataset 'Mushroom Observer',GBIF datasetKey facet,21638,1828,1828,SOURCE_REPORTED: registros de GBIF que provienen de otra plataforma auditada aparte (riesgo de doble conteo)
+df20,between datasets (DF20 vs FungiTastic),df20:train,fungitastic:Train,gbifID == observationID,166415,246884,160297,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:train,fungitastic:ClosedSet-Val,gbifID == observationID,166415,45613,0,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:train,fungitastic:ClosedSet-Test,gbifID == observationID,166415,48378,0,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:train,fungitastic:DNA-Test,gbifID == observationID,166415,2041,357,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:train,fungitastic:full_union,gbifID == observationID,166415,346459,160654,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:public_test,fungitastic:Train,gbifID == observationID,27814,246884,26808,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:public_test,fungitastic:ClosedSet-Val,gbifID == observationID,27814,45613,0,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:public_test,fungitastic:ClosedSet-Test,gbifID == observationID,27814,48378,0,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:public_test,fungitastic:DNA-Test,gbifID == observationID,27814,2041,71,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:public_test,fungitastic:full_union,gbifID == observationID,27814,346459,26879,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:union,fungitastic:Train,gbifID == observationID,177170,246884,170623,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:union,fungitastic:ClosedSet-Val,gbifID == observationID,177170,45613,0,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:union,fungitastic:ClosedSet-Test,gbifID == observationID,177170,48378,0,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:union,fungitastic:DNA-Test,gbifID == observationID,177170,2041,373,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,between datasets (DF20 vs FungiTastic),df20:union,fungitastic:full_union,gbifID == observationID,177170,346459,170996,identificadores de ocurrencia de GBIF (verificado con 1 ID de cada CSV)
+df20,within DF20,df20:train,df20:public_test,gbifID,166415,27814,17059,observaciones presentes en train y test (fuga de información entre particiones)
+df20,within DF20,df20:train,df20:public_test,ImageUniqueID,266344,29594,0,0 esperado (cada imagen en una sola partición)

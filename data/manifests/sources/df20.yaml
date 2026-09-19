@@ -1,0 +1,45 @@
+dataset:
+  id: df20
+  name: Danish Fungi 2020 (DF20)
+  type: benchmark_dataset
+  status: METADATA_AVAILABLE
+  status_reason: Se descargó y auditó localmente DF20-metadata.zip (train + public test). Imágenes (6,4 GB a 300
+    px; 110 GB originales) NO descargadas. El enlace al artículo WACV suministrado tiene un guion mal escrito (devuelve
+    404); la URL corregida responde 200.
+source:
+  official_urls:
+  - https://sites.google.com/view/danish-fungi-dataset
+  - https://github.com/BohemianVRA/DanishFungiDataset
+  - https://arxiv.org/abs/2103.10107
+  version: 'DF20-metadata.zip (Last-Modified 2022-03-11), CSV ''PROD-2''; sitio: DF20 y DF20-Mini'
+accessed: '2026-09-18'
+download_method: 'Metadatos: http://ptak.felk.cvut.cz/plants/DanishFungiDataset/DF20-metadata.zip; imágenes: DF20-300px.tar.gz
+  (6,4 GB) o DF20-train_val.tar.gz (110 GB)'
+parameters:
+  modalities_downloaded:
+  - metadata
+  images_downloaded: false
+  resolution_requested: ninguna
+  subset_requested: DF20-metadata.zip (train + public test)
+  command: python scripts/data/acquire_datasets.py df20
+local_files:
+- path: data/raw/df20/DF20-metadata.zip
+  size_bytes: 29089651
+  sha256: a6d75583ebf051c96b530ab99fa934967bdd19c4586ad310fc2180fb7495e6b0
+  source_url: http://ptak.felk.cvut.cz/plants/DanishFungiDataset/DF20-metadata.zip
+  download_date: '2026-09-18'
+api_snapshots:
+  count: 1
+  manifest: data/manifests/remote_queries.csv
+  folder: data/raw/df20/api/
+counts:
+  images_reported: 295938
+  images_verified: 295938
+  observations_reported: NA
+  observations_verified: 177170
+license: El artículo (arXiv) indica CC BY 4.0; el sitio no declara licencia del dataset; el CSV incluye rightsHolder
+  (autor) por imagen. Los registros de origen en GBIF declaran CC BY-NC 4.0.
+known_relationships: 'Predecesor histórico de FungiTastic (misma fuente: Atlas de hongos daneses vía GBIF).'
+next_step: 'Semana 3: no combinar con FungiTastic; si se usa, excluir por observationID las observaciones ya presentes
+  en FungiTastic o preferir uno de los dos.'
+notes: El artículo declara 1.604 especies; los CSV locales contienen menos valores distintos de 'species' (ver size_summary.csv).

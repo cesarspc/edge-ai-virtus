@@ -1,0 +1,13 @@
+dataset_id,primary_table,species_pct_missing,genus_pct_missing,family_pct_missing,observation_id_pct_missing,image_id_pct_missing,latitude_pct_missing,longitude_pct_missing,date_pct_missing,country_pct_missing,substrate_pct_missing,habitat_pct_missing,license_pct_missing,author_pct_missing
+fungitastic,full_union,0.0,0.0,0.9,0.0,NA,0.001,0.001,0.0,0.0,4.847,0.001,NA,NA
+fungitastic_aux_modalities,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+df20,train+public_test,0.011,0.0,0.89,0.0,0.0,0.0,0.0,0.006,0.408,0.516,0.369,NA,0.0
+mind_funga_v2,files_v2,18.493,0.0,NA,NA,0.0,NA,NA,NA,NA,NA,NA,NA,NA
+inaturalist_api,random_sample200_research_photos,2.0,0.0,NA,0.0,NA,0.0,0.0,0.0,NA,NA,NA,0.0,0.0
+inaturalist_open_data,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+sib_colombia_portal,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA,NA
+sib_macrohongosmitu,occurrence,55.0,1.667,1.667,0.0,NA,100.0,100.0,0.0,0.0,NA,100.0,100.0,0.0
+sib_macrohongos_jbb_2023_1,occurrence,0.0,46.739,42.391,0.0,NA,0.0,0.0,0.0,0.0,NA,100.0,100.0,0.0
+sib_hongos_col2023,occurrence,97.743,16.211,11.97,0.0,NA,11.696,65.116,0.0,0.0,NA,NA,100.0,0.0
+gbif,colombia_stillimage_sample900,14.556,4.0,0.111,0.0,NA,14.889,14.889,0.0,0.0,NA,79.222,1.444,0.667
+mushroom_observer,fungi_all_observations,38.964,10.18,10.946,0.0,NA,67.222,67.222,0.0,0.0,NA,NA,NA,NA
