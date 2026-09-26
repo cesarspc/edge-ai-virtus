@@ -1,0 +1,14 @@
+# Dependencias del entrenamiento (fase 4: M_A, modelo solo imagen). Se instalan ADEMÁS de requirements.txt.
+#
+# PyTorch se instala según el hardware; ver https://pytorch.org/get-started/locally/ . Ejemplos:
+#   GPU NVIDIA (CUDA 12.x):  pip install torch torchvision --index-url https://download.pytorch.org/whl/cu124
+#   Solo CPU:                pip install torch torchvision --index-url https://download.pytorch.org/whl/cpu
+# y después:
+#   pip install -r requirements-train.txt
+torch>=2.3
+torchvision>=0.18
+Pillow>=10.0
+scikit-learn>=1.4
+pandas>=2.2
+numpy>=1.26
+PyYAML>=6.0

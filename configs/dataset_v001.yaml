@@ -1,0 +1,95 @@
+# Configuración de la versión v001 del dataset procesado (Semana 3).
+# Todo lo que cambie el contenido del dataset (clases, fuentes, reglas, umbrales, particiones) vive aquí;
+# el SHA-256 de este archivo queda registrado en data/versions/v001/manifest.json.
+# Cambiar cualquier valor obliga a generar una versión nueva (ver data/versions/README.md).
+
+version: v001
+schema: data/schemas/metadata_schema_v1.yaml
+access_date: "2026-09-26"   # fecha de acceso de las consultas remotas añadidas en esta versión
+
+# --------------------------------------------------------------------------- clases
+# Nivel de clase: género (alcance, sección 1). label_id = posición en esta lista (orden alfabético, fijo).
+label_level: genus
+classes:
+  - Amanita
+  - Auricularia
+  - Ganoderma
+  - Geastrum
+  - Hericium
+  - Lycoperdon
+  - Morchella
+  - Pleurotus
+  - Trametes
+  - Xylaria
+
+# Sinónimos a nivel de género que se reasignan al género aceptado (normalización taxonómica).
+# Mushroom Observer los resuelve con names.csv (synonym_id); esta tabla cubre las fuentes sin tabla de sinónimos.
+genus_synonyms:
+  Coriolus: Trametes
+  Hirneola: Auricularia
+
+# Identificadores de taxón de iNaturalist (taxa.csv de Open Data, rango genus, reino Fungi 47170).
+inaturalist_genus_taxon_ids:
+  Amanita: 48419
+  Auricularia: 50817
+  Ganoderma: 48475
+  Geastrum: 63077
+  Hericium: 49160
+  Lycoperdon: 48444
+  Morchella: 56830
+  Pleurotus: 48496
+  Trametes: 47378
+  Xylaria: 55268
+
+# --------------------------------------------------------------------------- fuentes
+# role: development = entra en train/val/test; external_test = solo evaluación externa (cambio de dominio).
+sources:
+  fungitastic:
+    role: development
+    files: [Train, ClosedSet-Val, ClosedSet-Test, DNA-Test, OpenSet-Val, OpenSet-Test]   # Mini y FewShot no (subconjuntos)
+  mushroom_observer_co:
+    role: external_test
+    country: Colombia
+    min_vote_cache: 1.0        # consenso de MO (escala -3..3): >= 1 = consenso positivo («could be» o mejor); con 2,0 quedaban 280 obs.
+  inaturalist_co:
+    role: external_test
+    place_id: 7196             # Colombia
+    quality_grade: research
+  mind_funga_v2:
+    role: external_test        # solo imagen: sin observación, GPS, fecha ni sustrato
+excluded_sources:
+  df20: "96,5 % de sus observaciones ya están en FungiTastic y su partición original filtra observaciones (Semana 2, §7.3)"
+  gbif: "44,7 % de los registros colombianos con imagen provienen de iNaturalist y otros de Mushroom Observer (doble conteo)"
+  sib_colombia: "los tres recursos IPT no contienen fotografías"
+  inaturalist_open_data: "las tablas completas (13 y 20 GB) no se descargaron; se usa la API por género"
+
+# --------------------------------------------------------------------------- licencias
+# Licencias por imagen admitidas (códigos normalizados). Se excluyen «todos los derechos reservados» y las
+# variantes ND (sin obras derivadas): redimensionar/recortar para entrenar puede considerarse adaptación.
+allowed_licenses: [CC0, PDM, CC-BY, CC-BY-SA, CC-BY-NC, CC-BY-NC-SA]
+
+# --------------------------------------------------------------------------- limpieza
+cleaning:
+  min_year: 1800
+  max_coordinate_uncertainty_m: 10000     # por encima: geolocalización LOW_PRECISION (no se excluye)
+  min_observations_per_class_dev: 100      # control: toda clase debe tener al menos esto en desarrollo
+  suspicious_zero_elevation: true          # elevación exactamente 0 m => calidad SUSPECT
+
+# --------------------------------------------------------------------------- particiones
+splits:
+  scheme: grouped_hash
+  # Unidad de agrupación: «sitio-día» = misma fecha y misma celda de ~1 km (coordenadas redondeadas a 2 decimales).
+  # Observaciones sin fecha o sin coordenadas forman un grupo propio (su observation_uid).
+  group_coordinate_decimals: 2
+  salt: "edge-ai-virtus/v001"
+  ratios: {train: 0.70, val: 0.15, test: 0.15}
+  # Partición alternativa (solo FungiTastic): la temporal oficial (Train <= 2021, Val 2022, Test 2023).
+  keep_official_temporal_split: true
+
+# --------------------------------------------------------------------------- imágenes (definido, se aplica al descargar)
+image_policy:
+  fungitastic_resolution: 300p           # archivo oficial FungiTastic-*-300p.zip
+  min_side_px: 128
+  color_mode: RGB
+  perceptual_hash: phash64
+  near_duplicate_hamming: 4

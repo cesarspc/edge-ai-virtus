@@ -1,0 +1,350 @@
+{
+  "version": "v001",
+  "created_utc": "2026-09-26T20:58:15Z",
+  "content_fingerprint": "6704c19c0fb8b7f92932c7a586b10d8e34449f0f13c211d1e1a08eb154c3dec7",
+  "builder": {
+    "command": "python scripts/data/build_dataset.py --config configs/dataset_v001.yaml",
+    "git_commit": "f47a82042077c748a58cd43d1eb38f372b785c50",
+    "git_dirty": true,
+    "python": "3.12.3",
+    "pandas": "3.0.5",
+    "numpy": "2.0.0",
+    "pyyaml": "6.0.3"
+  },
+  "config": {
+    "path": "configs/dataset_v001.yaml",
+    "sha256": "39f06c7d1f2039cafb3e69e179240082dcb3b9216bd8cc094f319e8aba4e9c22"
+  },
+  "schema": {
+    "path": "data/schemas/metadata_schema_v1.yaml",
+    "sha256": "c2308d0fb26b41374bcae666d675a30b1e1cc97ea21a94ea5bf73f988aee39bf",
+    "schema_id": "metadata_schema_v1"
+  },
+  "code": [
+    {
+      "path": "scripts/data/build_dataset.py",
+      "sha256": "1daa899a6a8a63d9616861d34fa05b3763170a04bc9c2479b3a6a67b6682aeba"
+    },
+    {
+      "path": "scripts/data/curation_sources.py",
+      "sha256": "3c20380ae616990201acd67f627a6e1d012899b89a7f442209d77de1ce393975"
+    },
+    {
+      "path": "scripts/data/cleaning.py",
+      "sha256": "34f0fbd8d029dc620004622874060f0dd1e402ea4738b86561f07f0d5c528f59"
+    },
+    {
+      "path": "scripts/data/splits.py",
+      "sha256": "3e3cc6f0ccc7c2c464f17feae4ca4e2f5ab53bd2765464faa55c4a52d0905d98"
+    },
+    {
+      "path": "scripts/data/metadata_schema.py",
+      "sha256": "111994209f762c1be3ba6a137901611e4619f703943fa2dfd2f25273754717a1"
+    },
+    {
+      "path": "scripts/data/adapters.py",
+      "sha256": "9ef25c1bca4bf2ac82f0734f5347f859c22f463b9eb582720f3aeace9ec90908"
+    },
+    {
+      "path": "scripts/data/common.py",
+      "sha256": "3a3d4e42c461b1ab5e76641bd821b9df983a22ce3ab936282de9010224ee760d"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/raw/fungitastic/metadata.zip",
+      "size_bytes": 327493894,
+      "sha256": "b1dc1d24714d9522c545d8cdd8f7e6dd9999afe2620d271aeb761f1def0719ac",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mushroom_observer/observations.csv",
+      "size_bytes": 41983562,
+      "sha256": "7a37dc352b5115afbc67ef51adb72a5884917aad99b0227f3556989088e37fe2",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mushroom_observer/names.csv",
+      "size_bytes": 3967611,
+      "sha256": "da20c29f96ccfc8887cd2889cb4a64788e66e97ad7aef3a8fa967e1d281e5bd0",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mushroom_observer/name_classifications.csv",
+      "size_bytes": 4825895,
+      "sha256": "fd6522b4a9950badc485b6a988c76e34cec4e2358651ccdc4e612b61ff8bd848",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mushroom_observer/images_observations.csv",
+      "size_bytes": 28730531,
+      "sha256": "1942cc5cd2771e97394db21269afdc7b60ce39366fd59b17838e375c335df634",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mushroom_observer/images.csv",
+      "size_bytes": 175157554,
+      "sha256": "34609775daaa492f739aadab116b6ae7a683a2f36362ebdd9ee68637ecf2ef00",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mushroom_observer/locations.csv",
+      "size_bytes": 3376429,
+      "sha256": "aa5881a5e20f0c8b7146f7f3465195260f3c2e808f96360be1c500b81a2116f0",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p1.json",
+      "size_bytes": 39038576,
+      "sha256": "f6952a50dcdee79f33b36796ecd2753106c7bc2b576d4e7c9d7278063050125d",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p10.json",
+      "size_bytes": 30740847,
+      "sha256": "bedb8486fa2243c7a9f74c7334067333ddb6b18bc29eb53954d1193532d8f121",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p11.json",
+      "size_bytes": 32596441,
+      "sha256": "cd41de4f8ee7d16b3c36d650deaf50ebb00ae139492544f4aac1c918100fe1aa",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p12.json",
+      "size_bytes": 12464669,
+      "sha256": "12338d2924ad3d2bd0d6042f5f72fe6a176919d0e6600ba1d1d75ca4306c394d",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p2.json",
+      "size_bytes": 41060520,
+      "sha256": "10717650c4dd26b654b929a12924e0d268f684e7d2bbefaddcb4919972ff3f1a",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p3.json",
+      "size_bytes": 35780048,
+      "sha256": "58e2624f4727800e22e82676da02a54770fe26cab72a8dadb044c3c3e95661a4",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p4.json",
+      "size_bytes": 34229246,
+      "sha256": "79af48484a058cf37321d80afd2acbf7245816b2259b36ce98df7585153280e5",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p5.json",
+      "size_bytes": 29939442,
+      "sha256": "c420105bfa1374d80dd704250b33bdca809a8a4f14bb4bdd52a87c6994dad8e7",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p6.json",
+      "size_bytes": 32381566,
+      "sha256": "f96ce3cff9af6c216e1ecba6e998254ef5d67bf3925412f02da7073462f0bece",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p7.json",
+      "size_bytes": 35586309,
+      "sha256": "8038ae1ef041f7b6f4180407b90c64733b47ad3100ff7f9df75fe032f2eb21ef",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p8.json",
+      "size_bytes": 32568169,
+      "sha256": "ed56c1a210011ea0a31241af2ad82d5d7b5c667022a3e3a7f20b5b9cda60bf1a",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_amanita_p9.json",
+      "size_bytes": 32364646,
+      "sha256": "160ef4d4cb6fd5ba8d279b88427619c432a4c0175203b66d91237142fa12f3b9",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_auricularia_p1.json",
+      "size_bytes": 17345568,
+      "sha256": "203b88fb69915d19aafc77773bcd2270ee4c442542b92b30c0ca7227f9762d3f",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_auricularia_p2.json",
+      "size_bytes": 1087374,
+      "sha256": "f1cb3dcbc550fa8051a4e9d913dae938cb19d6b3564f604ecf0b0b9a64dabde3",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_ganoderma_p1.json",
+      "size_bytes": 9871965,
+      "sha256": "653934ab94b5c0f0219f5e4626a26735d8f2998b66481a2af50092c5d3ab8695",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_geastrum_p1.json",
+      "size_bytes": 3092769,
+      "sha256": "4def40ae1c865952896c09988bfb508a1e68b1be5483711900da7871b0b61a3a",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_hericium_p1.json",
+      "size_bytes": 865425,
+      "sha256": "24cfe0b61fd9612e8d68fb080d46fc11bc32c4d51cff84cc116847e57c9355b4",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_lycoperdon_p1.json",
+      "size_bytes": 8425279,
+      "sha256": "4964d43a003cfe74f990df6f24662f9c46170c28c70bfb14e9dc5b3498ffd9a3",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_morchella_p1.json",
+      "size_bytes": 17825239,
+      "sha256": "c914eff7cd7e00259622e831ebc4342b0bce8d7234b78016e0d8f930ba10ebf9",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_pleurotus_p1.json",
+      "size_bytes": 3222347,
+      "sha256": "0522bb9f171c75081d1214a15234c6483cf74d536aedb37e018086051b40bd23",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_trametes_p1.json",
+      "size_bytes": 20613418,
+      "sha256": "a38a15947f9024047ea3e222bd45f8883d1e4b5223707784647f41e613ffdea7",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_trametes_p2.json",
+      "size_bytes": 16455567,
+      "sha256": "9146663083f57bf877e15c3ca65814bf398737fc457ac98f5c06658665d946ec",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_trametes_p3.json",
+      "size_bytes": 14674279,
+      "sha256": "1aba4cc5dcfbd3ff9993d06d79bb851cd993aaa54ba8766d5822d37e330389e3",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_trametes_p4.json",
+      "size_bytes": 13910808,
+      "sha256": "adc94e646eff55ef1334b3a5d76b5750b3e5685239e83e47f925ecbfa968a184",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_xylaria_p1.json",
+      "size_bytes": 10269827,
+      "sha256": "da04e17e80c9064489d0ef46c7b7591501a849a1f6f457c9d8761e09692e8fd2",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mind_funga_v2/api/mendeley_dataset.json",
+      "size_bytes": 16286058,
+      "sha256": "277276eb849a01ab68b7ac7e649bf23166360f963e0ac7f9830601f0de35f3f7",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/mind_funga_v2/zip_central_directory.csv",
+      "size_bytes": 4261892,
+      "sha256": "e4d64b5ed2129217cd4a897ac3923a456f0c3890cc6982549988e0c6c2abf589",
+      "matches_raw_files_csv": true
+    }
+  ],
+  "outputs": [
+    {
+      "name": "observations.csv",
+      "path": "data/processed/v001/observations.csv",
+      "versioned_in_git": false,
+      "sha256": "b11f521093ad26a562109a767c80582a3a479b7cec73ee5427a9f598b6dbe407",
+      "rows": 30269
+    },
+    {
+      "name": "images.csv",
+      "path": "data/processed/v001/images.csv",
+      "versioned_in_git": false,
+      "sha256": "f352d1d8f74dd5994d3ba6390da2261a2c6531e2422d5932ac5a29df89384c85",
+      "rows": 53518
+    },
+    {
+      "name": "splits.csv",
+      "path": "data/versions/v001/splits.csv",
+      "versioned_in_git": true,
+      "sha256": "ce2951d4d778efa33c9433f7ec18265d2df0ecb9725176634e8e5b5c519ab99b"
+    },
+    {
+      "name": "classes.csv",
+      "path": "data/versions/v001/classes.csv",
+      "versioned_in_git": true,
+      "sha256": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd"
+    },
+    {
+      "name": "cleaning_log.csv",
+      "path": "data/versions/v001/cleaning_log.csv",
+      "versioned_in_git": true,
+      "sha256": "9dae3be335d721300c8fe3252d8f1da3758adbbdc55046e2939bcdc6282d2b1a"
+    },
+    {
+      "name": "split_summary.csv",
+      "path": "data/versions/v001/split_summary.csv",
+      "versioned_in_git": true,
+      "sha256": "2b533d262c29ffcdae6940f77790ea205e5f2dcf62038881b9fba92ce7447cf1"
+    },
+    {
+      "name": "env_coverage.csv",
+      "path": "data/versions/v001/env_coverage.csv",
+      "versioned_in_git": true,
+      "sha256": "160ead3bf69a8b3a5f93548212296f794c93093ce9a3e6377eb6e76ef8d32c6f"
+    }
+  ],
+  "counts": {
+    "observations": 30269,
+    "images": 53518,
+    "observations_by_split": {
+      "test": 3937,
+      "test_external": 4895,
+      "train": 17758,
+      "val": 3679
+    },
+    "images_by_split": {
+      "test": 6841,
+      "test_external": 9649,
+      "train": 30663,
+      "val": 6365
+    },
+    "observations_by_source": {
+      "fungitastic": 25374,
+      "inaturalist_co": 2364,
+      "mind_funga_v2": 1547,
+      "mushroom_observer_co": 984
+    },
+    "images_by_source": {
+      "fungitastic": 43869,
+      "inaturalist_co": 5021,
+      "mind_funga_v2": 1547,
+      "mushroom_observer_co": 3081
+    },
+    "groups_development": 20739
+  },
+  "leakage_checks": {
+    "groups_in_more_than_one_split": 0,
+    "observations_with_images_in_more_than_one_split": 0,
+    "images_in_more_than_one_split": 0,
+    "observation_uid_duplicated": 0,
+    "image_uid_duplicated": 0
+  },
+  "dataset_level_licenses": {
+    "fungitastic": "Declaraciones inconsistentes (artículo CC BY 4.0; Kaggle CC BY-NC-SA 4.0; registros GBIF CC BY-NC 4.0). Se registra la más restrictiva: CC-BY-NC-SA.",
+    "mind_funga_v2": "CC BY-NC 3.0 (Mendeley Data)."
+  },
+  "known_limitations": [
+    "No se descargaron imágenes: las reglas de integridad de imagen (decodificación, tamaño mínimo, hash perceptual) están definidas en image_policy pero no ejecutadas.",
+    "Clima no disponible (climatic.zip de FungiTastic responde HTTP 403 el 2026-09-26).",
+    "Las consultas de iNaturalist son instantáneas del 2026-09-26."
+  ]
+}

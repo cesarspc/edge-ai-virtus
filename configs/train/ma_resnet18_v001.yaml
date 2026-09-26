@@ -1,0 +1,54 @@
+# Primer entrenamiento de referencia: M_A = f(I) (solo imagen) con ResNet-18 preentrenada en ImageNet.
+# ResNet-18 es la «baseline académica» del documento de alcance (§5.2); las candidatas móviles
+# (MobileNetV3-Large, EfficientNet-Lite0, MobileViT-XXS) deben usar esta misma configuración cambiando solo `model`.
+# El SHA-256 de este archivo se guarda en cada ejecución (runs/<run_id>/run.json).
+
+run_name: ma_resnet18_v001
+
+data:
+  version: v001                                  # data/processed/v001 + data/versions/v001
+  source: fungitastic                            # desarrollo: train/val/test de FungiTastic
+  split_column: split                            # partición principal (grouped_hash). Alternativa: split_temporal
+  image_root: data/raw/images/fungitastic        # --out de scripts/data/download_images.py
+  download_manifest: data/raw/images/fungitastic/download_manifest.csv
+  require_all_images: true                       # falla si falta alguna imagen de train/val/test (evita entrenar con un subconjunto sin querer)
+
+model:
+  architecture: resnet18                         # torchvision.models.<architecture>
+  pretrained_weights: IMAGENET1K_V1              # torchvision weights enum; null = desde cero
+  num_classes: 10
+
+input:
+  size: 224
+  mean: [0.485, 0.456, 0.406]                    # normalización ImageNet (pesos preentrenados)
+  std: [0.229, 0.224, 0.225]
+  train_augment:
+    random_resized_crop_scale: [0.5, 1.0]
+    horizontal_flip: true
+    color_jitter: [0.2, 0.2, 0.2, 0.02]          # brillo, contraste, saturación, tono (suave: el color es diagnóstico)
+  eval_resize: 224                               # lado corto; después recorte central de `size`
+
+training:
+  seed: 42
+  epochs: 30
+  batch_size: 64
+  num_workers: 4
+  optimizer: adamw
+  lr: 0.0003
+  weight_decay: 0.05
+  scheduler: cosine
+  warmup_epochs: 1
+  label_smoothing: 0.1
+  class_weighting: none                          # none | inverse_sqrt  (el desbalance es 20:1 entre Amanita y Morchella)
+  amp: true                                      # precisión mixta si hay GPU CUDA
+  early_stopping_patience: 5                     # épocas sin mejorar la métrica de selección
+  selection_metric: val_obs_macro_f1             # la métrica principal del alcance es macro-F1
+  deterministic: false                           # true = reproducible bit a bit pero más lento
+
+evaluation:
+  top_k: [1, 3]
+  observation_aggregation: mean_prob             # predicción por observación = media de probabilidades de sus imágenes
+  evaluate_test_at_end: true                     # el test se usa UNA vez, con el mejor checkpoint según val
+
+output:
+  runs_dir: runs                                 # ignorado por Git

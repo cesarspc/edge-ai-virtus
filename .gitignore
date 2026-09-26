@@ -38,6 +38,8 @@ data/processed/
 *.safetensors
 checkpoints/
 models/
+# salidas de entrenamiento (scripts/train/train_ma.py)
+runs/
 
 # Cachés y temporales
 __pycache__/

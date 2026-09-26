@@ -9,7 +9,9 @@ La investigación se organiza por semanas. Estado actual:
 | Semana | Fase | Estado | Entregables |
 |---|---|---|---|
 | 2 | Auditoría y curaduría (inventario de datasets, faltantes, duplicados, desbalance) | Hecha (sin transformar datos) | [`reports/week_02_dataset_audit.md`](reports/week_02_dataset_audit.md) |
-| 3 en adelante | Curaduría efectiva, particiones, modelos, multimodalidad, móvil | Pendiente | — |
+| 3 | Limpieza, normalización, particiones, esquema de metadatos ambientales y versionado (`v001`) | Hecha (sin imágenes descargadas) | [`reports/week_03_dataset_curation.md`](reports/week_03_dataset_curation.md), [`data/versions/v001/`](data/versions/v001/) |
+| 4 | Entorno de entrenamiento y primer entrenamiento de referencia ($M_A$, ResNet-18, solo FungiTastic) | **Preparado, sin ejecutar** | [`docs/handoff_fase4_entrenamiento.md`](docs/handoff_fase4_entrenamiento.md) |
+| 5 en adelante | Candidatas móviles, multimodalidad, prueba externa colombiana, móvil | Pendiente | — |
 
 ## Estructura del repositorio
 
@@ -18,8 +20,16 @@ La investigación se organiza por semanas. Estado actual:
 ├── README.md
 ├── requirements.txt
 ├── .gitignore
+├── requirements-train.txt       # dependencias de entrenamiento (PyTorch, torchvision, scikit-learn)
+├── configs/
+│   ├── dataset_v001.yaml        # todo lo que define el contenido de la versión v001
+│   └── train/ma_resnet18_v001.yaml   # primer entrenamiento de referencia (M_A, ResNet-18)
+├── docs/handoff_fase4_entrenamiento.md   # guía paso a paso para continuar
 ├── data/
 │   ├── raw/                     # datos originales SOLO en local (ignorados por Git); README versionado
+│   ├── processed/v001/          # tablas completas del dataset procesado (ignoradas por Git; reproducibles)
+│   ├── versions/                # versionado: política, CHANGELOG y, por versión, manifiesto, particiones y ficha
+│   ├── schemas/metadata_schema_v1.yaml   # esquema de metadatos (procedencia: fuente, método, calidad)
 │   └── manifests/
 │       ├── dataset_inventory.csv   # una fila por fuente: estado, cifras reportadas vs. verificadas, licencias
 │       ├── raw_files.csv           # archivos locales con tamaño y SHA-256
@@ -31,10 +41,22 @@ La investigación se organiza por semanas. Estado actual:
 │   ├── adapters.py              # un adaptador por fuente (lectura de solo lectura)
 │   ├── audit_core.py            # métricas comunes a todos los datasets
 │   ├── inventory.py             # construcción del inventario y de los manifiestos YAML
-│   └── common.py                # rutas, HTTP, hashes y manifiestos
+│   ├── common.py                # rutas, HTTP, hashes y manifiestos
+│   ├── build_dataset.py         # Semana 3: construye, valida y versiona el dataset procesado
+│   ├── curation_sources.py      # un cargador por fuente (reglas + metadatos ambientales)
+│   ├── cleaning.py              # catálogo de reglas de limpieza/normalización y registro de su efecto
+│   ├── splits.py                # particiones agrupadas por sitio-día con hash determinista
+│   ├── metadata_schema.py       # carga y validación del esquema
+│   └── download_images.py       # fase 4: descarga reanudable de las imágenes FungiTastic de v001
+├── scripts/train/
+│   ├── check_env.py             # comprueba bibliotecas, GPU, versión del dataset e imágenes
+│   ├── train_ma.py              # entrena/evalúa M_A (solo imagen); resultados en runs/ (ignorado)
+│   ├── data.py                  # tablas por partición + verificación contra el manifiesto de la versión
+│   └── metrics.py               # macro-F1, exactitud balanceada, top-k, por clase, matriz de confusión
 ├── notebooks/01_dataset_audit.ipynb   # vista reproducible de la auditoría
 └── reports/
     ├── week_02_dataset_audit.md       # informe de la Semana 2
+    ├── week_03_dataset_curation.md    # informe de la Semana 3 (+ week_03_results.tex/.pdf)
     ├── audit/                         # resultados cuantitativos (CSV/JSON pequeños)
     └── figures/                       # figuras del informe
 ```
@@ -75,6 +97,28 @@ Para ejecutar el notebook de forma técnica:
 python -m jupyter nbconvert --to notebook --execute --inplace notebooks/01_dataset_audit.ipynb
 ```
 
+## Construir el dataset procesado (Semana 3)
+
+```bash
+python scripts/data/acquire_datasets.py inaturalist_genera_co   # instantáneas de iNaturalist por género (Colombia)
+python scripts/data/build_dataset.py                            # ~2 min; escribe data/processed/v001 y data/versions/v001
+python scripts/data/build_dataset.py --check                    # reconstruye y compara con el manifiesto
+```
+
+Política de versiones: [`data/versions/README.md`](data/versions/README.md).
+
+## Siguiente fase: imágenes y primer entrenamiento
+
+Guía completa: [`docs/handoff_fase4_entrenamiento.md`](docs/handoff_fase4_entrenamiento.md). Resumen:
+
+```bash
+python scripts/data/download_images.py                                   # ~1,1 GB, reanudable (solo FungiTastic)
+pip install -r requirements-train.txt                                    # tras instalar PyTorch según el hardware
+python scripts/train/check_env.py --config configs/train/ma_resnet18_v001.yaml
+python scripts/train/train_ma.py --config configs/train/ma_resnet18_v001.yaml --smoke
+python scripts/train/train_ma.py --config configs/train/ma_resnet18_v001.yaml
+```
+
 ## Dónde consultar los resultados
 
 * Informe: [`reports/week_02_dataset_audit.md`](reports/week_02_dataset_audit.md)
@@ -88,6 +132,8 @@ python -m jupyter nbconvert --to notebook --execute --inplace notebooks/01_datas
 * Las cifras se etiquetan como `SOURCE_REPORTED` (declaradas por la fuente), `LOCAL_VERIFIED` (calculadas sobre archivos
   locales), `DERIVED` (deducidas en memoria) o `NOT_VERIFIED` (no comprobadas).
 * La Semana 2 no modifica datos: no elimina, corrige, imputa, deduplica ni particiona.
+* Desde la Semana 3 las transformaciones solo ocurren en `build_dataset.py`, nunca sobre `data/raw/`, y cada regla
+  aplicada queda contada en `data/versions/<versión>/cleaning_log.csv`.
 
 ## Nota sobre OneDrive
 

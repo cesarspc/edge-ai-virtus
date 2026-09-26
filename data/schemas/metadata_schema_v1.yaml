@@ -1,0 +1,153 @@
+# Esquema de metadatos del dataset procesado — versión 1 (Semana 3).
+#
+# Dos tablas: `observations` (una fila por observación/hallazgo) e `images` (una fila por imagen).
+# Las variables ambientales viven en `observations` y cada una lleva tres columnas de procedencia:
+#   <grupo>__source   de dónde viene el valor (fuente)
+#   <grupo>__method   cómo se obtuvo originalmente (método)
+#   <grupo>__quality  qué confianza merece tras las reglas de limpieza (calidad)
+# Un «grupo» comparte procedencia: p. ej. latitude, longitude y coordinate_uncertainty_m forman el grupo `geo`.
+# El script scripts/data/metadata_schema.py valida cada versión contra este archivo.
+
+schema_id: metadata_schema_v1
+
+# --------------------------------------------------------------------------- vocabularios de procedencia
+provenance:
+  source:
+    description: >-
+      Origen del valor. `dataset:<dataset_id>` = columna del dataset original (dataset_id del inventario de la Semana 2);
+      `external:<producto>` = producto externo consultado por nosotros (p. ej. un ráster climático);
+      `derived` = calculado por nosotros a partir de otras columnas; `none` = no hay valor.
+    pattern: "^(dataset:[a-z0-9_]+|external:[A-Za-z0-9_.-]+|derived|none)$"
+  method:
+    OBSERVER_RECORDED: "Anotado por quien registró la observación (texto o selección en un formulario)."
+    POINT_REPORTED: "Coordenada puntual enviada por el observador (GPS del dispositivo o marcador en un mapa; la fuente no distingue)."
+    POINT_OBSCURED: "Coordenada puntual desplazada/oscurecida a propósito por la plataforma para proteger la ubicación."
+    LOCALITY_CENTROID: "Centro de la caja envolvente de una localidad con nombre; la incertidumbre es la semidiagonal de la caja."
+    DEVICE_TIMESTAMP_OR_USER: "Fecha de observación anotada por el usuario o tomada de la foto; la fuente no distingue."
+    SOURCE_DERIVED_UNDOCUMENTED: "Calculado por el dataset original con un procedimiento no documentado (p. ej. elevación o cobertura de FungiTastic)."
+    RASTER_LOOKUP: "Muestreado por nosotros de un ráster externo en la coordenada y fecha de la observación."
+    NOT_AVAILABLE: "No existe valor."
+  quality:
+    OK: "Valor presente y superó todas las reglas."
+    LOW_PRECISION: "Valor válido pero impreciso (incertidumbre > umbral, fecha solo a mes/año, coordenada oscurecida o de localidad)."
+    SUSPECT: "Pasa las reglas de formato pero es poco plausible (p. ej. elevación exactamente 0 m, localidad distinta a la de recolección)."
+    CORRECTED: "El valor original se corrigió con una regla documentada (p. ej. término en danés traducido)."
+    INVALID_REMOVED: "Había un valor, pero era inválido (fuera de rango, no interpretable) y se reemplazó por vacío."
+    MISSING: "La fuente tiene el campo, pero está vacío para esta observación."
+    NOT_PROVIDED: "La fuente no tiene este campo."
+
+# --------------------------------------------------------------------------- vocabularios controlados
+vocabularies:
+  substrate_class:
+    wood_dead: "Madera muerta, corteza muerta, astillas, conos."
+    wood_living: "Madera, raíces o corteza de árboles vivos."
+    wood_unspecified: "Madera sin indicar si está viva o muerta (solo se conoce la categoría gruesa)."
+    soil: "Suelo."
+    litter: "Hojarasca, acículas, restos vegetales en el suelo."
+    plant_living: "Hojas o tallos vivos de plantas herbáceas."
+    moss: "Musgos, hepáticas, esfagnos."
+    dung: "Excrementos."
+    fungi: "Otros hongos, mixomicetos o líquenes."
+    other: "Otros (piedra, fuego, animales, construcciones)."
+  habitat_class:
+    forest_deciduous: "Bosque caducifolio."
+    forest_coniferous: "Bosque o plantación de coníferas."
+    forest_mixed: "Bosque mixto."
+    forest_other: "Otro bosque (bosque sobre turbera, prado arbolado, sin tipo especificado)."
+    scrub: "Matorral, seto, sauceda."
+    open: "Pradera, brezal, dunas, turbera, prado salino."
+    anthropic: "Parque, jardín, césped, borde de camino, zanja, cantera, cultivo, tejado, mampostería."
+    other: "Otro (roca, «otro hábitat»)."
+  license:
+    CC0: "Dominio público (renuncia CC0)."
+    PDM: "Marca de dominio público."
+    CC-BY: "Atribución."
+    CC-BY-SA: "Atribución-CompartirIgual."
+    CC-BY-NC: "Atribución-NoComercial."
+    CC-BY-NC-SA: "Atribución-NoComercial-CompartirIgual."
+    CC-BY-ND: "Atribución-SinDerivadas (excluida en v001)."
+    CC-BY-NC-ND: "Atribución-NoComercial-SinDerivadas (excluida en v001)."
+    ARR: "Todos los derechos reservados (excluida)."
+  identification_basis:
+    expert_curated: "Identificación verificada por la sociedad micológica que publica los datos (FungiTastic/DMS)."
+    community_consensus: "Consenso de votos de la comunidad (Mushroom Observer, vote_cache)."
+    research_grade: "Grado de investigación de iNaturalist (≥ 2/3 de identificaciones coinciden)."
+    folder_label: "Etiqueta de la carpeta del archivo (MIND.Funga); sin agrupación por observación."
+
+# --------------------------------------------------------------------------- tablas
+tables:
+  observations:
+    primary_key: observation_uid
+    fields:
+      observation_uid: {type: string, required: true, description: "<source_id>:<id original>; único en toda la versión."}
+      source_id: {type: string, required: true, enum_from: sources}
+      source_observation_id: {type: string, required: true}
+      genus: {type: string, required: true, enum_from: classes}
+      label_id: {type: integer, required: true, description: "Posición del género en configs/dataset_vXXX.yaml:classes."}
+      taxon_name_raw: {type: string, required: true, description: "Nombre tal como lo trae la fuente (antes de normalizar)."}
+      identification_basis: {type: string, required: true, vocabulary: identification_basis}
+      split: {type: string, required: true, enum: [train, val, test, test_external]}
+      split_temporal: {type: string, required: false, enum: [train, val, test], description: "Partición temporal oficial de FungiTastic; vacía en otras fuentes."}
+      group_id: {type: string, required: true, description: "Unidad de agrupación de la partición (sitio-día u observación)."}
+      n_images: {type: integer, required: true}
+      country_code: {type: string, required: false, description: "ISO 3166-1 alfa-2."}
+  images:
+    primary_key: image_uid
+    fields:
+      image_uid: {type: string, required: true, description: "<source_id>:<id o archivo original>; único."}
+      observation_uid: {type: string, required: true, foreign_key: observations.observation_uid}
+      source_id: {type: string, required: true}
+      source_image_id: {type: string, required: true}
+      locator: {type: string, required: true, description: "Dónde obtener la imagen: nombre de archivo en el ZIP oficial o URL."}
+      license: {type: string, required: true, vocabulary: license}
+      license_scope: {type: string, required: true, enum: [image, dataset], description: "image = licencia propia de la imagen; dataset = la fuente solo declara una licencia global (se registra la más restrictiva declarada)."}
+      rights_holder: {type: string, required: false}
+      sha256_reported: {type: string, required: false, description: "Hash publicado por la fuente (solo MIND.Funga)."}
+      split: {type: string, required: true, enum: [train, val, test, test_external]}
+      genus: {type: string, required: true}
+      label_id: {type: integer, required: true}
+
+# --------------------------------------------------------------------------- variables ambientales
+# Cada grupo añade <grupo>__source, <grupo>__method y <grupo>__quality a `observations`.
+# `modality` indica en qué modelo del alcance se usa: G (geolocalización), C (clima), S (sustrato), X (contexto adicional).
+environmental_groups:
+  geo:
+    modality: G
+    variables:
+      latitude: {type: float, unit: "grados decimales WGS84", range: [-90, 90]}
+      longitude: {type: float, unit: "grados decimales WGS84", range: [-180, 180]}
+      coordinate_uncertainty_m: {type: float, unit: m, range: [0, 20000000]}
+  event_date:
+    modality: C
+    variables:
+      event_date: {type: date, unit: "ISO 8601 (AAAA-MM-DD)"}
+      event_date_precision: {type: string, enum: [day, month, year]}
+  elevation:
+    modality: G
+    variables:
+      elevation_m: {type: float, unit: "m s.n.m.", range: [-500, 9000]}
+  substrate:
+    modality: S
+    variables:
+      substrate_class: {type: string, vocabulary: substrate_class}
+      substrate_raw: {type: string, description: "Texto original de la fuente."}
+  habitat:
+    modality: X
+    variables:
+      habitat_class: {type: string, vocabulary: habitat_class}
+      habitat_raw: {type: string}
+  landcover:
+    modality: X
+    variables:
+      landcover_code: {type: integer, description: "Código de cobertura del dataset original; la clasificación usada no está documentada por FungiTastic."}
+  biogeographical_region:
+    modality: X
+    variables:
+      biogeographical_region: {type: string, description: "Región biogeográfica europea (FungiTastic)."}
+  climate:
+    modality: C
+    variables:
+      climate_temp_mean_c: {type: float, unit: "°C", range: [-60, 60], description: "Temperatura media del aire (ventana por definir)."}
+      climate_precip_mm: {type: float, unit: mm, range: [0, 20000], description: "Precipitación acumulada (ventana por definir)."}
+      climate_rel_humidity_pct: {type: float, unit: "%", range: [0, 100]}
+      climate_window: {type: string, description: "Ventana temporal del agregado (p. ej. 'P30D antes de event_date')."}

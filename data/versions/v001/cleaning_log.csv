@@ -1,0 +1,64 @@
+rule_id,category,action,source_id,n_observations,n_images,note,description
+T1,taxonomía,excluir,fungitastic,316232,743150,filas de los 6 CSV completos (antes de quitar las repetidas por diseño ClosedSet ⊂ OpenSet),El género (normalizado) no está entre las 10 clases del alcance.
+T1,taxonomía,excluir,inaturalist_co,0,,,El género (normalizado) no está entre las 10 clases del alcance.
+T1,taxonomía,excluir,mind_funga_v2,,12798,,El género (normalizado) no está entre las 10 clases del alcance.
+T1,taxonomía,excluir,mushroom_observer_co,9774,,,El género (normalizado) no está entre las 10 clases del alcance.
+T2,taxonomía,corregir,fungitastic,0,0,,"Sinónimo de género reasignado al género aceptado (Coriolus→Trametes, Hirneola→Auricularia; en MO vía synonym_id)."
+T2,taxonomía,corregir,mind_funga_v2,,0,,"Sinónimo de género reasignado al género aceptado (Coriolus→Trametes, Hirneola→Auricularia; en MO vía synonym_id)."
+T2,taxonomía,corregir,mushroom_observer_co,60,,nombres deprecated resueltos con synonym_id + tabla de sinónimos,"Sinónimo de género reasignado al género aceptado (Coriolus→Trametes, Hirneola→Auricularia; en MO vía synonym_id)."
+T3,taxonomía,excluir,fungitastic,0,0,,"Identificación sin resolver a género (rango superior a género o calificador sobre el género: 'cf. Amanita', '?')."
+T3,taxonomía,excluir,mind_funga_v2,,0,,"Identificación sin resolver a género (rango superior a género o calificador sobre el género: 'cf. Amanita', '?')."
+T3,taxonomía,excluir,mushroom_observer_co,9330,,,"Identificación sin resolver a género (rango superior a género o calificador sobre el género: 'cf. Amanita', '?')."
+T4,taxonomía,excluir,fungitastic,0,0,,Observación cuyas imágenes tienen géneros distintos (etiqueta en conflicto).
+T5,taxonomía,excluir,mushroom_observer_co,900,,umbral vote_cache >= 1.0,Mushroom Observer: consenso de la comunidad (vote_cache) inferior al umbral configurado.
+T6,taxonomía,excluir,fungitastic,4853,14137,,Reino distinto de Fungi o nombre sin clasificación.
+T6,taxonomía,excluir,mushroom_observer_co,1127,,,Reino distinto de Fungi o nombre sin clasificación.
+D1,duplicados,excluir,fungitastic,0,13449,filas repetidas entre CSV por diseño oficial (ClosedSet ⊂ OpenSet); no son imágenes distintas,Fila de imagen repetida dentro de la fuente (mismo archivo/ID); se conserva una.
+D1,duplicados,excluir,inaturalist_co,0,0,total_results declarado por la API: 3902; filas leídas: 3902,Fila de imagen repetida dentro de la fuente (mismo archivo/ID); se conserva una.
+D1,duplicados,excluir,mushroom_observer_co,,26,pares imagen–observación repetidos en todo MO,Fila de imagen repetida dentro de la fuente (mismo archivo/ID); se conserva una.
+D2,duplicados,excluir,inaturalist_co,,0,,Imagen enlazada a más de una observación (Mushroom Observer).
+D2,duplicados,excluir,mushroom_observer_co,,3,,Imagen enlazada a más de una observación (Mushroom Observer).
+D3,duplicados,excluir,mind_funga_v2,,53,"en las 10 clases: 4 por grupos que cruzan géneros, 49 copias redundantes",Archivos con el mismo SHA-256 publicado (MIND.Funga): se conserva uno; si el grupo cruza géneros se excluyen todos.
+D4,duplicados,excluir,mushroom_observer_co,4,7,enlaces 'Mushroom Observer URL' en iNaturalist: 9,Observación de MO publicada también en iNaturalist (enlace explícito 'Mushroom Observer URL'): se conserva la de iNaturalist.
+D5,duplicados,excluir,mushroom_observer_co,19,46,,"Posible duplicado entre fuentes: MO e iNaturalist con mismo género, misma fecha y coordenadas a < 0,01°: se conserva la de iNaturalist."
+D6,duplicados,excluir,mind_funga_v2,,170,,MIND.Funga: variantes con fondo sustituido ('branco'/'verde' en el nombre) de una misma fotografía.
+D7,duplicados,excluir,fungitastic,0,0,,Observación sin imágenes tras aplicar las demás reglas.
+D7,duplicados,excluir,inaturalist_co,1538,0,,Observación sin imágenes tras aplicar las demás reglas.
+D7,duplicados,excluir,mind_funga_v2,0,0,,Observación sin imágenes tras aplicar las demás reglas.
+D7,duplicados,excluir,mushroom_observer_co,8,0,,Observación sin imágenes tras aplicar las demás reglas.
+L1,licencias,excluir,inaturalist_co,,3319,"{'ARR': 3194, 'CC-BY-NC-ND': 94, 'CC-BY-ND': 31}",Licencia de la imagen fuera de la lista permitida (todos los derechos reservados o variantes ND).
+L1,licencias,excluir,mushroom_observer_co,,3,{'CC-BY-ND': 3},Licencia de la imagen fuera de la lista permitida (todos los derechos reservados o variantes ND).
+L2,licencias,excluir,mushroom_observer_co,,0,,Mushroom Observer: imagen marcada ok_for_export = 0.
+E1,ambiental,anular,fungitastic,0,,,"Coordenadas no numéricas, fuera de rango o (0, 0): se vacían (calidad INVALID_REMOVED)."
+E1,ambiental,anular,inaturalist_co,0,,,"Coordenadas no numéricas, fuera de rango o (0, 0): se vacían (calidad INVALID_REMOVED)."
+E1,ambiental,anular,mind_funga_v2,0,,,"Coordenadas no numéricas, fuera de rango o (0, 0): se vacían (calidad INVALID_REMOVED)."
+E1,ambiental,anular,mushroom_observer_co,0,,,"Coordenadas no numéricas, fuera de rango o (0, 0): se vacían (calidad INVALID_REMOVED)."
+E2,ambiental,marcar,fungitastic,4,,,"Geolocalización imprecisa: incertidumbre > umbral, punto oscurecido o centroide de localidad (LOW_PRECISION)."
+E2,ambiental,marcar,inaturalist_co,197,,,"Geolocalización imprecisa: incertidumbre > umbral, punto oscurecido o centroide de localidad (LOW_PRECISION)."
+E2,ambiental,marcar,mind_funga_v2,0,,,"Geolocalización imprecisa: incertidumbre > umbral, punto oscurecido o centroide de localidad (LOW_PRECISION)."
+E2,ambiental,marcar,mushroom_observer_co,123,,,"Geolocalización imprecisa: incertidumbre > umbral, punto oscurecido o centroide de localidad (LOW_PRECISION)."
+E3,ambiental,anular,fungitastic,0,,,"Fecha no interpretable, anterior al año mínimo o posterior a la fecha de acceso (INVALID_REMOVED)."
+E3,ambiental,anular,inaturalist_co,0,,,"Fecha no interpretable, anterior al año mínimo o posterior a la fecha de acceso (INVALID_REMOVED)."
+E3,ambiental,anular,mind_funga_v2,0,,,"Fecha no interpretable, anterior al año mínimo o posterior a la fecha de acceso (INVALID_REMOVED)."
+E3,ambiental,anular,mushroom_observer_co,0,,,"Fecha no interpretable, anterior al año mínimo o posterior a la fecha de acceso (INVALID_REMOVED)."
+E4,ambiental,marcar,fungitastic,0,,,Fecha con precisión de mes o año (LOW_PRECISION).
+E4,ambiental,marcar,inaturalist_co,0,,,Fecha con precisión de mes o año (LOW_PRECISION).
+E4,ambiental,marcar,mind_funga_v2,0,,,Fecha con precisión de mes o año (LOW_PRECISION).
+E4,ambiental,marcar,mushroom_observer_co,0,,,Fecha con precisión de mes o año (LOW_PRECISION).
+E5,ambiental,marcar,fungitastic,8034,,SUSPECT=8034; INVALID_REMOVED=0,Elevación exactamente 0 m (SUSPECT) o fuera de rango (INVALID_REMOVED).
+E5,ambiental,marcar,inaturalist_co,0,,SUSPECT=0; INVALID_REMOVED=0,Elevación exactamente 0 m (SUSPECT) o fuera de rango (INVALID_REMOVED).
+E5,ambiental,marcar,mind_funga_v2,0,,SUSPECT=0; INVALID_REMOVED=0,Elevación exactamente 0 m (SUSPECT) o fuera de rango (INVALID_REMOVED).
+E5,ambiental,marcar,mushroom_observer_co,0,,SUSPECT=0; INVALID_REMOVED=0,Elevación exactamente 0 m (SUSPECT) o fuera de rango (INVALID_REMOVED).
+E6,ambiental,marcar,fungitastic,1812,,sin sustrato detallado: 1812; sin ningún sustrato: 0,Sustrato solo con categoría gruesa (metaSubstrate) cuando falta el detallado (LOW_PRECISION).
+E7,ambiental,marcar,mushroom_observer_co,64,,,Mushroom Observer: la localidad no es el lugar de recolección (is_collection_location = 0) (SUSPECT).
+E8,ambiental,anular,fungitastic,25374,,climate__quality: MISSING,Clima no disponible: climatic.zip de FungiTastic responde HTTP 403; ninguna otra fuente trae clima (MISSING/NOT_PROVIDED).
+E8,ambiental,anular,inaturalist_co,2364,,climate__quality: NOT_PROVIDED,Clima no disponible: climatic.zip de FungiTastic responde HTTP 403; ninguna otra fuente trae clima (MISSING/NOT_PROVIDED).
+E8,ambiental,anular,mind_funga_v2,1547,,climate__quality: NOT_PROVIDED,Clima no disponible: climatic.zip de FungiTastic responde HTTP 403; ninguna otra fuente trae clima (MISSING/NOT_PROVIDED).
+E8,ambiental,anular,mushroom_observer_co,984,,climate__quality: NOT_PROVIDED,Clima no disponible: climatic.zip de FungiTastic responde HTTP 403; ninguna otra fuente trae clima (MISSING/NOT_PROVIDED).
+N1,normalización,transformar,todas,,,aplicada a todas las filas conservadas,"Género: espacios, mayúsculas y sinónimos normalizados; label_id = posición en la lista de clases."
+N2,normalización,transformar,todas,,,aplicada a todas las filas conservadas,Fechas a ISO 8601 (AAAA-MM-DD) con precisión explícita (day/month/year).
+N3,normalización,transformar,todas,,,aplicada a todas las filas conservadas,Coordenadas a grados decimales WGS84 con 6 decimales; incertidumbre en metros.
+N4,normalización,transformar,todas,,,aplicada a todas las filas conservadas,"Licencias a códigos CC normalizados (CC0, CC-BY, CC-BY-NC, …)."
+N5,normalización,transformar,todas,,,aplicada a todas las filas conservadas,"Sustrato y hábitat a vocabularios controlados, conservando el texto original (*_raw)."
+N6,normalización,transformar,todas,,,aplicada a todas las filas conservadas,Identificadores con espacio de nombres '<fuente>:<id>' y país en ISO 3166-1 alfa-2.
+C1,clases,verificar,fungitastic,0,,mínimo 100; clase menor: Morchella (288 observaciones),Cada clase debe tener al menos el mínimo configurado de observaciones en desarrollo.

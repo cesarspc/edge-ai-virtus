@@ -248,6 +248,26 @@ def acquire_inaturalist_api(s: requests.Session, refresh: bool) -> None:
        "quality_grade": "research", "photos": "true"})
 
 
+def acquire_inaturalist_genera_co(s: requests.Session, refresh: bool) -> None:
+    """Week 3 (dataset v001): research-grade observations with photos in Colombia for each target genus.
+
+    Stored as paged snapshots under ``data/raw/inaturalist_api/api/v001_co_<genus>_p<N>.json``. Photos are NOT
+    downloaded; each snapshot keeps the photo URLs, licenses and attributions needed later.
+    """
+    import yaml
+    cfg = yaml.safe_load((Path(__file__).resolve().parents[2] / "configs" / "dataset_v001.yaml").read_text(encoding="utf-8"))
+    for genus, taxon_id in cfg["inaturalist_genus_taxon_ids"].items():
+        page = 1
+        while True:
+            params = {"taxon_id": taxon_id, "place_id": COLOMBIA_PLACE_ID, "quality_grade": "research", "photos": "true",
+                      "per_page": 200, "page": page, "order_by": "id", "order": "asc"}
+            d = snapshot_json(s, "inaturalist_api", f"v001_co_{genus.lower()}_p{page}", f"{INAT_API}/observations",
+                              params, refresh, sleep=1.1, summary_key="total_results")
+            if page * 200 >= d["total_results"]:
+                break
+            page += 1
+
+
 # --------------------------------------------------------------------------- GBIF
 def acquire_gbif(s: requests.Session, refresh: bool) -> None:
     ds = "gbif"
@@ -374,6 +394,7 @@ SOURCES: dict[str, Callable[[requests.Session, bool], None]] = {
     "mind_funga_v2": acquire_mind_funga,
     "inaturalist_open_data": acquire_inaturalist_open_data,
     "inaturalist_api": acquire_inaturalist_api,
+    "inaturalist_genera_co": acquire_inaturalist_genera_co,
     "sib_colombia": acquire_sib,
     "gbif": acquire_gbif,
     "mushroom_observer": acquire_mushroom_observer,
