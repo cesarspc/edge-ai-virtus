@@ -45,7 +45,7 @@ import pandas as pd
 import requests
 
 sys.path.insert(0, str(Path(__file__).resolve().parent))
-from common import REPO_ROOT, log, make_session, rel, setup_logging, utc_now  # noqa: E402
+from common import REPO_ROOT, log, make_session, rel, setup_logging, utc_now, sha256_file  # noqa: E402
 
 FT_ROOT = "https://cmp.felk.cvut.cz/datagrid/FungiTastic/shared/download"
 RESOLUTION = "300p"
@@ -183,6 +183,7 @@ def plan_chunks(rows: pd.DataFrame) -> list[tuple[int, int, pd.DataFrame]]:
 def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--version", default="v001", help="processed dataset version (reads data/processed/<version>/images.csv)")
+    ap.add_argument("--images-csv", default=None, help="candidate image table, e.g. data/interim/v002/images.csv")
     ap.add_argument("--out", default=None, help="output directory (default data/raw/images/fungitastic)")
     ap.add_argument("--workers", type=int, default=4, help="parallel HTTP requests (be gentle with the academic server)")
     ap.add_argument("--limit", type=int, default=None, help="only the first N images of each split (trial run)")
@@ -191,7 +192,7 @@ def main() -> int:
     args = ap.parse_args()
     setup_logging(args.verbose)
 
-    images_csv = REPO_ROOT / "data" / "processed" / args.version / "images.csv"
+    images_csv = REPO_ROOT / args.images_csv if args.images_csv else REPO_ROOT / "data" / "processed" / args.version / "images.csv"
     if not images_csv.exists():
         log.error("%s not found: run `python scripts/data/build_dataset.py` first", rel(images_csv))
         return 1
@@ -232,7 +233,8 @@ def main() -> int:
     done: dict[str, dict[str, Any]] = {}
     if man_path.exists():
         for r in pd.read_csv(man_path, dtype=str, keep_default_na=False).to_dict("records"):
-            if r["status"] in ("ok", "too_small") and (img_dir / r["filename"]).exists():
+            path = img_dir / r["filename"]
+            if r["status"] in ("ok", "too_small") and path.is_file() and sha256_file(path) == r["sha256"]:
                 done[r["image_uid"]] = r
     todo = plan[~not_found & ~plan["image_uid"].isin(done)]
     log.info("%d already downloaded; %d to download", len(done), len(todo))

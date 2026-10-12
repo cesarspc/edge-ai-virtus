@@ -1,0 +1,16 @@
+{
+  "run_id": "20261004T133123181686Z_ma_resnet18_v002",
+  "epochs_completed": 16,
+  "best_epoch": 11,
+  "best_val_obs_macro_f1": 0.9545427706343522,
+  "test_evaluations": 1,
+  "validation_image_errors": 499,
+  "validation_observation_errors": 140,
+  "checkpoint_sha256": "a5edc643662266708263899c2fdd6977f0dabac160739ba7ccfde82603af50e3",
+  "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "total_recorded_epoch_seconds": 53282.1,
+  "mean_recorded_epoch_seconds": 3330.13125,
+  "plots_use_saved_metrics": true,
+  "model_inference_performed": false,
+  "observation_errors_reconstructed_from_rounded_saved_probabilities": true
+}

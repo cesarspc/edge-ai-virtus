@@ -1,0 +1,15 @@
+group,source_id,quality,n_observations,pct
+biogeographical_region,fungitastic,MISSING,4089,16.17
+biogeographical_region,fungitastic,OK,21201,83.83
+climate,fungitastic,MISSING,25290,100.0
+elevation,fungitastic,MISSING,4066,16.08
+elevation,fungitastic,OK,13193,52.17
+elevation,fungitastic,SUSPECT,8031,31.76
+event_date,fungitastic,OK,25290,100.0
+geo,fungitastic,LOW_PRECISION,4,0.02
+geo,fungitastic,OK,25286,99.98
+habitat,fungitastic,OK,25290,100.0
+landcover,fungitastic,MISSING,4066,16.08
+landcover,fungitastic,OK,21224,83.92
+substrate,fungitastic,LOW_PRECISION,1812,7.16
+substrate,fungitastic,OK,23478,92.84

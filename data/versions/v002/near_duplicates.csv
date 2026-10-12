@@ -1,0 +1,2 @@
+image_uid_a,image_uid_b,split_a,split_b,genus_a,genus_b,hamming
+fungitastic:0-3336959327.JPG,fungitastic:2-4465862839.JPG,train,test,Lycoperdon,Lycoperdon,4

@@ -50,7 +50,8 @@ def main() -> int:
 
     print("== dataset e imágenes")
     try:
-        t = load_tables(cfg)
+        active_splits = ("train", "val", "test") if cfg["evaluation"]["evaluate_test_at_end"] else ("train", "val")
+        t = load_tables(cfg, show_progress=True, splits=active_splits)
         print(f"  versión {t.version}, huella {t.fingerprint[:16]}…, clases: {', '.join(t.classes)}")
         print("  " + summary(t).to_string(index=False).replace("\n", "\n  "))
         if len(t.missing):

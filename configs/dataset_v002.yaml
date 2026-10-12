@@ -1,0 +1,38 @@
+# Primera baseline: subconjunto de 10 géneros con particiones oficiales.
+version: v002
+schema: data/schemas/metadata_schema_v1.yaml
+access_date: "2026-10-01"
+label_level: genus
+classes: [Amanita, Auricularia, Ganoderma, Geastrum, Hericium, Lycoperdon, Morchella, Pleurotus, Trametes, Xylaria]
+genus_synonyms: {Coriolus: Trametes, Hirneola: Auricularia}
+sources:
+  fungitastic:
+    role: development
+    files: [Train, ClosedSet-Val, ClosedSet-Test]
+excluded_sources:
+  df20: "96,5 % de observaciones compartidas con FungiTastic; fuga entre sus particiones originales."
+  fungitastic_open_mini_fewshot_dna: "OpenSet contiene ClosedSet; Mini/FewShot se solapan y DNA es un protocolo distinto."
+  gbif: "Agregador de fuentes; riesgo de doble conteo."
+  inaturalist: "Fuera de la primera baseline de una sola fuente."
+  mushroom_observer: "Fuera de la primera baseline de una sola fuente."
+  mind_funga_v2: "Fuera de la primera baseline de una sola fuente."
+  sib_colombia: "Recursos auditados sin imágenes."
+allowed_licenses: [CC0, PDM, CC-BY, CC-BY-SA, CC-BY-NC, CC-BY-NC-SA]
+cleaning:
+  min_year: 1800
+  max_coordinate_uncertainty_m: 10000
+  min_observations_per_class_dev: 100
+  suspicious_zero_elevation: true
+splits:
+  scheme: fungitastic_official
+  group_coordinate_decimals: 2
+  keep_official_temporal_split: true
+image_policy:
+  fungitastic_resolution: 300p
+  min_side_px: 128
+  small_images: report  # preservar particiones oficiales; redimensionar en los transforms
+  color_mode: RGB
+  perceptual_hash: phash64
+  near_duplicate_hamming: 4
+  download_manifest: data/raw/images/fungitastic_v002/download_manifest.csv
+  cross_split_exact_duplicates: protect_test

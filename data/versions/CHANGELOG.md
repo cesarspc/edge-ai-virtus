@@ -1,5 +1,23 @@
 # Historial de versiones del dataset
 
+## v002 — 2026-10-01
+
+Primera baseline con imágenes descargadas; configuración `configs/dataset_v002.yaml`.
+Huella: `144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90`.
+
+* **Fuente y clases:** solo FungiTastic, los mismos 10 géneros de v001.
+* **Particiones oficiales:** Train (17.799 observaciones / 30.172 imágenes), ClosedSet-Val
+  (3.452 / 6.290), ClosedSet-Test (4.039 / 7.159); sin `test_external`.
+* **Integridad:** SHA-256 verificado para las 43.621 imágenes. Cero duplicados exactos entre
+  particiones; prioridad de exclusión implementada: test > val > train.
+* **Auditorías:** cero cruces sitio-día; un par perceptualmente similar entre train y test
+  (Hamming 4), reportado sin exclusión. Se conservan y reportan 33 imágenes pequeñas.
+* **Entrenamiento:** ResNet-18 preentrenada, selección por macro-F1 de observación en val;
+  smoke y eval-only consultan solo val, y la corrida completa evalúa test una vez al final.
+* **Limitaciones:** desbalance oficial, poco soporte de Morchella en val/test y similitud
+  perceptual reportada; la partición oficial no elimina todos los posibles sesgos.
+
+
 ## v001 — 2026-09-26
 
 Primera versión procesada (Semana 3). Configuración `configs/dataset_v001.yaml`, esquema `metadata_schema_v1`.

@@ -1,0 +1,23 @@
+rule_id,category,action,source_id,n_observations,n_images,note,description
+D8,duplicados,excluir,fungitastic,0,0,copias exactas entre particiones; test tiene prioridad,SHA-256 idéntico entre particiones: prioridad test > val > train; sin reasignar imágenes.
+T1,taxonomía,excluir,fungitastic,310879,561523,filas de los 6 CSV completos (antes de quitar las repetidas por diseño ClosedSet ⊂ OpenSet),El género (normalizado) no está entre las 10 clases del alcance.
+T2,taxonomía,corregir,fungitastic,0,0,,"Sinónimo de género reasignado al género aceptado (Coriolus→Trametes, Hirneola→Auricularia; en MO vía synonym_id)."
+T3,taxonomía,excluir,fungitastic,0,0,,"Identificación sin resolver a género (rango superior a género o calificador sobre el género: 'cf. Amanita', '?')."
+T4,taxonomía,excluir,fungitastic,0,0,,Observación cuyas imágenes tienen géneros distintos (etiqueta en conflicto).
+T6,taxonomía,excluir,fungitastic,4706,10049,,Reino distinto de Fungi o nombre sin clasificación.
+D1,duplicados,excluir,fungitastic,0,0,filas repetidas entre CSV por diseño oficial (ClosedSet ⊂ OpenSet); no son imágenes distintas,Fila de imagen repetida dentro de la fuente (mismo archivo/ID); se conserva una.
+D7,duplicados,excluir,fungitastic,0,0,,Observación sin imágenes tras aplicar las demás reglas.
+E1,ambiental,anular,fungitastic,0,,,"Coordenadas no numéricas, fuera de rango o (0, 0): se vacían (calidad INVALID_REMOVED)."
+E2,ambiental,marcar,fungitastic,4,,,"Geolocalización imprecisa: incertidumbre > umbral, punto oscurecido o centroide de localidad (LOW_PRECISION)."
+E3,ambiental,anular,fungitastic,0,,,"Fecha no interpretable, anterior al año mínimo o posterior a la fecha de acceso (INVALID_REMOVED)."
+E4,ambiental,marcar,fungitastic,0,,,Fecha con precisión de mes o año (LOW_PRECISION).
+E5,ambiental,marcar,fungitastic,8031,,SUSPECT=8031; INVALID_REMOVED=0,Elevación exactamente 0 m (SUSPECT) o fuera de rango (INVALID_REMOVED).
+E6,ambiental,marcar,fungitastic,1812,,sin sustrato detallado: 1812; sin ningún sustrato: 0,Sustrato solo con categoría gruesa (metaSubstrate) cuando falta el detallado (LOW_PRECISION).
+E8,ambiental,anular,fungitastic,25290,,climate__quality: MISSING,Clima no disponible: climatic.zip de FungiTastic responde HTTP 403; ninguna otra fuente trae clima (MISSING/NOT_PROVIDED).
+N1,normalización,transformar,todas,,,aplicada a todas las filas conservadas,"Género: espacios, mayúsculas y sinónimos normalizados; label_id = posición en la lista de clases."
+N2,normalización,transformar,todas,,,aplicada a todas las filas conservadas,Fechas a ISO 8601 (AAAA-MM-DD) con precisión explícita (day/month/year).
+N3,normalización,transformar,todas,,,aplicada a todas las filas conservadas,Coordenadas a grados decimales WGS84 con 6 decimales; incertidumbre en metros.
+N4,normalización,transformar,todas,,,aplicada a todas las filas conservadas,"Licencias a códigos CC normalizados (CC0, CC-BY, CC-BY-NC, …)."
+N5,normalización,transformar,todas,,,aplicada a todas las filas conservadas,"Sustrato y hábitat a vocabularios controlados, conservando el texto original (*_raw)."
+N6,normalización,transformar,todas,,,aplicada a todas las filas conservadas,Identificadores con espacio de nombres '<fuente>:<id>' y país en ISO 3166-1 alfa-2.
+C1,clases,verificar,fungitastic,0,,mínimo 100; clase menor: Morchella (287 observaciones),Cada clase debe tener al menos el mínimo configurado de observaciones en desarrollo.

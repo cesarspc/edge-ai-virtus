@@ -37,6 +37,13 @@ def assign(obs: pd.DataFrame, cfg: dict[str, Any]) -> pd.DataFrame:
     sp = cfg["splits"]
     obs = obs.copy()
     obs["group_id"] = group_ids(obs, sp["group_coordinate_decimals"])
+    if sp["scheme"] == "fungitastic_official":
+        if set(obs["source_id"]) != {"fungitastic"} or not obs["split_temporal"].isin(["train", "val", "test"]).all():
+            raise ValueError("official splits require FungiTastic with a known original partition")
+        obs["split"] = obs["split_temporal"]
+        return obs
+    if sp["scheme"] != "grouped_hash":
+        raise ValueError(f"unknown split scheme: {sp['scheme']}")
     u = hash_unit(obs["group_id"], sp["salt"])
     r = sp["ratios"]
     dev_split = np.select([u < r["train"], u < r["train"] + r["val"]], ["train", "val"], "test")

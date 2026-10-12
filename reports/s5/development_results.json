@@ -1,0 +1,24 @@
+{
+  "campaign": "mobilenet_v3_large_v002",
+  "selection_metric": "val observation macro-F1",
+  "test_used_for_selection": false,
+  "completed_trials": [
+    {
+      "run": "runs\\20261012T161041257797Z_s5_mobilenet_v3_large_v002_a",
+      "trial": "a",
+      "macro_f1_observation": 0.9705519051264352,
+      "macro_f1_image": 0.9254456516198706,
+      "class_weighting": "none",
+      "lr": 0.0003,
+      "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+      "checkpoint_sha256": "c6a54270440d76f98cabd33b52c386372e9b4d837b29596d952391966b59a061",
+      "run_json_sha256": "f95d2e0126568c434df720420a5ef6a7696c5aca7bc54ae1122bdba03affe639",
+      "metrics_val_sha256": "3ddb9c898e0ef58f97363da643fa8c7d15d51d2c7521fa743e55ffc2aa65dfb8"
+    }
+  ],
+  "pending_trials": [
+    "b",
+    "c",
+    "d"
+  ]
+}

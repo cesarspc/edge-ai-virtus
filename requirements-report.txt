@@ -1,0 +1,2 @@
+# Consolidación y gráficas de resultados ya guardados (además de requirements-train.txt).
+matplotlib>=3.8

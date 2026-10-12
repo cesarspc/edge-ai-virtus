@@ -89,6 +89,14 @@ def load_fungitastic(cfg: dict[str, Any], log: K.CleaningLog) -> tuple[pd.DataFr
             with z.open(A.FT_FULL_FILES[name]) as fh:
                 frames.append(pd.read_csv(fh, usecols=lambda col: col != "captions", low_memory=False).assign(_file=name))
     df = pd.concat(frames, ignore_index=True)
+    if cfg["splits"]["scheme"] == "fungitastic_official":
+        files = cfg["sources"][sid]["files"]
+        if set(files) != {"Train", "ClosedSet-Val", "ClosedSet-Test"} or len(files) != 3:
+            raise ValueError("official baseline requires exactly Train, ClosedSet-Val and ClosedSet-Test")
+        if df.groupby("observationID")["_file"].nunique().gt(1).any():
+            raise ValueError("observation IDs shared across official partitions")
+        if df.groupby("filename")["_file"].nunique().gt(1).any():
+            raise ValueError("image filenames shared across official partitions")
     logger.info("FungiTastic: %d rows in %d files", len(df), len(frames))
     # T6 kingdom
     bad = df["kingdom"] != "Fungi"

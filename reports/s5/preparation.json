@@ -1,0 +1,43 @@
+{
+  "phase": "S5",
+  "prepared_on": "2026-10-10",
+  "platform_target": "Android",
+  "android_device_model": null,
+  "state": "prepared; mobile training not started",
+  "baseline_run": "20261004T133123181686Z_ma_resnet18_v002",
+  "baseline_best_epoch": 11,
+  "baseline_stop_epoch": 16,
+  "trials": [
+    {
+      "trial": "a",
+      "config": "configs/train/s5_mobilenet_v3_large_v002_a.yaml",
+      "sha256": "43d0645700504ade2e4b3590eab788e80c228d1bcfa37a461d1143405a9ba25b",
+      "lr": 0.0003,
+      "class_weighting": "none"
+    },
+    {
+      "trial": "b",
+      "config": "configs/train/s5_mobilenet_v3_large_v002_b.yaml",
+      "sha256": "0ac98aee8419709ce26b0355e44595e50081af5ed1ef41eb59594a81cee2604c",
+      "lr": 0.0001,
+      "class_weighting": "none"
+    },
+    {
+      "trial": "c",
+      "config": "configs/train/s5_mobilenet_v3_large_v002_c.yaml",
+      "sha256": "eae0871bec72ba4f40a4d61356321c42643cbd8a680d338fab1f4703d489f983",
+      "lr": 0.0003,
+      "class_weighting": "inverse_sqrt"
+    },
+    {
+      "trial": "d",
+      "config": "configs/train/s5_mobilenet_v3_large_v002_d.yaml",
+      "sha256": "c08e9dd9ce081611535e446a3c943ab11eebc9391f8ee225cb2031bc59fee5e0",
+      "lr": 0.0001,
+      "class_weighting": "inverse_sqrt"
+    }
+  ],
+  "new_test_evaluations": 0,
+  "architecture_profile": "reports/s5/architecture_profile.json",
+  "syntax_checks": "Python and PowerShell source parsed successfully; smoke not executed"
+}

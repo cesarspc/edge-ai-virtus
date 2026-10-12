@@ -1,5 +1,13 @@
 # edge-ai-virtus
 
+## Primera baseline con particiones oficiales (v002)
+
+Ejecutar en PowerShell desde la raíz: `powershell -ExecutionPolicy Bypass -File scripts/run_baseline.ps1`.
+Usa únicamente FungiTastic (`Train`, `ClosedSet-Val`, `ClosedSet-Test`), verifica hashes, protege test
+al excluir copias exactas entre particiones y entrena ResNet-18. La prueba rápida no evalúa test.
+Opciones y protocolo: [docs/baseline_v002.md](docs/baseline_v002.md). La documentación de v001 sigue abajo
+como historial de las fases anteriores.
+
 Investigación universitaria sobre la **identificación multimodal de macromicetos mediante inteligencia artificial**:
 imágenes, geolocalización, variables climáticas, sustrato y otros metadatos. En fases posteriores se evaluarán modelos
 visuales y multimodales y su ejecución en dispositivos móviles.

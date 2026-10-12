@@ -16,6 +16,7 @@ import pandas as pd
 
 # id -> (category, action, description). Descriptions are in Spanish because they go verbatim into the reports.
 RULES: dict[str, tuple[str, str, str]] = {
+    "D8": ("duplicados", "excluir", "SHA-256 idéntico entre particiones: prioridad test > val > train; sin reasignar imágenes."),
     # --- alcance y taxonomía
     "T1": ("taxonomía", "excluir", "El género (normalizado) no está entre las 10 clases del alcance."),
     "T2": ("taxonomía", "corregir", "Sinónimo de género reasignado al género aceptado (Coriolus→Trametes, Hirneola→Auricularia; en MO vía synonym_id)."),

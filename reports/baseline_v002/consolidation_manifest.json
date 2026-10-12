@@ -1,0 +1,34 @@
+{
+  "source_run": "runs\\20261004T133123181686Z_ma_resnet18_v002",
+  "source_sha256": {
+    "best.pt": "a5edc643662266708263899c2fdd6977f0dabac160739ba7ccfde82603af50e3",
+    "completed.json": "10f2009a4904c96d3deca1cbfb5dd65980ee31639e2e48d81dbfc0ccfd04170e",
+    "history.csv": "f99bf2011bd4cba4eecef47929cc71ae90c95e058a1b4e141b972727ca9ec5e1",
+    "last.pt": "356eae581d36d82b2ba38d02d98fb3f32ae4ed8280ac4d4b2d8ccadeeb002b25",
+    "metrics_test.json": "565247eae09c6ac9d8b3147e36a1bd5cae46545b16cf5c2049756ad768b7d388",
+    "metrics_val.json": "504430bac7578e1791e66c860b85780372859cc255c879c03b00b5f0647de97d",
+    "predictions_test.csv": "ae3f098934839ac9c08ca12f8d00a43651eeb97f06cdbff340e2f52c6a608fb2",
+    "predictions_val.csv": "a28e3eba181401ad80a2327c566e88472c7a81724eee045f15b47565ec39ac8d",
+    "progress.json": "e94a42718588adc876729e1c9bdd00debe1705bd7f79f969dbf548bef01ebdfd",
+    "RESULTS.md": "09e151406479acf040a8e3a8de72c55b9169add0f34ffa47a2d674adf0921971",
+    "run.json": "dd21dc851501e1891e554dce32bc85d139f88e581bbf524d03bcf2cc7a95e5c3",
+    "test_started.json": "2cf70c903497b3fd9241109d4fe074c4c6d3829a980e63e53e7499c215613a88"
+  },
+  "model_inference_performed": false,
+  "test_evaluations_added": 0,
+  "generator_sha256": "a679773daced6691b4857b702875fdc5195af8f564bda091bbb68b35d1d012f4",
+  "output_sha256": {
+    "reports\\baseline_v002\\confusion_pairs.csv": "4b6868949c9db7a56eb403d52840e88151c7bbf720b39b2312e29acdccd350df",
+    "reports\\baseline_v002\\metrics_by_genus.csv": "694f4b4613fe843e3f25255ca7d8a223f3085fb72d20e7fdd704752e286c14b2",
+    "reports\\baseline_v002\\metrics_summary.csv": "dfc6ea35710f4aad4478c69102b9721c90dd62c33f6ec664cfa54bc4c1cf1400",
+    "reports\\baseline_v002\\small_class_support.csv": "79e143ffd52141444061d129d0164f90ccffbbfa3d6f2dd4ae7b233acd8b3b94",
+    "reports\\baseline_v002\\validation_image_errors.csv": "782731f072cde3e0c5993bdcf281797531945e516e4aa664f5cf70c31a7b3c29",
+    "reports\\baseline_v002\\validation_observation_errors.csv": "5aa31829fecebaaef44d77768e63d620ae1d239fe313d8bd17e7be4a9ead1a6a",
+    "reports\\figures\\baseline_v002_confusion_image_counts.png": "205c87fbbbc16fea0b1b348cf66a14e419dee287fc2080e0dd3c4e43304c6350",
+    "reports\\figures\\baseline_v002_confusion_image_percent.png": "8073f0e3c6bf5b65b344cfb596d14723cd5f4475a413f1764709f73454f2cc74",
+    "reports\\figures\\baseline_v002_confusion_observation_counts.png": "36c7545e35ba7f397f651485c9def6f780da3be30ddc3c1a1fb05f7ebc825288",
+    "reports\\figures\\baseline_v002_confusion_observation_percent.png": "746b5ae5c98386b664d2e293cf156149e0765b3afbee177c696441cdab77da69",
+    "reports\\figures\\baseline_v002_f1_by_genus.png": "08177a99bbcb1b7a0c5e07ac5721779111ac225443d0aeba530bb002f322e438",
+    "reports\\figures\\baseline_v002_training_curves.png": "82c476e9c12f6e707fe698565d5638b5cbe630cbfe74afae8c67f1264783ef12"
+  }
+}

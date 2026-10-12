@@ -1,0 +1,190 @@
+{
+  "version": "v002",
+  "created_utc": "2026-10-01T22:52:17Z",
+  "content_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "builder": {
+    "command": "python scripts/data/build_dataset.py --config configs/dataset_v002.yaml",
+    "git_commit": "9cf685adb8f52c42a9b615255be3128feddd5947",
+    "git_dirty": true,
+    "python": "3.12.10",
+    "pandas": "3.0.6",
+    "numpy": "2.5.3",
+    "pyyaml": "6.0.3"
+  },
+  "config": {
+    "path": "configs/dataset_v002.yaml",
+    "sha256": "68dfbb94ee76552af924445998a98abf2e365b102610c9a4088f6181222ee47c"
+  },
+  "schema": {
+    "path": "data/schemas/metadata_schema_v1.yaml",
+    "sha256": "c2308d0fb26b41374bcae666d675a30b1e1cc97ea21a94ea5bf73f988aee39bf",
+    "schema_id": "metadata_schema_v1"
+  },
+  "code": [
+    {
+      "path": "scripts/data/build_dataset.py",
+      "sha256": "3c04671b3230fae0607bb47139cba34acfa77be6544e5081ae33f4dae054d123"
+    },
+    {
+      "path": "scripts/data/curation_sources.py",
+      "sha256": "17d90b153e4054a177796c10d067bbfcf49d9ce2da4d1381a5e7898189ffddf4"
+    },
+    {
+      "path": "scripts/data/cleaning.py",
+      "sha256": "3964e45b2ef0c84bd9bb32c6d424491d4cf6c267bd7116ec9751bdc1466d8c4e"
+    },
+    {
+      "path": "scripts/data/splits.py",
+      "sha256": "e041198fa1308c8faa0e06b45af4bb76a0e3f56e5b5afd66913d86fb62e97a6d"
+    },
+    {
+      "path": "scripts/data/metadata_schema.py",
+      "sha256": "6cbfe1799f658f0eff6c2b6285a144c3813bd3ae9049909c11aabb43cfddd202"
+    },
+    {
+      "path": "scripts/data/adapters.py",
+      "sha256": "9ef25c1bca4bf2ac82f0734f5347f859c22f463b9eb582720f3aeace9ec90908"
+    },
+    {
+      "path": "scripts/data/common.py",
+      "sha256": "3a3d4e42c461b1ab5e76641bd821b9df983a22ce3ab936282de9010224ee760d"
+    },
+    {
+      "path": "scripts/data/image_curation.py",
+      "sha256": "ecb64ad8a5d7a90989da27a98f5f16c5de3732ed8415e153033ece1f5594d2e9"
+    }
+  ],
+  "inputs": [
+    {
+      "path": "data/raw/fungitastic/metadata.zip",
+      "size_bytes": 327493894,
+      "sha256": "b1dc1d24714d9522c545d8cdd8f7e6dd9999afe2620d271aeb761f1def0719ac",
+      "matches_raw_files_csv": true
+    },
+    {
+      "path": "data/raw/images/fungitastic_v002/download_manifest.csv",
+      "size_bytes": 10802088,
+      "sha256": "800a501ace754a5dbfbfb9edb2acdeabe04b23e8793294a7744f9dcceb3d179e",
+      "matches_raw_files_csv": null
+    }
+  ],
+  "outputs": [
+    {
+      "name": "observations.csv",
+      "path": "data/processed/v002/observations.csv",
+      "versioned_in_git": false,
+      "sha256": "eb35b7ea5dc9f0651d4b80a18ac1a5951dcbefbeb82fc37b6ad83572975f81e4",
+      "rows": 25290
+    },
+    {
+      "name": "images.csv",
+      "path": "data/processed/v002/images.csv",
+      "versioned_in_git": false,
+      "sha256": "a7d5546d005d996a0e10cfabcb79d524fce2030dd4c7d4f060fd19765d7092f6",
+      "rows": 43621
+    },
+    {
+      "name": "splits.csv",
+      "path": "data/versions/v002/splits.csv",
+      "versioned_in_git": true,
+      "sha256": "7254055b2a45a7a6a801994cb5b2cb585ab5dfaeca0c2fbddc1b4abdf2e17883"
+    },
+    {
+      "name": "classes.csv",
+      "path": "data/versions/v002/classes.csv",
+      "versioned_in_git": true,
+      "sha256": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd"
+    },
+    {
+      "name": "cleaning_log.csv",
+      "path": "data/versions/v002/cleaning_log.csv",
+      "versioned_in_git": true,
+      "sha256": "04a6185e4e33f20ba91e14bb99d8af3fb7d0b4b5e7e2c312b3a6dbff31ec5b58"
+    },
+    {
+      "name": "split_summary.csv",
+      "path": "data/versions/v002/split_summary.csv",
+      "versioned_in_git": true,
+      "sha256": "8a2c5132d929a34f423acbfb99b51fced71d3ef214b8370f121c00e93862e441"
+    },
+    {
+      "name": "env_coverage.csv",
+      "path": "data/versions/v002/env_coverage.csv",
+      "versioned_in_git": true,
+      "sha256": "5a9b5d7e989517c74cdf2b56f1176990526ba9f51dc10e3af7088c715aa8b0f3"
+    },
+    {
+      "name": "image_exclusions.csv",
+      "path": "data/versions/v002/image_exclusions.csv",
+      "versioned_in_git": true,
+      "sha256": "c9fceceb6c995554a05fa5adaee61228b5218573bf38244262a03e801d3a9ba9"
+    },
+    {
+      "name": "near_duplicates.csv",
+      "path": "data/versions/v002/near_duplicates.csv",
+      "versioned_in_git": true,
+      "sha256": "9cfdb7d734f17f9ee498b92a640d4959cb489aa9ad74b58613965c9f8a405df2"
+    },
+    {
+      "name": "site_day_overlaps.csv",
+      "path": "data/versions/v002/site_day_overlaps.csv",
+      "versioned_in_git": true,
+      "sha256": "5f48b16be2aed027ded49d12468ffffdfe05de924f902e86aeed88e04b0ad24c"
+    },
+    {
+      "name": "image_integrity.csv",
+      "path": "data/versions/v002/image_integrity.csv",
+      "versioned_in_git": true,
+      "sha256": "36f6e95dff814d608407db2c80eb3e502783424ac711bd861317d94b578ea860"
+    },
+    {
+      "name": "small_images.csv",
+      "path": "data/versions/v002/small_images.csv",
+      "versioned_in_git": true,
+      "sha256": "d020f12d2c77974c537ba731c18e8d0021600a8b329ae398809f87c763d235cf"
+    }
+  ],
+  "counts": {
+    "observations": 25290,
+    "images": 43621,
+    "observations_by_split": {
+      "test": 4039,
+      "train": 17799,
+      "val": 3452
+    },
+    "images_by_split": {
+      "test": 7159,
+      "train": 30172,
+      "val": 6290
+    },
+    "observations_by_source": {
+      "fungitastic": 25290
+    },
+    "images_by_source": {
+      "fungitastic": 43621
+    },
+    "groups_development": 20681
+  },
+  "leakage_checks": {
+    "groups_in_more_than_one_split": 0,
+    "observations_with_images_in_more_than_one_split": 0,
+    "images_in_more_than_one_split": 0,
+    "observation_uid_duplicated": 0,
+    "image_uid_duplicated": 0
+  },
+  "dataset_level_licenses": {
+    "fungitastic": "Declaraciones inconsistentes (artículo CC BY 4.0; Kaggle CC BY-NC-SA 4.0; registros GBIF CC BY-NC 4.0). Se registra la más restrictiva: CC-BY-NC-SA."
+  },
+  "known_limitations": [
+    "Site-day overlap and perceptual similarity are reported, not reassigned.",
+    "Climate unavailable; first model uses images only."
+  ],
+  "split_protocol": "Train / ClosedSet-Val / ClosedSet-Test (official; no reassignment)",
+  "image_curation": {
+    "exact_policy": "test > val > train; same-partition copies retained",
+    "excluded_images": 0,
+    "near_duplicate_pairs": 1,
+    "small_images_retained": 33,
+    "near_duplicates_auto_excluded": false
+  }
+}

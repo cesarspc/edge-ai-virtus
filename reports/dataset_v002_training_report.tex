@@ -1,0 +1,684 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage[top=2.3cm,bottom=2.3cm,left=2.4cm,right=2.4cm]{geometry}
+\usepackage{booktabs,tabularx,array,enumitem,amsmath,hyperref}
+\usepackage{pgfplots}
+\pgfplotsset{compat=1.18}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.5em}
+\renewcommand{\arraystretch}{1.14}
+\setlist[itemize]{topsep=3pt,itemsep=2pt,parsep=0pt}
+\urlstyle{tt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\newcommand{\archivo}[1]{\nolinkurl{#1}}
+
+\title{\textbf{Exploración de modelos de Inteligencia Artificial multimodal\\
+para la identificación de macromicetos mediante dispositivos móviles}\\[0.6em]
+\normalsize Semanas 3 y 4: curaduría del dataset y formulación de la línea base visual con ResNet-18}
+\author{Daniel Esteban Camacho Ospina\\Cesar Augusto Pulido Cuervo}
+\date{4 de octubre de 2026}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Se establece una línea base visual para la clasificación de diez géneros de
+macromicetos mediante transferencia de aprendizaje con ResNet-18. El dataset
+v002 comprende 43\,621 imágenes de 25\,290 observaciones de FungiTastic y conserva
+las particiones oficiales de entrenamiento, validación y prueba. La metodología
+incluye normalización taxonómica, un esquema de procedencia y calidad de los
+metadatos ambientales, versionado y controles de integridad y fuga de información.
+La selección del modelo utiliza macro-F1 por observación en validación.
+El entrenamiento concluye en la época 16 mediante parada temprana y selecciona
+el checkpoint de la época 11, con macro-F1 de observación de 0,9545 en val y
+0,9463 en test. La evaluación final de test se ejecutó una sola vez.
+El trabajo corresponde a las semanas S3 y S4 y
+establece las condiciones para evaluar una arquitectura eficiente para móvil
+y consolidar las métricas durante S5 y S6.
+\end{abstract}
+
+\section{Introducción y objetivo}
+
+La identificación de macromicetos a partir de fotografías requiere una base de
+datos consistente y un protocolo de evaluación que permita distinguir el
+aprendizaje visual de la dependencia entre observaciones. La coexistencia de
+varias imágenes de un mismo hallazgo, el desbalance entre géneros y las diferencias
+de contexto geográfico condicionan la interpretación del desempeño.
+
+El objetivo de esta etapa es establecer un dataset reproducible y formular una
+arquitectura de referencia para cuantificar el rendimiento inicial del componente
+visual. El modelo \(M_A=f(I)\) utiliza únicamente la imagen \(I\) para predecir uno
+de diez \textbf{géneros}. Su alcance es la clasificación a nivel de género;
+la identificación de especies y la determinación de comestibilidad no son
+variables objetivo de este experimento. Aunque el proyecto contempla modelos
+multimodales, los metadatos ambientales se conservan para etapas posteriores y
+no se incorporan a la entrada de esta línea base.
+
+\section{Correspondencia con las semanas S3 y S4}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{p{2.7cm}p{3.1cm}Y}
+\toprule
+\textbf{Semana y periodo} & \textbf{Fase} & \textbf{Alcance de la etapa}\\
+\midrule
+S3: 21--27 de septiembre & Fase 2: Auditoría y curaduría & Reglas de limpieza y
+normalización; particiones reproducibles train/val/test; esquema de metadatos
+ambientales con fuente, método y calidad; versionado del dataset.\\
+S4: 28 de septiembre--4 de octubre & Fase 3: Línea base visual & Configuración
+del entorno de entrenamiento y primer entrenamiento con una arquitectura de referencia.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+El dataset v002 y su protocolo de particiones materializan los componentes de
+curaduría y reproducibilidad de S3. La configuración de ResNet-18 y el
+entrenamiento inicial corresponden a S4. La arquitectura de referencia completó
+su evaluación final y sus artefactos quedaron conservados. El análisis distingue
+el criterio de selección en val de las métricas finales de test.
+
+\section{Diseño del dataset y trazabilidad}
+
+La versión v002 utiliza una sola fuente y preserva las particiones oficiales de
+FungiTastic. El versionado distingue esta definición de versiones anteriores y
+permite asociar cada experimento con un conjunto específico de imágenes,
+etiquetas y controles de calidad. La integridad se comprueba con SHA-256 y la
+consistencia se valida entre las tablas de observaciones e imágenes.
+
+\subsection{Organización y trazabilidad}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{p{5.7cm}Y}
+\toprule
+\textbf{Ubicación} & \textbf{Contenido y función}\\
+\midrule
+\archivo{data/raw/fungitastic/} & Metadatos originales; se leen sin modificarlos.\\
+\archivo{data/raw/images/fungitastic_v002/} & Fotografías locales y manifiesto de descarga.\\
+\archivo{data/interim/v002/} & Tablas candidatas necesarias para planificar la descarga.\\
+\archivo{data/processed/v002/} & Tablas finales \archivo{observations.csv} e \archivo{images.csv}.\\
+\archivo{data/versions/v002/} & Manifiesto, clases, particiones, auditorías y ficha del dataset.\\
+\archivo{configs/train/ma_resnet18_v002.yaml} & Arquitectura, transformaciones y parámetros de entrenamiento.\\
+\archivo{runs/<run_id>/} & Configuración efectiva, historial, checkpoints, progreso y resultados.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Las fotografías, los datos procesados y las salidas de entrenamiento permanecen en
+local y se excluyen de Git. Las configuraciones y los artefactos de auditoría se
+pueden versionar. El manifiesto registra hashes de entradas, código y salidas.
+La reconstrucción de v002 con \archivo{--check} produjo contenido idéntico.
+La huella publicada es:
+\begin{center}\small\ttfamily
+144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90
+\end{center}
+
+\subsection{Esquema de metadatos ambientales}
+
+La tabla de observaciones organiza la información ambiental en grupos de
+geolocalización, fecha, elevación, sustrato, hábitat, cobertura del suelo, región
+biogeográfica y clima. Cada grupo asocia sus variables con una terna de
+procedencia: \textbf{fuente}, \textbf{método} y \textbf{calidad}.
+
+La fuente identifica el origen del dato; el método distingue la forma de
+obtención o transformación; la calidad permite separar valores válidos,
+imprecisos, sospechosos, ausentes o invalidados. Esta representación evita
+interpretar una ausencia como un valor observado y permite definir criterios
+explícitos para futuros modelos multimodales. La normalización conserva además
+el texto original cuando se utilizan vocabularios controlados.
+
+\section{Fuente, curaduría y tamaño final}
+
+\subsection{Selección de FungiTastic}
+
+Se emplean exclusivamente los CSV \archivo{Train}, \archivo{ClosedSet-Val}
+y \archivo{ClosedSet-Test}. No se creó \archivo{test_external}.
+La auditoría previa y la configuración documentan la exclusión de DF20 por su
+solapamiento con FungiTastic, de OpenSet porque contiene ClosedSet, y de
+Mini/FewShot y DNA por sus protocolos distintos. GBIF, iNaturalist,
+Mushroom Observer y MIND.Funga no forman parte de esta primera versión de una fuente.
+Estas decisiones reducen el riesgo de duplicar contenido entre fuentes; no demuestran
+por sí solas ausencia de sesgo.
+
+\subsection{Unidad de análisis y limpieza}
+
+Una \textbf{observación} representa un hallazgo y puede contener varias fotografías.
+Cada imagen tiene un identificador propio y una referencia a su observación.
+Todas las imágenes del mismo hallazgo conservan la etiqueta y la partición de este.
+
+La lectura de los tres CSV produjo 615\,193 filas de imagen. El registro de limpieza
+documenta la exclusión de 10\,049 filas sin clasificación en Fungi y, posteriormente,
+561\,523 filas fuera de los diez géneros. Quedaron \textbf{43\,621 imágenes de
+25\,290 observaciones}. Estos conteos corresponden al subconjunto seleccionado,
+no a la totalidad de FungiTastic.
+
+Se normalizan nombres, espacios y sinónimos configurados
+(\textit{Coriolus}\(\rightarrow\)\textit{Trametes},
+\textit{Hirneola}\(\rightarrow\)\textit{Auricularia}); los identificadores de
+clase van de 0 a 9 según el orden de la configuración. También se normalizan
+fechas, coordenadas, licencias y vocabularios ambientales, conservando su procedencia
+y calidad. Las marcas de calidad ambiental no implican excluir una imagen de este
+modelo. Por ejemplo, el clima figura como ausente en las 25\,290 observaciones.
+
+\subsection{Conteos por género}
+
+Los conteos de imágenes y observaciones son números enteros; los millares se
+separan mediante un espacio fino. Los porcentajes se identifican explícitamente
+con el símbolo \(\%\), y la coma se utiliza como separador decimal.
+
+\begin{center}
+\small
+\begin{tabular}{lrrr|rrr}
+\toprule
+& \multicolumn{3}{c}{\textbf{Observaciones}} & \multicolumn{3}{c}{\textbf{Imágenes}}\\
+\textbf{Género} & \textbf{Train} & \textbf{Val} & \textbf{Test} & \textbf{Train} & \textbf{Val} & \textbf{Test}\\
+\midrule
+Amanita & 3\,752 & 904 & 1\,315 & 6\,508 & 1\,709 & 2\,393\\
+Auricularia & 1\,443 & 288 & 319 & 2\,106 & 411 & 475\\
+Ganoderma & 1\,832 & 335 & 346 & 3\,567 & 738 & 653\\
+Geastrum & 779 & 79 & 182 & 1\,350 & 157 & 377\\
+Hericium & 494 & 66 & 51 & 826 & 114 & 101\\
+Lycoperdon & 2\,166 & 408 & 407 & 3\,336 & 686 & 660\\
+Morchella & 256 & 11 & 20 & 405 & 21 & 34\\
+Pleurotus & 1\,465 & 251 & 319 & 2\,690 & 495 & 616\\
+Trametes & 3\,654 & 756 & 791 & 6\,626 & 1\,421 & 1\,384\\
+Xylaria & 1\,958 & 354 & 289 & 2\,758 & 538 & 466\\
+\midrule
+\textbf{Total} & \textbf{17\,799} & \textbf{3\,452} & \textbf{4\,039} & \textbf{30\,172} & \textbf{6\,290} & \textbf{7\,159}\\
+\bottomrule
+\end{tabular}
+\end{center}
+
+Se conserva el desbalance original del subconjunto oficial. No se igualaron los
+conteos por clase, no se sobremuestrearon clases y no se aplicaron pesos de clase
+en la función de pérdida. La macro-F1 permite dar igual importancia a los diez
+géneros durante la selección, pero no elimina el desbalance de las actualizaciones
+de entrenamiento. Morchella tiene solo 11 observaciones de val y 20 de test;
+su rendimiento debe interpretarse con este soporte reducido.
+
+\section{Particiones y controles de fuga de información}
+
+\subsection{Protocolo oficial}
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{lrrY}
+\toprule
+\textbf{Partición} & \textbf{Observaciones} & \textbf{Imágenes} & \textbf{Uso}\\
+\midrule
+Train & 17\,799 (70,38\,\%) & 30\,172 (69,17\,\%) & Actualizar los pesos del modelo.\\
+ClosedSet-Val & 3\,452 (13,65\,\%) & 6\,290 (14,42\,\%) & Seleccionar el checkpoint y controlar la parada temprana.\\
+ClosedSet-Test & 4\,039 (15,97\,\%) & 7\,159 (16,41\,\%) & Evaluación final del mejor checkpoint.\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Cada celda de observaciones e imágenes presenta el conteo y, entre paréntesis,
+su porcentaje respecto al total de 25\,290 observaciones o 43\,621 imágenes,
+respectivamente.
+
+La columna \archivo{split} se asigna directamente a partir del CSV oficial y
+coincide con \archivo{split_temporal}. Las proporciones anteriores se calcularon
+después del filtrado de géneros: no son porcentajes fijados mediante una nueva
+partición aleatoria de \(70\,\%/15\,\%/15\,\%\). Val es la evaluación durante el desarrollo.
+Test queda reservado y no interviene en gradientes, selección o parada temprana.
+
+\subsection{Auditorías ejecutadas}
+
+\begin{itemize}
+\item \textbf{Identidad:} cero identificadores de imagen u observación duplicados
+y cero observaciones con imágenes en más de una partición. El esquema valida
+la coincidencia de etiqueta, partición y número de fotografías de cada observación.
+\item \textbf{Sitio-día:} se agrupan observaciones por fecha y coordenadas redondeadas
+a dos decimales. Si faltan datos válidos, se usa un grupo individual. Se encontraron
+\textbf{cero grupos compartidos entre particiones}. Este es un diagnóstico:
+no se reasignan filas y la celda angular no constituye una distancia física constante.
+\item \textbf{Duplicados exactos:} se verificaron los SHA-256 de las imágenes y no
+se encontraron copias exactas entre particiones; las exclusiones fueron cero.
+La política implementada protege test sobre val y val sobre train, retirando solo
+la copia de menor prioridad. Las copias dentro de la misma partición se conservan.
+\item \textbf{Similitud perceptual:} se utiliza pHash de 64 bits y distancia de
+Hamming menor o igual a 4. Se reportó \textbf{un par entre train y test}, de
+Lycoperdon: \archivo{0-3336959327.JPG} y \archivo{2-4465862839.JPG}, con distancia 4.
+Se conserva para respetar el protocolo; similitud perceptual no prueba identidad.
+\item \textbf{Tamaño:} 33 fotografías decodificables tienen un lado menor de 128
+píxeles. Se conservaron y reportaron; las transformaciones las redimensionan.
+\end{itemize}
+
+Los controles se registran en \archivo{image_integrity.csv},
+\archivo{image_exclusions.csv}, \archivo{near_duplicates.csv},
+\archivo{site_day_overlaps.csv} y \archivo{small_images.csv}.
+El entrenamiento vuelve a comprobar los archivos contra los hashes publicados.
+
+\section{Formulación de la línea base visual con ResNet-18}
+
+\subsection{Fundamento y papel de la arquitectura de referencia}
+
+ResNet-18 es una red convolucional de 18 capas con conexiones residuales.
+En un bloque de este tipo, la salida combina una transformación aprendida con
+la entrada mediante una conexión de identidad o una proyección compatible:
+\[
+h_{l+1}=\sigma\bigl(F(h_l;\theta_l)+S(h_l)\bigr),
+\]
+donde \(F\) representa la transformación del bloque, \(S\) la conexión residual
+y \(\sigma\) la activación. Esta estructura facilita la propagación de la
+información y de los gradientes durante la optimización.
+
+El preentrenamiento en ImageNet aporta una inicialización de filtros visuales
+que se adaptan al dominio de macromicetos mediante ajuste de toda la red. La
+arquitectura se utiliza como referencia para estudiar la capacidad discriminativa
+de la imagen y comparar posteriormente modelos aptos para dispositivos móviles.
+Su elección no acredita por sí sola eficiencia de inferencia en un teléfono:
+esa propiedad requiere medir tamaño, latencia y consumo en la etapa siguiente.
+
+\subsection{Arquitectura y entrada}
+
+Se utiliza \textbf{ResNet-18} con pesos \archivo{IMAGENET1K_V1} de torchvision.
+La capa final se reemplaza por una capa lineal de diez salidas; se ajustan todos
+los parámetros de la red. El modelo produce logits y, en evaluación, se aplica
+softmax para obtener probabilidades por género.
+
+Las imágenes se convierten a RGB y la entrada de la red es de
+\(224\times224\) píxeles. En train se aplican recorte aleatorio redimensionado
+con escala de área entre 0,5 y 1,0, volteo horizontal aleatorio y variación de color
+(brillo, contraste y saturación: 0,2; tono: 0,02).
+En val/test se redimensiona el lado menor a 224 píxeles y se aplica recorte central
+de \(224\times224\), sin aumento aleatorio. En ambos casos se normaliza cada
+canal con las medias \((0,485;0,456;0,406)\) y desviaciones
+\((0,229;0,224;0,225)\) de ImageNet.
+
+\subsection{Pérdida y optimización}
+
+La función de pérdida es entropía cruzada con suavizado de etiquetas
+\(\varepsilon=0,1\). Para la clase objetivo \(y\) y \(K=10\):
+\[
+q_c=(1-\varepsilon)\mathbf{1}[c=y]+\frac{\varepsilon}{K},
+\qquad \mathcal{L}=-\sum_{c=1}^{K}q_c\log p_c.
+\]
+No se incorporan ponderaciones de clase. El optimizador es AdamW; la tasa de
+aprendizaje se incrementa durante la primera época y después sigue un descenso
+coseno, actualizado por lote.
+
+\begin{center}
+\small
+\begin{tabularx}{\textwidth}{p{5.4cm}Y}
+\toprule
+\textbf{Parámetro} & \textbf{Valor implementado}\\
+\midrule
+Máximo de épocas / semilla & 30 / 42\\
+Lote train / lote evaluación & 64 / 128\\
+Optimizador / tasa inicial & AdamW / \(3\times10^{-4}\)\\
+Decaimiento de pesos & 0,05\\
+Scheduler / calentamiento & Coseno / una época\\
+Suavizado de etiquetas & 0,1\\
+Selección / parada temprana & Macro-F1 por observación en val / cinco épocas sin mejora\\
+Carga de datos & Cuatro workers; recreados por época para la reanudación\\
+Dispositivo de la corrida revisada & CPU; AMP desactivado en la configuración efectiva\\
+Determinismo estricto & Desactivado; se fija la semilla y se guardan estados aleatorios\\
+\bottomrule
+\end{tabularx}
+\end{center}
+
+Los lotes de train se barajan. Con 30\,172 imágenes y lote 64 se realizan
+471 lotes completos por época; el último lote incompleto de 28 imágenes se
+descarta en esa época. Val/test no descartan el último lote. La selección no
+usa la pérdida de train: el mejor checkpoint maximiza macro-F1 de observación en val.
+
+\subsection{Métricas por imagen y por observación}
+
+Además de macro-F1, se calculan exactitud, exactitud balanceada, top-1 y top-3,
+precisión, sensibilidad y F1 por género, soporte y matriz de confusión.
+Las predicciones de imágenes de un mismo hallazgo se agregan mediante promedio
+de probabilidades:
+\[
+\bar p_{o,c}=\frac{1}{n_o}\sum_{i\in I_o}p_{i,c},
+\qquad \hat y_o=\arg\max_c\bar p_{o,c}.
+\]
+Así, cada observación cuenta una vez en la métrica utilizada para seleccionar el
+modelo, aunque tenga varias fotografías. Para cada género se calcula
+\(F1_c=2P_cR_c/(P_c+R_c)\), y
+\(\mathrm{macro\text{-}F1}=\frac{1}{10}\sum_{c=1}^{10}F1_c\).
+Las clases sin predicción positiva reciben cero en las divisiones indefinidas.
+
+Al terminar el entrenamiento se carga \archivo{best.pt} y se producen métricas
+y predicciones de val y test. Las rutas \archivo{--smoke} y
+\archivo{--eval-only} evalúan solo val; la primera comprueba la ejecución con
+tres lotes y no constituye una estimación de rendimiento.
+
+\section{Reproducibilidad y continuidad experimental}
+
+Cada ejecución conserva la configuración efectiva, la huella del dataset,
+el historial de optimización y los estados necesarios para continuar el
+experimento. La verificación de disponibilidad e integridad precede al
+entrenamiento, mientras que el seguimiento del progreso permite distinguir
+la preparación de datos, las actualizaciones del modelo y la validación.
+
+\archivo{best.pt} conserva el mejor modelo según val.
+\archivo{last.pt} se guarda de forma atómica al completar una época y su validación:
+incluye pesos actuales, optimizador, scheduler, GradScaler, estados aleatorios,
+historial, mejor checkpoint y contador de parada temprana.
+\archivo{--resume} continúa desde la siguiente época y crea un nuevo directorio
+con el historial heredado y el campo \archivo{resumed_from}.
+
+La opción \archivo{-PauseAfterEpoch} o un archivo \archivo{pause.request} permite
+pausar al terminar la época sin evaluar test. Una interrupción a mitad de época
+pierde ese avance parcial, pero conserva el último \archivo{last.pt} completo.
+Antes de finalizar la primera época todavía no existe este checkpoint.
+La reanudación exige la misma configuración, etiquetas, huella y tipo de dispositivo;
+la semilla no garantiza resultados numéricamente idénticos entre hardware distinto.
+
+Se rechaza reanudar una corrida terminada o que ya inició la evaluación de test.
+\archivo{test_started.json} registra el comienzo de esa evaluación y
+\archivo{completed.json} acredita una finalización exitosa.
+Estos controles evitan una repetición automática de test en esa corrida.
+
+\section{Resultados y discusión}
+
+\subsection{Finalización y selección de la arquitectura de referencia}
+
+La ejecución consolidada es \archivo{20261004T133123181686Z_ma_resnet18_v002},
+que heredó el historial y los estados de entrenamiento de las reanudaciones previas.
+Se completaron \textbf{16 épocas}; la parada temprana ocurrió después de cinco
+épocas consecutivas (12--16) sin superar la macro-F1 de observación en val
+de la \textbf{época 11}. Este checkpoint fue recuperado para la evaluación final.
+El registro de finalización confirma \textbf{una evaluación de test} y la
+existencia de historial, predicciones y métricas finales.
+
+La configuración efectiva corresponde a Python 3.12.10, PyTorch 2.14.1+cpu
+y torchvision 0.29.1+cpu, con ejecución en CPU, AMP desactivado y cero
+imágenes faltantes. La consolidación utiliza exclusivamente los archivos
+guardados; no ejecuta otra inferencia ni vuelve a evaluar test.
+
+\subsection{Evolución del entrenamiento}
+
+F1 se expresa en la escala de 0 a 1. La exactitud se presenta como porcentaje
+con símbolo explícito; la pérdida es entropía cruzada y el tiempo está en minutos.
+\begin{center}\small
+\begin{tabular}{rrrrrr}
+\toprule
+\textbf{Época} & \textbf{Pérdida train} & \textbf{F1 imagen val} & \textbf{F1 obs. val} & \textbf{Exactitud imagen} & \textbf{Minutos}\\
+\midrule
+1 & 1,0928 & 0,7883 & 0,8454 & 83,35\,\% & 97,2\\
+2 & 0,8142 & 0,8430 & 0,9033 & 86,72\,\% & 47,4\\
+3 & 0,7532 & 0,8620 & 0,9005 & 90,17\,\% & 47,9\\
+4 & 0,7147 & 0,8436 & 0,8972 & 88,70\,\% & 48,1\\
+5 & 0,6932 & 0,8680 & 0,9183 & 90,76\,\% & 48,2\\
+6 & 0,6736 & 0,8564 & 0,9233 & 90,45\,\% & 54,9\\
+7 & 0,6553 & 0,8725 & 0,9221 & 89,87\,\% & 52,6\\
+8 & 0,6358 & 0,8782 & 0,9353 & 91,76\,\% & 60,3\\
+9 & 0,6234 & 0,8825 & 0,9343 & 91,37\,\% & 52,7\\
+10 & 0,6051 & 0,8803 & 0,9491 & 91,80\,\% & 47,7\\
+11 & 0,5993 & 0,8997 & \textbf{0,9545} & 92,07\,\% & 94,6\\
+12 & 0,5855 & 0,8924 & 0,9369 & 92,00\,\% & 47,4\\
+13 & 0,5748 & 0,8788 & 0,9348 & 92,03\,\% & 47,3\\
+14 & 0,5651 & 0,8992 & 0,9454 & 93,56\,\% & 47,2\\
+15 & 0,5556 & 0,8948 & 0,9372 & 93,42\,\% & 47,3\\
+16 & 0,5483 & 0,9121 & 0,9494 & 93,78\,\% & 47,3\\
+\bottomrule\end{tabular}\end{center}
+
+La pérdida disminuye de 1,0928 a 0,5483. La macro-F1 de observación pasa
+de 0,8454 en la primera época a 0,9545 en la seleccionada (mejora de
+10,92 puntos porcentuales en la escala de F1). La época 16 alcanza
+0,9121 en F1 de imagen, pero 0,9494 en F1 de observación; por ello no
+sustituye al checkpoint de la época 11. La elección respeta el criterio
+definido previamente y no utiliza el rendimiento de test.
+
+La suma de los tiempos registrados para las 16 épocas es de 14,80 horas;
+la media es 55,5 minutos por época.
+Estos tiempos incluyen validación dentro de cada época, pueden reflejar
+suspensiones y no equivalen al tiempo continuo entre el inicio y el fin
+de una ejecución con pausas y reanudaciones.
+
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}
+\begin{axis}[width=.94\textwidth,height=5.5cm,xlabel={Época},ylabel={Entropía cruzada},
+xmin=1,xmax=16,xtick={1,4,8,11,16},grid=major,
+tick label style={font=\small},label style={font=\small}]
+\addplot[blue,mark=*,mark size=1.5pt] coordinates {(1,1.09280272) (2,0.81420936) (3,0.75321910) (4,0.71470973) (5,0.69315276) (6,0.67358492) (7,0.65531671) (8,0.63580538) (9,0.62341348) (10,0.60508928) (11,0.59928756) (12,0.58554775) (13,0.57480244) (14,0.56513808) (15,0.55558786) (16,0.54828336)};
+\addplot[red,dashed] coordinates {(11,0.54)(11,1.1)};
+\end{axis}
+\end{tikzpicture}
+\par\smallskip
+\begin{tikzpicture}
+\begin{axis}[width=.94\textwidth,height=6cm,xlabel={Época},ylabel={Macro-F1 (0--1)},
+xmin=1,xmax=16,ymin=.77,ymax=.97,xtick={1,4,8,11,16},grid=major,
+legend pos=south east,legend style={font=\small},tick label style={font=\small},label style={font=\small}]
+\addplot[teal,mark=*,mark size=1.5pt] coordinates {(1,0.84537213) (2,0.90328831) (3,0.90047605) (4,0.89724439) (5,0.91827070) (6,0.92326025) (7,0.92208221) (8,0.93527384) (9,0.93433173) (10,0.94907896) (11,0.95454277) (12,0.93685406) (13,0.93480094) (14,0.94544569) (15,0.93718054) (16,0.94938297)};
+\addlegendentry{Val por observación}
+\addplot[blue,mark=square*,mark size=1.5pt] coordinates {(1,0.78831466) (2,0.84302836) (3,0.86196481) (4,0.84363064) (5,0.86797921) (6,0.85643758) (7,0.87253452) (8,0.87815451) (9,0.88246991) (10,0.88031467) (11,0.89968718) (12,0.89241032) (13,0.87879134) (14,0.89923725) (15,0.89483876) (16,0.91210182)};
+\addlegendentry{Val por imagen}
+\addplot[red,dashed,forget plot] coordinates {(11,.77)(11,.97)};
+\end{axis}
+\end{tikzpicture}
+\caption{Curvas construidas a partir del historial guardado. La línea roja señala
+la época 11; las cinco épocas siguientes no mejoran el criterio de selección.
+El eje de F1 está restringido a 0,77--0,97 para mostrar su evolución.}
+\end{figure}
+
+\subsection{Evaluación final del checkpoint seleccionado}
+
+\begin{center}\small\begin{tabular}{llrrrr}
+\toprule
+\textbf{Conjunto} & \textbf{Unidad} & \textbf{N} & \textbf{Macro-F1} & \textbf{Exactitud} & \textbf{Top-3}\\
+\midrule
+VAL & Imagen & 6\,290 & 0,8997 & 92,07\,\% & 98,30\,\%\\
+VAL & Observación & 3\,452 & 0,9545 & 95,94\,\% & 99,33\,\%\\
+TEST & Imagen & 7\,159 & 0,8875 & 91,09\,\% & 98,42\,\%\\
+TEST & Observación & 4\,039 & 0,9463 & 95,79\,\% & 99,43\,\%\\
+\bottomrule\end{tabular}\end{center}
+
+La macro-F1 de observación es 0,9545 en val y 0,9463 en test; la
+diferencia es de 0,82 puntos porcentuales en la escala de F1. La exactitud
+por observación en test es 95,79\,\%. F1 combina precisión y sensibilidad
+y no representa directamente el porcentaje de aciertos.
+
+En val se registran 499 errores de imagen y 140 de observación; en test,
+638 y 170, respectivamente. El promedio de probabilidades de las fotografías
+de un hallazgo permite una predicción conjunta con mayor rendimiento
+observado que la evaluación de fotografías individuales. Las unidades y
+sus denominadores son diferentes; estas diferencias no constituyen una
+estimación causal del aporte de cada fotografía.
+
+\subsection{Rendimiento por género y soporte}
+
+\begin{center}\small\begin{tabular}{lrrrrrr}\toprule
+& \multicolumn{3}{c}{\textbf{Val: observación}} & \multicolumn{3}{c}{\textbf{Test: observación}}\\
+\textbf{Género} & \textbf{N} & \textbf{F1} & \textbf{Recall} & \textbf{N} & \textbf{F1} & \textbf{Recall}\\
+\midrule
+Amanita & 904 & 0,9804 & 96,90\,\% & 1\,315 & 0,9797 & 97,34\,\%\\
+Auricularia & 288 & 0,9589 & 93,06\,\% & 319 & 0,9477 & 90,91\,\%\\
+Ganoderma & 335 & 0,9273 & 91,34\,\% & 346 & 0,9283 & 91,62\,\%\\
+Geastrum & 79 & 0,9325 & 96,20\,\% & 182 & 0,9508 & 95,60\,\%\\
+Hericium & 66 & 0,9219 & 89,39\,\% & 51 & 0,9184 & 88,24\,\%\\
+Lycoperdon & 408 & 0,9377 & 97,79\,\% & 407 & 0,9382 & 98,77\,\%\\
+Morchella & 11 & 1,0000 & 100,00\,\% & 20 & 0,9474 & 90,00\,\%\\
+Pleurotus & 251 & 0,9569 & 97,21\,\% & 319 & 0,9484 & 94,98\,\%\\
+Trametes & 756 & 0,9649 & 96,30\,\% & 791 & 0,9639 & 96,33\,\%\\
+Xylaria & 354 & 0,9650 & 97,46\,\% & 289 & 0,9408 & 96,19\,\%\\
+\bottomrule\end{tabular}\end{center}
+
+El archivo de métricas por género conserva también precisión, F1 y
+sensibilidad a nivel de imagen, junto con verdaderos positivos, falsos
+positivos y falsos negativos para los dos conjuntos.
+
+\subsection{Matrices de confusión}
+
+Las filas representan el género real y las columnas el predicho; todos
+los valores de las siguientes matrices son \textbf{conteos enteros de observaciones}.
+Las columnas se abrevian en el mismo orden de las clases: Aman, Auri,
+Gano, Geas, Heri, Lyco, Morc, Pleu, Tram y Xyla.
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrrrrrr}\toprule
+\multicolumn{11}{c}{\textbf{VAL: matriz por observación}}\\
+Real / Predicho & Aman & Auri & Gano & Geas & Heri & Lyco & Morc & Pleu & Tram & Xyla\\\midrule
+Amanita & 876 & 0 & 0 & 3 & 1 & 22 & 0 & 0 & 1 & 1\\
+Auricularia & 1 & 268 & 4 & 0 & 2 & 0 & 0 & 5 & 3 & 5\\
+Ganoderma & 1 & 1 & 306 & 0 & 0 & 5 & 0 & 2 & 14 & 6\\
+Geastrum & 0 & 0 & 0 & 76 & 0 & 2 & 0 & 1 & 0 & 0\\
+Hericium & 0 & 0 & 0 & 0 & 59 & 1 & 0 & 1 & 5 & 0\\
+Lycoperdon & 4 & 0 & 2 & 3 & 0 & 399 & 0 & 0 & 0 & 0\\
+Morchella & 0 & 0 & 0 & 0 & 0 & 0 & 11 & 0 & 0 & 0\\
+Pleurotus & 1 & 1 & 1 & 2 & 0 & 0 & 0 & 244 & 2 & 0\\
+Trametes & 0 & 1 & 10 & 0 & 0 & 9 & 0 & 4 & 728 & 4\\
+Xylaria & 0 & 0 & 2 & 0 & 0 & 5 & 0 & 2 & 0 & 345\\
+\bottomrule\end{tabular}\end{center}
+\begin{center}\scriptsize
+\setlength{\tabcolsep}{3pt}
+\begin{tabular}{lrrrrrrrrrr}\toprule
+\multicolumn{11}{c}{\textbf{TEST: matriz por observación}}\\
+Real / Predicho & Aman & Auri & Gano & Geas & Heri & Lyco & Morc & Pleu & Tram & Xyla\\\midrule
+Amanita & 1280 & 0 & 0 & 6 & 0 & 26 & 0 & 2 & 1 & 0\\
+Auricularia & 2 & 290 & 4 & 1 & 1 & 1 & 0 & 6 & 4 & 10\\
+Ganoderma & 5 & 2 & 317 & 0 & 0 & 4 & 0 & 2 & 13 & 3\\
+Geastrum & 1 & 0 & 0 & 174 & 0 & 5 & 0 & 1 & 0 & 1\\
+Hericium & 0 & 0 & 0 & 0 & 45 & 1 & 0 & 1 & 4 & 0\\
+Lycoperdon & 3 & 0 & 0 & 0 & 1 & 402 & 0 & 1 & 0 & 0\\
+Morchella & 1 & 0 & 0 & 0 & 0 & 0 & 18 & 0 & 1 & 0\\
+Pleurotus & 5 & 1 & 1 & 1 & 0 & 2 & 0 & 303 & 3 & 3\\
+Trametes & 1 & 0 & 11 & 0 & 0 & 7 & 0 & 3 & 762 & 7\\
+Xylaria & 0 & 0 & 4 & 2 & 0 & 2 & 0 & 1 & 2 & 278\\
+\bottomrule\end{tabular}\end{center}
+
+Se exportaron además matrices gráficas de imagen y observación, tanto
+con conteos como normalizadas por fila. En estas últimas cada celda
+indica explícitamente un porcentaje del soporte del género real.
+
+\subsection{Análisis de errores de validación}
+
+Los errores de val se reconstruyeron a partir de las predicciones guardadas
+sin utilizar el modelo. Las probabilidades exportadas tienen seis decimales;
+la agregación reprodujo exactamente la matriz de observación guardada.
+
+\begin{center}\small\begin{tabular}{llrr}\toprule
+\textbf{Género real} & \textbf{Predicción} & \textbf{Errores obs.} & \textbf{Soporte real}\\\midrule
+Amanita & Lycoperdon & 22 & 904\\
+Ganoderma & Trametes & 14 & 335\\
+Trametes & Ganoderma & 10 & 756\\
+Trametes & Lycoperdon & 9 & 756\\
+Hericium & Trametes & 5 & 66\\
+\bottomrule\end{tabular}\end{center}
+
+Hericium registra siete observaciones incorrectas de 66; cinco se
+confunden con Trametes. Geastrum presenta tres errores de 79. Morchella
+acierta las once observaciones de val, pero tiene cuatro imágenes
+incorrectas de 21: el acierto por hallazgo no implica acierto en cada fotografía.
+
+El recall de Morchella de 100\,\% tiene un intervalo Wilson aproximado
+al 95\,\% de 74,12\,\%--100\,\%; Hericium, 79,69\,\%--94,77\,\%;
+y Geastrum, 89,42\,\%--98,70\,\%. Estos intervalos describen la incertidumbre
+del recall debida al soporte reducido, bajo un supuesto binomial; no son
+intervalos de F1 ni una corrección de posibles dependencias entre observaciones.
+
+La inspección visual de ejemplos de val muestra tomas parciales de
+superficies, ejemplares deteriorados y una imagen de microscopía. Algunos
+errores reciben probabilidades elevadas. Estos ejemplos orientan una
+revisión taxonómica y de condiciones de captura, sin demostrar que la
+etiqueta sea incorrecta ni modificarla automáticamente.
+
+Se conservan listas completas de errores por imagen y observación, con
+identificadores y probabilidades, y una galería local de ejemplos. El
+análisis detallado para orientar los siguientes experimentos se limita
+a val; las cifras de test se reportan como evaluación final descriptiva.
+
+\subsection{Conservación de la línea base}
+
+El checkpoint de la época 11, la configuración efectiva, el manifiesto
+del dataset, el historial, las métricas y las predicciones finales se
+copiaron a un archivo de conservación independiente de la carpeta de corrida.
+La igualdad de los hashes SHA-256 entre origen y copia fue verificada,
+y los archivos de la corrida original permanecen sin cambios.
+
+La huella SHA-256 del checkpoint conservado es:
+\begin{center}\small\ttfamily
+a5edc643662266708263899c2fdd6977f0dabac160739ba7ccfde82603af50e3
+\end{center}
+
+La configuración efectiva es la registrada durante el entrenamiento.
+La conservación incluye hashes de cada archivo y permite utilizar esta
+línea base como referencia para S5 y S6.
+\section{Limitaciones del experimento}
+
+\begin{itemize}
+\item \textbf{Representatividad:} FungiTastic procede principalmente del contexto
+danés. El rendimiento en sus particiones no valida automáticamente el desempeño
+en fotografías colombianas o capturadas mediante móviles.
+\item \textbf{Desbalance y soporte:} conservar el protocolo mantiene clases poco
+representadas; macro-F1 y métricas por clase deben leerse junto con sus conteos.
+\item \textbf{Dependencia visual:} una pareja perceptualmente similar permanece
+entre train y test. Cero duplicados exactos o cruces sitio-día no descarta otros
+tipos de correlación o errores de etiqueta.
+\item \textbf{Resolución:} las imágenes descargadas son 300p y la red observa
+recortes de 224 píxeles; puede perderse detalle útil para especies próximas.
+\item \textbf{Modalidades:} el clima está ausente y los otros metadatos no se
+usan en este modelo. Los resultados no corresponden a un modelo multimodal.
+\item \textbf{Licencias:} el manifiesto documenta declaraciones inconsistentes
+en FungiTastic y registra conservadoramente CC-BY-NC-SA para el dataset.
+\end{itemize}
+
+\section{Trabajo próximo a realizar: semanas S5 y S6}
+
+La arquitectura de referencia finalizó su entrenamiento y evaluación, y el
+checkpoint seleccionado quedó conservado junto con la configuración efectiva.
+Esta línea base constituye la referencia para el siguiente trabajo de la Fase 3.
+
+\subsection{S5: 5--11 de octubre. Arquitectura eficiente para móvil}
+
+La semana S5 corresponde al entrenamiento de una arquitectura eficiente apta
+para móvil, al ajuste de hiperparámetros y al manejo del desbalance.
+Se plantea:
+\begin{itemize}
+\item Seleccionar y entrenar una arquitectura eficiente, conservando el dataset
+v002 y el protocolo de evaluación para facilitar la comparación con ResNet-18.
+\item Ajustar tasa de aprendizaje, regularización y otros hiperparámetros
+mediante resultados de val, manteniendo test fuera de la selección.
+\item Analizar estrategias de manejo del desbalance en train, con atención a
+los géneros de menor soporte y a sus efectos sobre macro-F1 y sensibilidad.
+\item Caracterizar tamaño del modelo, latencia de inferencia y viabilidad de
+ejecución móvil; distinguir estas medidas del rendimiento de clasificación.
+\end{itemize}
+
+\subsection{S6: 12--18 de octubre. Consolidación y modularización}
+
+La semana S6 corresponde a la consolidación de métricas base por nivel
+taxonómico y a la modularización del pipeline para la Fase 5.
+Se plantea:
+\begin{itemize}
+\item Consolidar métricas, matrices de confusión y análisis de errores de las
+arquitecturas de referencia y eficiente, indicando soporte por clase y unidad
+de evaluación (imagen u observación).
+\item Organizar los resultados por nivel taxonómico. La versión v002 evalúa
+géneros; cualquier evaluación a nivel de especie requerirá una definición
+explícita de etiquetas, cobertura y particiones antes del entrenamiento.
+\item Separar adquisición y curaduría, transformaciones, arquitectura,
+entrenamiento y evaluación en módulos con interfaces y configuraciones comunes.
+\item Preparar el pipeline para la integración prevista en la Fase 5,
+conservando la procedencia de metadatos, el versionado y la trazabilidad experimental.
+\end{itemize}
+
+El resultado esperado de S5--S6 es una comparación reproducible entre desempeño
+visual y requisitos de ejecución móvil, junto con una base modular para las
+siguientes fases del proyecto. Las propuestas se evaluarán con val y las corridas
+finales seleccionadas consultarán test una vez al concluir.
+
+\section{Conclusión}
+
+Se dispone de un dataset versionado y reproducible de diez géneros, con fotografías
+descargadas, particiones oficiales y controles explícitos de integridad y fuga.
+La primera línea base utiliza transferencia de aprendizaje con ResNet-18 y selección
+por macro-F1 de observación en val. Se completaron 16 épocas y se seleccionó la
+época 11; el test final alcanza macro-F1 de observación de 0,9463 y exactitud de
+95,79\,\%. La revisión de errores de val y del soporte reducido de algunas clases
+delimita la interpretación de estos resultados. La consolidación conservó el
+checkpoint y su configuración sin repetir la evaluación de test. Las actividades de S3 y S4
+establecen las condiciones metodológicas para el trabajo de S5 y S6: evaluar
+una arquitectura eficiente para móvil, abordar el desbalance y consolidar un
+pipeline modular con métricas claramente vinculadas al nivel taxonómico.
+
+\end{document}

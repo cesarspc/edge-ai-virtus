@@ -40,6 +40,7 @@ checkpoints/
 models/
 # salidas de entrenamiento (scripts/train/train_ma.py)
 runs/
+artifacts/baselines/
 
 # Cachés y temporales
 __pycache__/

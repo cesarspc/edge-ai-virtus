@@ -34,6 +34,7 @@ sys.path.insert(0, str(Path(__file__).resolve().parent))
 import cleaning as K  # noqa: E402
 import metadata_schema as MS  # noqa: E402
 import splits as SP  # noqa: E402
+import image_curation as IC  # noqa: E402
 from common import RAW_DIR, RAW_FILES_CSV, REPO_ROOT, log, rel, setup_logging, sha256_file, utc_now  # noqa: E402
 from curation_sources import LOADERS, log_env  # noqa: E402
 
@@ -45,6 +46,8 @@ MO_ID = re.compile(r"(\d+)\s*/?\s*$")
 
 # --------------------------------------------------------------------------- cross-source duplicates
 def cross_source_dedup(obs: pd.DataFrame, img: pd.DataFrame, log_: K.CleaningLog) -> tuple[pd.DataFrame, pd.DataFrame]:
+    if not {"mushroom_observer_co", "inaturalist_co"}.issubset(set(obs["source_id"])):
+        return obs, img
     mo = obs["source_id"] == "mushroom_observer_co"
     inat = obs["source_id"] == "inaturalist_co"
     # D4: explicit link iNaturalist -> Mushroom Observer
@@ -66,7 +69,7 @@ def cross_source_dedup(obs: pd.DataFrame, img: pd.DataFrame, log_: K.CleaningLog
 
 
 # --------------------------------------------------------------------------- build
-def build(cfg: dict[str, Any], schema: dict[str, Any]) -> dict[str, Any]:
+def build(cfg: dict[str, Any], schema: dict[str, Any], prepare_images: bool = False) -> dict[str, Any]:
     clog = K.CleaningLog()
     obs_parts, img_parts = [], []
     for sid in cfg["sources"]:
@@ -78,14 +81,28 @@ def build(cfg: dict[str, Any], schema: dict[str, Any]) -> dict[str, Any]:
     obs, img = cross_source_dedup(obs, img, clog)
     for sid in cfg["sources"]:   # E-rules are counted on the final observations of each source
         log_env(clog, sid, obs[obs["source_id"] == sid])
-    extra = {"vote_cache": obs.set_index("observation_uid")["vote_cache"].dropna()}
-    obs = obs.drop(columns=["vote_cache", "mo_url"])
+    extra = {"vote_cache": obs.set_index("observation_uid")["vote_cache"].dropna()} if "vote_cache" in obs else {}
+    obs = obs.drop(columns=["vote_cache", "mo_url"], errors="ignore")
     # labels, groups and splits
     label = {g: i for i, g in enumerate(cfg["classes"])}
     obs["label_id"] = obs["genus"].map(label).astype(int)
     img["label_id"] = img["genus"].map(label).astype(int)
     obs = SP.assign(obs, cfg)
     img["split"] = img["observation_uid"].map(obs.set_index("observation_uid")["split"])
+    image_audits = {}
+    policy = cfg.get("image_policy", {})
+    if policy.get("cross_split_exact_duplicates") and not prepare_images:
+        before_obs = len(obs)
+        obs, img, exclusions, near, integrity, small = IC.curate(obs, img, policy)
+        clog.add("D8", "fungitastic", before_obs - len(obs), len(exclusions),
+                 note="copias exactas entre particiones; test tiene prioridad")
+        image_audits = {"image_exclusions": exclusions, "near_duplicates": near, "image_integrity": integrity,
+                        "small_images": small}
+    if cfg["splits"]["scheme"] == "fungitastic_official":
+        support = obs.groupby(["split", "genus"]).size()
+        absent = [(s, g) for s in ("train", "val", "test") for g in cfg["classes"] if support.get((s, g), 0) == 0]
+        if absent:
+            raise SystemExit(f"official partitions have empty classes: {absent}")
     # C1: minimum observations per class in development
     dev_counts = obs[obs["split"] != "test_external"].groupby("genus").size().reindex(cfg["classes"], fill_value=0)
     minimum = cfg["cleaning"]["min_observations_per_class_dev"]
@@ -101,7 +118,11 @@ def build(cfg: dict[str, Any], schema: dict[str, Any]) -> dict[str, Any]:
     errors = MS.validate(obs, img, schema, cfg)
     if errors:
         raise SystemExit("schema validation failed:\n  " + "\n  ".join(errors))
-    return {"obs": obs, "img": img, "log": clog.frame(), "leakage": SP.leakage_checks(obs, img), "extra": extra}
+    leakage = SP.leakage_checks(obs, img)
+    if any(v for k, v in leakage.items() if k != "groups_in_more_than_one_split"):
+        raise SystemExit(f"identity leakage detected: {leakage}")
+    return {"obs": obs, "img": img, "log": clog.frame(), "leakage": leakage, "extra": extra,
+            "image_audits": image_audits}
 
 
 # --------------------------------------------------------------------------- summaries
@@ -123,8 +144,14 @@ def summaries(res: dict[str, Any], cfg: dict[str, Any], schema: dict[str, Any]) 
     env_cov["pct"] = (100 * env_cov["n_observations"] / env_cov["source_id"].map(tot)).round(2)
     classes = pd.DataFrame({"label_id": range(len(cfg["classes"])), "genus": cfg["classes"]})
     splits_tbl = obs[["observation_uid", "source_id", "genus", "label_id", "group_id", "split", "split_temporal", "n_images"]]
-    return {"split_summary": split_summary, "env_coverage": env_cov.reset_index(drop=True), "classes": classes,
-            "splits": splits_tbl}
+    result = {"split_summary": split_summary, "env_coverage": env_cov.reset_index(drop=True), "classes": classes,
+              "splits": splits_tbl, **res["image_audits"]}
+    if cfg["splits"]["scheme"] == "fungitastic_official":
+        groups = obs.groupby("group_id").agg(splits=("split", lambda s: "|".join(sorted(set(s)))),
+                                              n_partitions=("split", "nunique"),
+                                              n_observations=("observation_uid", "size"))
+        result["site_day_overlaps"] = groups.loc[groups["n_partitions"] > 1].reset_index()
+    return result
 
 
 def to_csv_bytes(df: pd.DataFrame) -> bytes:
@@ -143,11 +170,18 @@ def git_info() -> dict[str, Any]:
 
 
 def input_files(cfg: dict[str, Any]) -> list[Path]:
-    files = [RAW_DIR / "fungitastic" / "metadata.zip"]
-    files += [RAW_DIR / "mushroom_observer" / f"{n}.csv" for n in
-              ("observations", "names", "name_classifications", "images_observations", "images", "locations")]
-    files += sorted((RAW_DIR / "inaturalist_api" / "api").glob("v001_co_*.json"))
-    files += [RAW_DIR / "mind_funga_v2" / "api" / "mendeley_dataset.json", RAW_DIR / "mind_funga_v2" / "zip_central_directory.csv"]
+    files = []
+    if "fungitastic" in cfg["sources"]:
+        files += [RAW_DIR / "fungitastic" / "metadata.zip"]
+    if "mushroom_observer_co" in cfg["sources"]:
+        files += [RAW_DIR / "mushroom_observer" / f"{n}.csv" for n in
+                  ("observations", "names", "name_classifications", "images_observations", "images", "locations")]
+    if "inaturalist_co" in cfg["sources"]:
+        files += sorted((RAW_DIR / "inaturalist_api" / "api").glob("v001_co_*.json"))
+    if "mind_funga_v2" in cfg["sources"]:
+        files += [RAW_DIR / "mind_funga_v2" / "api" / "mendeley_dataset.json", RAW_DIR / "mind_funga_v2" / "zip_central_directory.csv"]
+    if cfg.get("image_policy", {}).get("download_manifest"):
+        files += [REPO_ROOT / cfg["image_policy"]["download_manifest"]]
     return files
 
 
@@ -157,7 +191,7 @@ def describe_inputs(cfg: dict[str, Any]) -> list[dict[str, Any]]:
     for p in input_files(cfg):
         h = sha256_file(p)
         out.append({"path": rel(p), "size_bytes": p.stat().st_size, "sha256": h,
-                    "matches_raw_files_csv": registered.get(rel(p)) == h})
+                    "matches_raw_files_csv": registered[rel(p)] == h if rel(p) in registered else None})
     return out
 
 
@@ -185,8 +219,14 @@ def card(version: str, cfg: dict[str, Any], res: dict[str, Any], sm: dict[str, p
     for sid, s in cfg["sources"].items():
         lines.append(f"| `{sid}` | {s['role']} | {int((obs['source_id'] == sid).sum()):,} | {int((img['source_id'] == sid).sum()):,} |".replace(",", "."))
     lines += ["", "Fuentes excluidas: " + "; ".join(f"`{k}` ({v})" for k, v in cfg["excluded_sources"].items()) + ".", "",
-              "## Controles de fuga (todos deben ser 0)", ""]
+              "## Controles de identidad y cruces de sitio-día", ""]
     lines += [f"* `{k}`: {v}" for k, v in res["leakage"].items()]
+    if cfg["splits"]["scheme"] == "fungitastic_official":
+        lines += ["", "Se preservan las particiones oficiales. Los cruces de sitio-día se reportan sin reasignar datos.",
+                  "", f"Imágenes excluidas por SHA-256 entre particiones: {len(sm['image_exclusions'])}.",
+                  f"Pares perceptualmente similares entre particiones: {len(sm['near_duplicates'])}; no se excluyen automáticamente.",
+                  f"Imágenes por debajo del umbral de tamaño: {len(sm['small_images'])}; conservadas y reportadas.",
+                  "Ver `image_exclusions.csv`, `near_duplicates.csv` y `site_day_overlaps.csv`."]
     lines += ["", "## Licencias de las imágenes", "", "| Licencia | Alcance | Imágenes |", "|---|---|---|"]
     for (lic, scope), n in img.groupby(["license", "license_scope"]).size().items():
         lines.append(f"| {lic} | {scope} | {n:,} |".replace(",", "."))
@@ -199,6 +239,7 @@ def main() -> int:
     ap = argparse.ArgumentParser(description=__doc__, formatter_class=argparse.RawDescriptionHelpFormatter)
     ap.add_argument("--config", default="configs/dataset_v001.yaml")
     ap.add_argument("--check", action="store_true", help="rebuild and compare with the stored manifest without writing")
+    ap.add_argument("--prepare-images", action="store_true", help="write candidate tables for download; do not publish a version")
     ap.add_argument("--rewrite-manifest", action="store_true",
                     help="if the content is unchanged, rewrite manifest.json (new git commit / timestamp) instead of keeping it")
     ap.add_argument("-v", "--verbose", action="store_true")
@@ -211,12 +252,24 @@ def main() -> int:
     version = cfg["version"]
     proc_dir, ver_dir = REPO_ROOT / "data" / "processed" / version, REPO_ROOT / "data" / "versions" / version
 
-    res = build(cfg, schema)
+    if args.prepare_images and (args.check or args.rewrite_manifest):
+        ap.error("--prepare-images cannot be combined with --check or --rewrite-manifest")
+    res = build(cfg, schema, prepare_images=args.prepare_images)
     sm = summaries(res, cfg, schema)
     processed = {"observations.csv": to_csv_bytes(res["obs"]), "images.csv": to_csv_bytes(res["img"])}
+    if args.prepare_images:
+        staging_dir = REPO_ROOT / "data" / "interim" / version
+        staging_dir.mkdir(parents=True, exist_ok=True)
+        for k, v in processed.items():
+            (staging_dir / k).write_bytes(v)
+        log.info("candidate tables ready for image download; no version manifest published")
+        return 0
     versioned = {"splits.csv": to_csv_bytes(sm["splits"]), "classes.csv": to_csv_bytes(sm["classes"]),
                  "cleaning_log.csv": to_csv_bytes(res["log"]), "split_summary.csv": to_csv_bytes(sm["split_summary"]),
                  "env_coverage.csv": to_csv_bytes(sm["env_coverage"])}
+    for name in ("image_exclusions", "near_duplicates", "site_day_overlaps", "image_integrity", "small_images"):
+        if name in sm:
+            versioned[name + ".csv"] = to_csv_bytes(sm[name])
     content = {k: hashlib.sha256(v).hexdigest() for k, v in {**processed, **versioned}.items()}
     fingerprint = hashlib.sha256("".join(f"{k}:{content[k]}\n" for k in sorted(content)).encode()).hexdigest()
     log.info("content fingerprint %s | leakage %s", fingerprint, res["leakage"])
@@ -275,6 +328,18 @@ def main() -> int:
                               "Clima no disponible (climatic.zip de FungiTastic responde HTTP 403 el 2026-09-26).",
                               "Las consultas de iNaturalist son instantáneas del " + cfg["access_date"] + "."],
     }
+    if cfg["splits"]["scheme"] == "fungitastic_official":
+        manifest["code"].append({"path": "scripts/data/image_curation.py",
+                                  "sha256": sha256_file(REPO_ROOT / "scripts/data/image_curation.py")})
+        manifest["split_protocol"] = "Train / ClosedSet-Val / ClosedSet-Test (official; no reassignment)"
+        manifest["image_curation"] = {"exact_policy": "test > val > train; same-partition copies retained",
+                                       "excluded_images": len(sm["image_exclusions"]),
+                                       "near_duplicate_pairs": len(sm["near_duplicates"]),
+                                       "small_images_retained": len(sm["small_images"]),
+                                       "near_duplicates_auto_excluded": False}
+        manifest["dataset_level_licenses"] = {"fungitastic": manifest["dataset_level_licenses"]["fungitastic"]}
+        manifest["known_limitations"] = ["Site-day overlap and perceptual similarity are reported, not reassigned.",
+                                           "Climate unavailable; first model uses images only."]
     man_path.write_text(json.dumps(manifest, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     (ver_dir / "DATASET_CARD.md").write_text(card(version, cfg, res, sm, manifest), encoding="utf-8")
     log.info("wrote %s and %s", rel(proc_dir), rel(ver_dir))
