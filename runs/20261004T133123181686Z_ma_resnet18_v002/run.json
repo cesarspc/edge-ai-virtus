@@ -1,0 +1,109 @@
+{
+  "run_id": "20261004T133123181686Z_ma_resnet18_v002",
+  "mode": "train",
+  "config_path": "configs\\train\\ma_resnet18_v002.yaml",
+  "config_sha256": "c109fc0f4927e696dfbd11f9250fbd358c56212c29e0228315bb6f90302e9641",
+  "config": {
+    "run_name": "ma_resnet18_v002",
+    "data": {
+      "version": "v002",
+      "source": "fungitastic",
+      "split_column": "split",
+      "image_root": "data/raw/images/fungitastic_v002",
+      "download_manifest": "data/raw/images/fungitastic_v002/download_manifest.csv",
+      "require_all_images": true
+    },
+    "model": {
+      "architecture": "resnet18",
+      "pretrained_weights": "IMAGENET1K_V1",
+      "num_classes": 10
+    },
+    "input": {
+      "size": 224,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "train_augment": {
+        "random_resized_crop_scale": [
+          0.5,
+          1.0
+        ],
+        "horizontal_flip": true,
+        "color_jitter": [
+          0.2,
+          0.2,
+          0.2,
+          0.02
+        ]
+      },
+      "eval_resize": 224
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 30,
+      "batch_size": 64,
+      "num_workers": 4,
+      "optimizer": "adamw",
+      "lr": 0.0003,
+      "weight_decay": 0.05,
+      "scheduler": "cosine",
+      "warmup_epochs": 1,
+      "label_smoothing": 0.1,
+      "class_weighting": "none",
+      "amp": true,
+      "early_stopping_patience": 5,
+      "selection_metric": "val_obs_macro_f1",
+      "deterministic": false
+    },
+    "evaluation": {
+      "top_k": [
+        1,
+        3
+      ],
+      "observation_aggregation": "mean_prob",
+      "evaluate_test_at_end": true
+    },
+    "output": {
+      "runs_dir": "runs"
+    }
+  },
+  "dataset": {
+    "version": "v002",
+    "content_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+    "split_column": "split",
+    "images": {
+      "train": 30172,
+      "val": 6290,
+      "test": 7159
+    },
+    "images_missing": 0
+  },
+  "git": {
+    "commit": "9cf685adb8f52c42a9b615255be3128feddd5947",
+    "dirty": true
+  },
+  "device": "cpu",
+  "amp": false,
+  "code_sha256": {
+    "train_ma.py": "64ccc6ce034939d9d1be73fc226716069918ba8a7e18465c671795d4304a1c00",
+    "data.py": "7fcc1a8119a176308e2ae89e12aadfb841866a5468bd69bdac126b9b367e84fa",
+    "metrics.py": "f579098dc32b10e0709767b25eccc91e63a5f3883233df2a6584365741ce65de"
+  },
+  "versions": {
+    "python": "3.12.10",
+    "torch": "2.14.1+cpu",
+    "torchvision": "0.29.1+cpu",
+    "cuda": null,
+    "cudnn": null
+  },
+  "gpu": null,
+  "resumed_from": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261003T151523733153Z_ma_resnet18_v002\\last.pt",
+  "resumed_after_epoch": 13
+}

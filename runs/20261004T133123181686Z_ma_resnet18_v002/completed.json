@@ -1,0 +1,8 @@
+{
+  "run_id": "20261004T133123181686Z_ma_resnet18_v002",
+  "evaluated_splits": [
+    "val",
+    "test"
+  ],
+  "test_evaluations": 1
+}

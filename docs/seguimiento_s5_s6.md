@@ -15,12 +15,12 @@ S5 compara MobileNetV3-Large con cuatro configuraciones controladas sobre el dat
 | C | 0,0003 | Inversa de raíz del conteo | Pendiente |
 | D | 0,0001 | Inversa de raíz del conteo | Pendiente |
 
-El ensayo A alcanzó macro-F1 de observación **0,9706** y macro-F1 de imagen **0,9254** en `val`. No evaluó `test`. Los detalles y hashes se actualizan en `reports/s5/development_results.md` y `.json`; el historial completo queda en la carpeta local de la corrida, que Git ignora.
+El ensayo A alcanzó macro-F1 de observación **0,9706** y macro-F1 de imagen **0,9254** en `val`. No evaluó `test`. Los detalles y hashes se actualizan en `reports/s5/development_results.md` y `.json`; los archivos de esta corrida completa se versionan en `runs/`. Los checkpoints `.pt` se almacenan con Git LFS. Las corridas incompletas se mantienen locales e ignoradas por Git.
 
 ### Pendientes y controles S5
 
 1. Ejecutar B, C y D con sus configuraciones fijadas, la misma huella de dataset, seed, particiones, resolución y procedimiento de entrenamiento que A.
-2. Conservar `last.pt` y `best.pt` locales de cada corrida, y revisar que se haya completado normalmente. No reanudar una corrida ya marcada como completada.
+2. Conservar `last.pt` y `best.pt` de cada corrida completada y revisar su marcador de finalización. No reanudar una corrida ya marcada como completada. Las corridas interrumpidas pueden reanudarse localmente, pero no se publican como resultados completos.
 3. Comparar primero A contra B para el efecto del LR y A contra C para la ponderación. D permite observar la combinación; cuatro ensayos y una sola seed no permiten afirmar estabilidad entre semillas.
 4. Revisar macro-F1, precisión, recall, matriz de confusión y soporte en `val`, prestando atención a Morchella, Hericium y Geastrum, cuyos soportes son pequeños. No ajustar usando `test`.
 5. Después de decidir cerrar la campaña y registrar los ensayos pendientes, fijar el checkpoint ganador por macro-F1 de observación en `val` con `scripts/train/summarize_s5.py --select-run "runs/<run_id>"`.

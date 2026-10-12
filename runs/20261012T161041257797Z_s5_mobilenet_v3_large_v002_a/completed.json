@@ -1,0 +1,7 @@
+{
+  "run_id": "20261012T161041257797Z_s5_mobilenet_v3_large_v002_a",
+  "evaluated_splits": [
+    "val"
+  ],
+  "test_evaluations": 0
+}
