@@ -23,7 +23,10 @@ def aggregate_observations(image_ids: pd.Series, obs_ids: pd.Series, y: np.ndarr
     return g["_y"].first().to_numpy(), g[list(range(probs.shape[1]))].mean().to_numpy()
 
 
-def classification_metrics(y: np.ndarray, probs: np.ndarray, classes: list[str], top_k: list[int]) -> dict[str, Any]:
+def classification_metrics(y: np.ndarray, probs: np.ndarray, classes: list[str], top_k: list[int],
+                           name_key: str = "genus") -> dict[str, Any]:
+    """``name_key`` is the per-class field holding the class name (``genus`` for the trained label; the S6
+    taxonomic report uses ``family``, ``order``, ...). Top-k values with ``k >= len(classes)`` are trivially 1."""
     labels = list(range(len(classes)))
     pred = probs.argmax(axis=1)
     p, r, f, n = precision_recall_fscore_support(y, pred, labels=labels, zero_division=0)
@@ -35,7 +38,7 @@ def classification_metrics(y: np.ndarray, probs: np.ndarray, classes: list[str],
     }
     for k in top_k:
         out[f"top{k}_accuracy"] = topk_accuracy(probs, y, k)
-    out["per_class"] = [{"label_id": i, "genus": c, "precision": float(p[i]), "recall": float(r[i]),
+    out["per_class"] = [{"label_id": i, name_key: c, "precision": float(p[i]), "recall": float(r[i]),
                          "f1": float(f[i]), "support": int(n[i])} for i, c in enumerate(classes)]
     out["confusion_matrix"] = confusion_matrix(y, pred, labels=labels).tolist()
     return out

@@ -1,0 +1,71 @@
+{
+  "version": "v002",
+  "fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "created_utc": "2026-10-17T05:18:42Z",
+  "builder": {
+    "command": "python scripts/data/build_taxonomy.py",
+    "sha256": "cb1b589560c38297c74aea17f0563bbc0c1192da19e458984553247454dd06e0",
+    "python": "3.12.3",
+    "pandas": "3.0.5"
+  },
+  "inputs": [
+    {
+      "path": "data/raw/fungitastic/metadata.zip",
+      "sha256": "b1dc1d24714d9522c545d8cdd8f7e6dd9999afe2620d271aeb761f1def0719ac",
+      "members": [
+        "FungiTastic/FungiTastic-Train.csv",
+        "FungiTastic/FungiTastic-ClosedSet-Val.csv",
+        "FungiTastic/FungiTastic-ClosedSet-Test.csv"
+      ],
+      "columns": [
+        "observationID",
+        "genus",
+        "species",
+        "family",
+        "order",
+        "class",
+        "phylum"
+      ]
+    },
+    {
+      "path": "data/versions/v002/splits.csv",
+      "sha256": "7254055b2a45a7a6a801994cb5b2cb585ab5dfaeca0c2fbddc1b4abdf2e17883"
+    },
+    {
+      "path": "data/versions/v002/classes.csv",
+      "sha256": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd"
+    }
+  ],
+  "rules": [
+    "Higher ranks (family, order, class, phylum) are taken as published by FungiTastic; no manual edits.",
+    "The label genus is the synonym-normalized genus of the version; raw genus differences are listed.",
+    "An observation with images that disagree on species or higher ranks would abort the build."
+  ],
+  "checks": {
+    "observations": 25290,
+    "observations_without_taxonomy": 0,
+    "observations_with_conflicting_taxonomy": 0,
+    "ambiguous_genera": 0,
+    "raw_genus_synonyms": [],
+    "distinct": {
+      "species": 66,
+      "genus": 10,
+      "family": 9,
+      "order": 7,
+      "class": 3,
+      "phylum": 2
+    }
+  },
+  "outputs": [
+    {
+      "name": "genus_taxonomy.csv",
+      "path": "data/taxonomy/v002/genus_taxonomy.csv",
+      "sha256": "ba586b0b5ca2925cde63c42ff59b140cd5db7908d77d43a6f342e1a4e38012c6"
+    },
+    {
+      "name": "observation_species.csv",
+      "path": "data/taxonomy/v002/observation_species.csv",
+      "sha256": "00dc025e83f86f6831e70294430b7ad9e6c278cd99f401963e1da551e656d9e6"
+    }
+  ]
+}

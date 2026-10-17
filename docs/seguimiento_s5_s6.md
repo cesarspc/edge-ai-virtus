@@ -1,6 +1,6 @@
 # Seguimiento de S5 y S6
 
-Actualizado: 12 de octubre de 2026.
+Actualizado: 17 de octubre de 2026 (S6 implementado; S5 con ensayos B–D pendientes).
 
 Este documento registra el estado práctico de las fases S5 y S6 y los controles que deben mantenerse para que las comparaciones sean reproducibles.
 
@@ -28,11 +28,26 @@ El ensayo A alcanzó macro-F1 de observación **0,9706** y macro-F1 de imagen **
 7. Completar la medición móvil en Android cuando se disponga del teléfono concreto. Registrar modelo del dispositivo, versión de Android, runtime y versión, precisión numérica, tamaño del artefacto, latencias (incluidos percentiles), memoria y condiciones de medición. El perfil sintético de CPU del PC no equivale a rendimiento en Android.
 8. Actualizar el informe formal con el resultado MobileNet y su comparación con ResNet-18 después de completar la selección y evaluación final; indicar claramente que la comparación usa el mismo `v002` y reportar métricas por imagen y observación.
 
-## Alcance siguiente: S6
+## Alcance S6: implementado
 
-Según la planificación del proyecto, S6 consolida las métricas base por nivel taxonómico y modulariza el pipeline para preparar la Fase 5. S6 debe iniciar una vez cerrado y documentado S5.
+Detalle y resultados: [`docs/s6_taxonomia_pipeline.md`](s6_taxonomia_pipeline.md); tablas en
+[`reports/s6/README.md`](../reports/s6/README.md). Se adelantó con las predicciones existentes (ResNet-18 val/test y
+MobileNet A val), sin esperar al cierre de S5.
 
-### Trabajo previsto para S6
+- [x] Niveles taxonómicos verificados en los metadatos: `data/taxonomy/v002/` (`build_taxonomy.py --check`). No hay
+  etiquetas faltantes, ambiguas ni sinónimos.
+- [x] Métricas por género, familia, orden, clase y filo: macro-F1, precisión, recall, exactitud, exactitud
+  balanceada, soporte, matrices de confusión e IC95 por observación (`taxonomic_metrics.py --check`). Incluye
+  desglose por especie.
+- [x] Mismo protocolo: particiones oficiales, agregación `mean_prob`, imagen y observación por separado.
+- [x] Pipeline modular en `scripts/train/pipeline/`, con la receta S5 intacta (regresión byte a byte de smoke y
+  reanudación) y los checkpoints existentes cargables y reanudables.
+- [x] Procedencia: `run.json` registra los hashes de todos los módulos del pipeline.
+- [ ] Al cerrar S5 (B, C, D y test final), volver a ejecutar `python scripts/train/taxonomic_metrics.py` para
+  añadir el modelo seleccionado en test.
+- [ ] Decidir cómo tratar los finales de línea de `data/versions/**` (ver limitaciones en el documento S6).
+
+## Trabajo previsto originalmente para S6
 
 - Definir qué niveles taxonómicos están disponibles y confiables en los metadatos de `v002`; documentar etiquetas faltantes o ambiguas antes de calcular métricas.
 - Publicar métricas base por nivel taxonómico, además del nivel de género ya evaluado: macro-F1, precisión, recall, exactitud, soporte y matrices de confusión donde la definición aplique.

@@ -1,0 +1,11 @@
+label_id,genus,family,order,class,phylum,n_species,n_obs_train,n_obs_val,n_obs_test
+0,Amanita,Amanitaceae,Agaricales,Agaricomycetes,Basidiomycota,19,3752,904,1315
+1,Auricularia,Auriculariaceae,Auriculariales,Agaricomycetes,Basidiomycota,2,1443,288,319
+2,Ganoderma,Polyporaceae,Polyporales,Agaricomycetes,Basidiomycota,5,1832,335,346
+3,Geastrum,Geastraceae,Geastrales,Agaricomycetes,Basidiomycota,9,779,79,182
+4,Hericium,Hericiaceae,Russulales,Agaricomycetes,Basidiomycota,3,494,66,51
+5,Lycoperdon,Lycoperdaceae,Agaricales,Agaricomycetes,Basidiomycota,10,2166,408,407
+6,Morchella,Morchellaceae,Pezizales,Pezizomycetes,Ascomycota,3,256,11,20
+7,Pleurotus,Pleurotaceae,Agaricales,Agaricomycetes,Basidiomycota,3,1465,251,319
+8,Trametes,Polyporaceae,Polyporales,Agaricomycetes,Basidiomycota,7,3654,756,791
+9,Xylaria,Xylariaceae,Xylariales,Sordariomycetes,Ascomycota,5,1958,354,289

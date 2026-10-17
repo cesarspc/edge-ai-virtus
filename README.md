@@ -8,6 +8,10 @@ al excluir copias exactas entre particiones y entrena ResNet-18. La prueba rápi
 Opciones y protocolo: [docs/baseline_v002.md](docs/baseline_v002.md). La documentación de v001 sigue abajo
 como historial de las fases anteriores.
 
+S5 (MobileNetV3-Large, ensayos A–D): [docs/s5_mobilenet_v002.md](docs/s5_mobilenet_v002.md).
+S6 (métricas por nivel taxonómico y pipeline modular en `scripts/train/pipeline/`):
+[docs/s6_taxonomia_pipeline.md](docs/s6_taxonomia_pipeline.md). Estado de ambas: [docs/seguimiento_s5_s6.md](docs/seguimiento_s5_s6.md).
+
 Investigación universitaria sobre la **identificación multimodal de macromicetos mediante inteligencia artificial**:
 imágenes, geolocalización, variables climáticas, sustrato y otros metadatos. En fases posteriores se evaluarán modelos
 visuales y multimodales y su ejecución en dispositivos móviles.

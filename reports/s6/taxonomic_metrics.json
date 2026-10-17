@@ -1,0 +1,4915 @@
+{
+  "version": "v002",
+  "fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "taxonomy": {
+    "path": "data/taxonomy/v002/genus_taxonomy.csv",
+    "manifest_outputs": [
+      {
+        "name": "genus_taxonomy.csv",
+        "path": "data/taxonomy/v002/genus_taxonomy.csv",
+        "sha256": "ba586b0b5ca2925cde63c42ff59b140cd5db7908d77d43a6f342e1a4e38012c6"
+      },
+      {
+        "name": "observation_species.csv",
+        "path": "data/taxonomy/v002/observation_species.csv",
+        "sha256": "00dc025e83f86f6831e70294430b7ad9e6c278cd99f401963e1da551e656d9e6"
+      }
+    ]
+  },
+  "levels": [
+    "genus",
+    "family",
+    "order",
+    "class",
+    "phylum"
+  ],
+  "prediction_rule": "taxon of the top-1 genus (secondary: sum of genus probabilities)",
+  "observation_aggregation": "mean of image probabilities per observation, then the rule",
+  "bootstrap_resamples": 1000,
+  "evaluations": [
+    {
+      "model": "ma_resnet18_v002",
+      "architecture": "resnet18",
+      "split": "val",
+      "run_id": "20261004T133123181686Z_ma_resnet18_v002",
+      "source": "development run",
+      "predictions": "runs/20261004T133123181686Z_ma_resnet18_v002/predictions_val.csv",
+      "predictions_sha256": "a28e3eba181401ad80a2327c566e88472c7a81724eee045f15b47565ec39ac8d",
+      "observations": 3452,
+      "images": 6290,
+      "genus_reproduction": {
+        "image_level": {
+          "confusion_identical": true,
+          "max_abs_diff": 0.0
+        },
+        "observation_level": {
+          "confusion_identical": true,
+          "max_abs_diff": 0.0
+        }
+      },
+      "metrics": {
+        "image_level": {
+          "genus": {
+            "n": 6290,
+            "macro_f1": 0.8996871784513105,
+            "accuracy": 0.9206677265500794,
+            "balanced_accuracy": 0.894596408716897,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanita",
+                "precision": 0.9758308157099698,
+                "recall": 0.9449970743124634,
+                "f1": 0.960166468489893,
+                "support": 1709
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auricularia",
+                "precision": 0.9516539440203562,
+                "recall": 0.9099756690997567,
+                "f1": 0.9303482587064676,
+                "support": 411
+              },
+              {
+                "label_id": 2,
+                "taxon": "Ganoderma",
+                "precision": 0.8975069252077562,
+                "recall": 0.8780487804878049,
+                "f1": 0.8876712328767123,
+                "support": 738
+              },
+              {
+                "label_id": 3,
+                "taxon": "Geastrum",
+                "precision": 0.8726114649681529,
+                "recall": 0.8726114649681529,
+                "f1": 0.8726114649681529,
+                "support": 157
+              },
+              {
+                "label_id": 4,
+                "taxon": "Hericium",
+                "precision": 0.9108910891089109,
+                "recall": 0.8070175438596491,
+                "f1": 0.8558139534883721,
+                "support": 114
+              },
+              {
+                "label_id": 5,
+                "taxon": "Lycoperdon",
+                "precision": 0.815,
+                "recall": 0.9504373177842566,
+                "f1": 0.8775235531628532,
+                "support": 686
+              },
+              {
+                "label_id": 6,
+                "taxon": "Morchella",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 7,
+                "taxon": "Pleurotus",
+                "precision": 0.9118236472945892,
+                "recall": 0.9191919191919192,
+                "f1": 0.9154929577464789,
+                "support": 495
+              },
+              {
+                "label_id": 8,
+                "taxon": "Trametes",
+                "precision": 0.9342485549132948,
+                "recall": 0.9099225897255454,
+                "f1": 0.9219251336898395,
+                "support": 1421
+              },
+              {
+                "label_id": 9,
+                "taxon": "Xylaria",
+                "precision": 0.9071428571428571,
+                "recall": 0.9442379182156134,
+                "f1": 0.9253187613843351,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1615,
+                2,
+                4,
+                7,
+                2,
+                63,
+                0,
+                1,
+                11,
+                4
+              ],
+              [
+                1,
+                374,
+                8,
+                0,
+                2,
+                1,
+                0,
+                8,
+                9,
+                8
+              ],
+              [
+                5,
+                5,
+                648,
+                0,
+                0,
+                18,
+                0,
+                8,
+                37,
+                17
+              ],
+              [
+                2,
+                0,
+                0,
+                137,
+                0,
+                12,
+                0,
+                2,
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                1,
+                0,
+                92,
+                3,
+                1,
+                5,
+                9,
+                1
+              ],
+              [
+                12,
+                0,
+                4,
+                7,
+                2,
+                652,
+                0,
+                1,
+                5,
+                3
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                1,
+                0,
+                17,
+                0,
+                1,
+                1
+              ],
+              [
+                6,
+                4,
+                6,
+                4,
+                0,
+                5,
+                1,
+                455,
+                13,
+                1
+              ],
+              [
+                9,
+                6,
+                48,
+                1,
+                2,
+                33,
+                0,
+                14,
+                1293,
+                15
+              ],
+              [
+                3,
+                1,
+                3,
+                1,
+                0,
+                13,
+                0,
+                5,
+                4,
+                508
+              ]
+            ],
+            "level": "genus",
+            "rule": "top1_genus",
+            "n_classes": 10,
+            "macro_precision": 0.9071446140471149,
+            "macro_recall": 0.894596408716897,
+            "genera_per_taxon": {
+              "Amanita": [
+                "Amanita"
+              ],
+              "Auricularia": [
+                "Auricularia"
+              ],
+              "Ganoderma": [
+                "Ganoderma"
+              ],
+              "Geastrum": [
+                "Geastrum"
+              ],
+              "Hericium": [
+                "Hericium"
+              ],
+              "Lycoperdon": [
+                "Lycoperdon"
+              ],
+              "Morchella": [
+                "Morchella"
+              ],
+              "Pleurotus": [
+                "Pleurotus"
+              ],
+              "Trametes": [
+                "Trametes"
+              ],
+              "Xylaria": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.8996871784513105,
+              "accuracy": 0.9206677265500794,
+              "balanced_accuracy": 0.894596408716897,
+              "top1_accuracy": 0.9206677265500794,
+              "top3_accuracy": 0.9829888712241653,
+              "disagreements_with_top1_genus": 0
+            }
+          },
+          "family": {
+            "n": 6290,
+            "macro_f1": 0.9041482260659647,
+            "accuracy": 0.934181240063593,
+            "balanced_accuracy": 0.8995989025735776,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanitaceae",
+                "precision": 0.9758308157099698,
+                "recall": 0.9449970743124634,
+                "f1": 0.960166468489893,
+                "support": 1709
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariaceae",
+                "precision": 0.9516539440203562,
+                "recall": 0.9099756690997567,
+                "f1": 0.9303482587064676,
+                "support": 411
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastraceae",
+                "precision": 0.8726114649681529,
+                "recall": 0.8726114649681529,
+                "f1": 0.8726114649681529,
+                "support": 157
+              },
+              {
+                "label_id": 3,
+                "taxon": "Hericiaceae",
+                "precision": 0.9108910891089109,
+                "recall": 0.8070175438596491,
+                "f1": 0.8558139534883721,
+                "support": 114
+              },
+              {
+                "label_id": 4,
+                "taxon": "Lycoperdaceae",
+                "precision": 0.815,
+                "recall": 0.9504373177842566,
+                "f1": 0.8775235531628532,
+                "support": 686
+              },
+              {
+                "label_id": 5,
+                "taxon": "Morchellaceae",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 6,
+                "taxon": "Pleurotaceae",
+                "precision": 0.9118236472945892,
+                "recall": 0.9191919191919192,
+                "f1": 0.9154929577464789,
+                "support": 495
+              },
+              {
+                "label_id": 7,
+                "taxon": "Polyporaceae",
+                "precision": 0.9620132953466287,
+                "recall": 0.9383974062065771,
+                "f1": 0.9500586166471278,
+                "support": 2159
+              },
+              {
+                "label_id": 8,
+                "taxon": "Xylariaceae",
+                "precision": 0.9071428571428571,
+                "recall": 0.9442379182156134,
+                "f1": 0.9253187613843351,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1615,
+                2,
+                7,
+                2,
+                63,
+                0,
+                1,
+                15,
+                4
+              ],
+              [
+                1,
+                374,
+                0,
+                2,
+                1,
+                0,
+                8,
+                17,
+                8
+              ],
+              [
+                2,
+                0,
+                137,
+                0,
+                12,
+                0,
+                2,
+                2,
+                2
+              ],
+              [
+                1,
+                1,
+                0,
+                92,
+                3,
+                1,
+                5,
+                10,
+                1
+              ],
+              [
+                12,
+                0,
+                7,
+                2,
+                652,
+                0,
+                1,
+                9,
+                3
+              ],
+              [
+                1,
+                0,
+                0,
+                1,
+                0,
+                17,
+                0,
+                1,
+                1
+              ],
+              [
+                6,
+                4,
+                4,
+                0,
+                5,
+                1,
+                455,
+                19,
+                1
+              ],
+              [
+                14,
+                11,
+                1,
+                2,
+                51,
+                0,
+                22,
+                2026,
+                32
+              ],
+              [
+                3,
+                1,
+                1,
+                0,
+                13,
+                0,
+                5,
+                7,
+                508
+              ]
+            ],
+            "level": "family",
+            "rule": "top1_genus",
+            "n_classes": 9,
+            "macro_precision": 0.9113004395218586,
+            "macro_recall": 0.8995989025735776,
+            "genera_per_taxon": {
+              "Amanitaceae": [
+                "Amanita"
+              ],
+              "Auriculariaceae": [
+                "Auricularia"
+              ],
+              "Geastraceae": [
+                "Geastrum"
+              ],
+              "Hericiaceae": [
+                "Hericium"
+              ],
+              "Lycoperdaceae": [
+                "Lycoperdon"
+              ],
+              "Morchellaceae": [
+                "Morchella"
+              ],
+              "Pleurotaceae": [
+                "Pleurotus"
+              ],
+              "Polyporaceae": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Xylariaceae": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9051212185994717,
+              "accuracy": 0.9362480127186009,
+              "balanced_accuracy": 0.8990966288414377,
+              "top1_accuracy": 0.9362480127186009,
+              "top3_accuracy": 0.9871224165341812,
+              "disagreements_with_top1_genus": 27
+            }
+          },
+          "order": {
+            "n": 6290,
+            "macro_f1": 0.9065458777392295,
+            "accuracy": 0.9481717011128776,
+            "balanced_accuracy": 0.8934403072819863,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricales",
+                "precision": 0.9512525389302641,
+                "recall": 0.972318339100346,
+                "f1": 0.9616700889801506,
+                "support": 2890
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariales",
+                "precision": 0.9516539440203562,
+                "recall": 0.9099756690997567,
+                "f1": 0.9303482587064676,
+                "support": 411
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastrales",
+                "precision": 0.8726114649681529,
+                "recall": 0.8726114649681529,
+                "f1": 0.8726114649681529,
+                "support": 157
+              },
+              {
+                "label_id": 3,
+                "taxon": "Pezizales",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 4,
+                "taxon": "Polyporales",
+                "precision": 0.9620132953466287,
+                "recall": 0.9383974062065771,
+                "f1": 0.9500586166471278,
+                "support": 2159
+              },
+              {
+                "label_id": 5,
+                "taxon": "Russulales",
+                "precision": 0.9108910891089109,
+                "recall": 0.8070175438596491,
+                "f1": 0.8558139534883721,
+                "support": 114
+              },
+              {
+                "label_id": 6,
+                "taxon": "Xylariales",
+                "precision": 0.9071428571428571,
+                "recall": 0.9442379182156134,
+                "f1": 0.9253187613843351,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                2810,
+                6,
+                18,
+                1,
+                43,
+                4,
+                8
+              ],
+              [
+                10,
+                374,
+                0,
+                0,
+                17,
+                2,
+                8
+              ],
+              [
+                16,
+                0,
+                137,
+                0,
+                2,
+                0,
+                2
+              ],
+              [
+                1,
+                0,
+                0,
+                17,
+                1,
+                1,
+                1
+              ],
+              [
+                87,
+                11,
+                1,
+                0,
+                2026,
+                2,
+                32
+              ],
+              [
+                9,
+                1,
+                0,
+                1,
+                10,
+                92,
+                1
+              ],
+              [
+                21,
+                1,
+                1,
+                0,
+                7,
+                0,
+                508
+              ]
+            ],
+            "level": "order",
+            "rule": "top1_genus",
+            "n_classes": 7,
+            "macro_precision": 0.9214717188032048,
+            "macro_recall": 0.8934403072819863,
+            "genera_per_taxon": {
+              "Agaricales": [
+                "Amanita",
+                "Lycoperdon",
+                "Pleurotus"
+              ],
+              "Auriculariales": [
+                "Auricularia"
+              ],
+              "Geastrales": [
+                "Geastrum"
+              ],
+              "Pezizales": [
+                "Morchella"
+              ],
+              "Polyporales": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Russulales": [
+                "Hericium"
+              ],
+              "Xylariales": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.90851266422801,
+              "accuracy": 0.9494435612082671,
+              "balanced_accuracy": 0.8912740534406552,
+              "top1_accuracy": 0.9494435612082671,
+              "top3_accuracy": 0.995389507154213,
+              "disagreements_with_top1_genus": 38
+            }
+          },
+          "class": {
+            "n": 6290,
+            "macro_f1": 0.9226008642941084,
+            "accuracy": 0.9861685214626391,
+            "balanced_accuracy": 0.9148379259974777,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricomycetes",
+                "precision": 0.9942216774645422,
+                "recall": 0.9907520502530099,
+                "f1": 0.9924838314979899,
+                "support": 5731
+              },
+              {
+                "label_id": 1,
+                "taxon": "Pezizomycetes",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 2,
+                "taxon": "Sordariomycetes",
+                "precision": 0.9071428571428571,
+                "recall": 0.9442379182156134,
+                "f1": 0.9253187613843351,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                5678,
+                2,
+                51
+              ],
+              [
+                3,
+                17,
+                1
+              ],
+              [
+                30,
+                0,
+                508
+              ]
+            ],
+            "level": "class",
+            "rule": "top1_genus",
+            "n_classes": 3,
+            "macro_precision": 0.9320337922375542,
+            "macro_recall": 0.9148379259974777,
+            "genera_per_taxon": {
+              "Agaricomycetes": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ],
+              "Pezizomycetes": [
+                "Morchella"
+              ],
+              "Sordariomycetes": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9226305182611715,
+              "accuracy": 0.9875993640699523,
+              "balanced_accuracy": 0.8939323873786481,
+              "top1_accuracy": 0.9875993640699523,
+              "disagreements_with_top1_genus": 32
+            }
+          },
+          "phylum": {
+            "n": 6290,
+            "macro_f1": 0.9584563269967981,
+            "accuracy": 0.9863275039745628,
+            "balanced_accuracy": 0.9658590304932313,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Ascomycota",
+                "precision": 0.9084628670120898,
+                "recall": 0.9409660107334525,
+                "f1": 0.9244288224956063,
+                "support": 559
+              },
+              {
+                "label_id": 1,
+                "taxon": "Basidiomycota",
+                "precision": 0.9942216774645422,
+                "recall": 0.9907520502530099,
+                "f1": 0.9924838314979899,
+                "support": 5731
+              }
+            ],
+            "confusion_matrix": [
+              [
+                526,
+                33
+              ],
+              [
+                53,
+                5678
+              ]
+            ],
+            "level": "phylum",
+            "rule": "top1_genus",
+            "n_classes": 2,
+            "macro_precision": 0.951342272238316,
+            "macro_recall": 0.9658590304932313,
+            "genera_per_taxon": {
+              "Ascomycota": [
+                "Morchella",
+                "Xylaria"
+              ],
+              "Basidiomycota": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9623915582878924,
+              "accuracy": 0.9879173290937997,
+              "balanced_accuracy": 0.9586593828436438,
+              "top1_accuracy": 0.9879173290937997,
+              "disagreements_with_top1_genus": 30
+            }
+          }
+        },
+        "observation_level": {
+          "genus": {
+            "n": 3452,
+            "macro_f1": 0.9545427706343522,
+            "accuracy": 0.9594438006952491,
+            "balanced_accuracy": 0.9556571614848961,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanita",
+                "precision": 0.9920724801812004,
+                "recall": 0.9690265486725663,
+                "f1": 0.9804141018466704,
+                "support": 904
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auricularia",
+                "precision": 0.988929889298893,
+                "recall": 0.9305555555555556,
+                "f1": 0.9588550983899821,
+                "support": 288
+              },
+              {
+                "label_id": 2,
+                "taxon": "Ganoderma",
+                "precision": 0.9415384615384615,
+                "recall": 0.9134328358208955,
+                "f1": 0.9272727272727272,
+                "support": 335
+              },
+              {
+                "label_id": 3,
+                "taxon": "Geastrum",
+                "precision": 0.9047619047619048,
+                "recall": 0.9620253164556962,
+                "f1": 0.9325153374233128,
+                "support": 79
+              },
+              {
+                "label_id": 4,
+                "taxon": "Hericium",
+                "precision": 0.9516129032258065,
+                "recall": 0.8939393939393939,
+                "f1": 0.921875,
+                "support": 66
+              },
+              {
+                "label_id": 5,
+                "taxon": "Lycoperdon",
+                "precision": 0.9006772009029346,
+                "recall": 0.9779411764705882,
+                "f1": 0.9377203290246768,
+                "support": 408
+              },
+              {
+                "label_id": 6,
+                "taxon": "Morchella",
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 11
+              },
+              {
+                "label_id": 7,
+                "taxon": "Pleurotus",
+                "precision": 0.9420849420849421,
+                "recall": 0.9721115537848606,
+                "f1": 0.9568627450980393,
+                "support": 251
+              },
+              {
+                "label_id": 8,
+                "taxon": "Trametes",
+                "precision": 0.9667994687915007,
+                "recall": 0.9629629629629629,
+                "f1": 0.9648774022531478,
+                "support": 756
+              },
+              {
+                "label_id": 9,
+                "taxon": "Xylaria",
+                "precision": 0.9556786703601108,
+                "recall": 0.9745762711864406,
+                "f1": 0.965034965034965,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                876,
+                0,
+                0,
+                3,
+                1,
+                22,
+                0,
+                0,
+                1,
+                1
+              ],
+              [
+                1,
+                268,
+                4,
+                0,
+                2,
+                0,
+                0,
+                5,
+                3,
+                5
+              ],
+              [
+                1,
+                1,
+                306,
+                0,
+                0,
+                5,
+                0,
+                2,
+                14,
+                6
+              ],
+              [
+                0,
+                0,
+                0,
+                76,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                59,
+                1,
+                0,
+                1,
+                5,
+                0
+              ],
+              [
+                4,
+                0,
+                2,
+                3,
+                0,
+                399,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                244,
+                2,
+                0
+              ],
+              [
+                0,
+                1,
+                10,
+                0,
+                0,
+                9,
+                0,
+                4,
+                728,
+                4
+              ],
+              [
+                0,
+                0,
+                2,
+                0,
+                0,
+                5,
+                0,
+                2,
+                0,
+                345
+              ]
+            ],
+            "level": "genus",
+            "rule": "top1_genus",
+            "n_classes": 10,
+            "macro_precision": 0.9544155921145755,
+            "macro_recall": 0.9556571614848961,
+            "genera_per_taxon": {
+              "Amanita": [
+                "Amanita"
+              ],
+              "Auricularia": [
+                "Auricularia"
+              ],
+              "Ganoderma": [
+                "Ganoderma"
+              ],
+              "Geastrum": [
+                "Geastrum"
+              ],
+              "Hericium": [
+                "Hericium"
+              ],
+              "Lycoperdon": [
+                "Lycoperdon"
+              ],
+              "Morchella": [
+                "Morchella"
+              ],
+              "Pleurotus": [
+                "Pleurotus"
+              ],
+              "Trametes": [
+                "Trametes"
+              ],
+              "Xylaria": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9545427706343522,
+              "accuracy": 0.9594438006952491,
+              "balanced_accuracy": 0.9556571614848961,
+              "top1_accuracy": 0.9594438006952491,
+              "top3_accuracy": 0.9933371958285052,
+              "disagreements_with_top1_genus": 0
+            },
+            "macro_f1_ci95": [
+              0.9454442262094244,
+              0.9620740364550935
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "family": {
+            "n": 3452,
+            "macro_f1": 0.9587602614680333,
+            "accuracy": 0.966396292004635,
+            "balanced_accuracy": 0.9611031485209315,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanitaceae",
+                "precision": 0.9920724801812004,
+                "recall": 0.9690265486725663,
+                "f1": 0.9804141018466704,
+                "support": 904
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariaceae",
+                "precision": 0.988929889298893,
+                "recall": 0.9305555555555556,
+                "f1": 0.9588550983899821,
+                "support": 288
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastraceae",
+                "precision": 0.9047619047619048,
+                "recall": 0.9620253164556962,
+                "f1": 0.9325153374233128,
+                "support": 79
+              },
+              {
+                "label_id": 3,
+                "taxon": "Hericiaceae",
+                "precision": 0.9516129032258065,
+                "recall": 0.8939393939393939,
+                "f1": 0.921875,
+                "support": 66
+              },
+              {
+                "label_id": 4,
+                "taxon": "Lycoperdaceae",
+                "precision": 0.9006772009029346,
+                "recall": 0.9779411764705882,
+                "f1": 0.9377203290246768,
+                "support": 408
+              },
+              {
+                "label_id": 5,
+                "taxon": "Morchellaceae",
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 11
+              },
+              {
+                "label_id": 6,
+                "taxon": "Pleurotaceae",
+                "precision": 0.9420849420849421,
+                "recall": 0.9721115537848606,
+                "f1": 0.9568627450980393,
+                "support": 251
+              },
+              {
+                "label_id": 7,
+                "taxon": "Polyporaceae",
+                "precision": 0.9814471243042672,
+                "recall": 0.9697525206232814,
+                "f1": 0.9755647763946519,
+                "support": 1091
+              },
+              {
+                "label_id": 8,
+                "taxon": "Xylariaceae",
+                "precision": 0.9556786703601108,
+                "recall": 0.9745762711864406,
+                "f1": 0.965034965034965,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                876,
+                0,
+                3,
+                1,
+                22,
+                0,
+                0,
+                1,
+                1
+              ],
+              [
+                1,
+                268,
+                0,
+                2,
+                0,
+                0,
+                5,
+                7,
+                5
+              ],
+              [
+                0,
+                0,
+                76,
+                0,
+                2,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                59,
+                1,
+                0,
+                1,
+                5,
+                0
+              ],
+              [
+                4,
+                0,
+                3,
+                0,
+                399,
+                0,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                1,
+                1,
+                2,
+                0,
+                0,
+                0,
+                244,
+                3,
+                0
+              ],
+              [
+                1,
+                2,
+                0,
+                0,
+                14,
+                0,
+                6,
+                1058,
+                10
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                5,
+                0,
+                2,
+                2,
+                345
+              ]
+            ],
+            "level": "family",
+            "rule": "top1_genus",
+            "n_classes": 9,
+            "macro_precision": 0.9574739016800066,
+            "macro_recall": 0.9611031485209315,
+            "genera_per_taxon": {
+              "Amanitaceae": [
+                "Amanita"
+              ],
+              "Auriculariaceae": [
+                "Auricularia"
+              ],
+              "Geastraceae": [
+                "Geastrum"
+              ],
+              "Hericiaceae": [
+                "Hericium"
+              ],
+              "Lycoperdaceae": [
+                "Lycoperdon"
+              ],
+              "Morchellaceae": [
+                "Morchella"
+              ],
+              "Pleurotaceae": [
+                "Pleurotus"
+              ],
+              "Polyporaceae": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Xylariaceae": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9594885669390203,
+              "accuracy": 0.9675550405561993,
+              "balanced_accuracy": 0.9615105219805505,
+              "top1_accuracy": 0.9675550405561993,
+              "top3_accuracy": 0.9950753186558516,
+              "disagreements_with_top1_genus": 4
+            },
+            "macro_f1_ci95": [
+              0.9491896560928683,
+              0.9667491530878839
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "order": {
+            "n": 3452,
+            "macro_f1": 0.9622937292594249,
+            "accuracy": 0.9742178447276941,
+            "balanced_accuracy": 0.959996076892373,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricales",
+                "precision": 0.9753943217665615,
+                "recall": 0.9891234804862444,
+                "f1": 0.9822109275730623,
+                "support": 1563
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariales",
+                "precision": 0.988929889298893,
+                "recall": 0.9305555555555556,
+                "f1": 0.9588550983899821,
+                "support": 288
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastrales",
+                "precision": 0.9047619047619048,
+                "recall": 0.9620253164556962,
+                "f1": 0.9325153374233128,
+                "support": 79
+              },
+              {
+                "label_id": 3,
+                "taxon": "Pezizales",
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 11
+              },
+              {
+                "label_id": 4,
+                "taxon": "Polyporales",
+                "precision": 0.9814471243042672,
+                "recall": 0.9697525206232814,
+                "f1": 0.9755647763946519,
+                "support": 1091
+              },
+              {
+                "label_id": 5,
+                "taxon": "Russulales",
+                "precision": 0.9516129032258065,
+                "recall": 0.8939393939393939,
+                "f1": 0.921875,
+                "support": 66
+              },
+              {
+                "label_id": 6,
+                "taxon": "Xylariales",
+                "precision": 0.9556786703601108,
+                "recall": 0.9745762711864406,
+                "f1": 0.965034965034965,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1546,
+                1,
+                8,
+                0,
+                6,
+                1,
+                1
+              ],
+              [
+                6,
+                268,
+                0,
+                0,
+                7,
+                2,
+                5
+              ],
+              [
+                3,
+                0,
+                76,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                21,
+                2,
+                0,
+                0,
+                1058,
+                0,
+                10
+              ],
+              [
+                2,
+                0,
+                0,
+                0,
+                5,
+                59,
+                0
+              ],
+              [
+                7,
+                0,
+                0,
+                0,
+                2,
+                0,
+                345
+              ]
+            ],
+            "level": "order",
+            "rule": "top1_genus",
+            "n_classes": 7,
+            "macro_precision": 0.965403544816792,
+            "macro_recall": 0.959996076892373,
+            "genera_per_taxon": {
+              "Agaricales": [
+                "Amanita",
+                "Lycoperdon",
+                "Pleurotus"
+              ],
+              "Auriculariales": [
+                "Auricularia"
+              ],
+              "Geastrales": [
+                "Geastrum"
+              ],
+              "Pezizales": [
+                "Morchella"
+              ],
+              "Polyporales": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Russulales": [
+                "Hericium"
+              ],
+              "Xylariales": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9646872468826732,
+              "accuracy": 0.9753765932792584,
+              "balanced_accuracy": 0.9575628806199646,
+              "top1_accuracy": 0.9753765932792584,
+              "top3_accuracy": 0.9982618771726536,
+              "disagreements_with_top1_genus": 14
+            },
+            "macro_f1_ci95": [
+              0.9511530894121483,
+              0.9719109132371576
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "class": {
+            "n": 3452,
+            "macro_f1": 0.9869937100357077,
+            "accuracy": 0.9927578215527231,
+            "balanced_accuracy": 0.9897977485317506,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricomycetes",
+                "precision": 0.9970779220779221,
+                "recall": 0.9948169744088111,
+                "f1": 0.9959461650721583,
+                "support": 3087
+              },
+              {
+                "label_id": 1,
+                "taxon": "Pezizomycetes",
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "support": 11
+              },
+              {
+                "label_id": 2,
+                "taxon": "Sordariomycetes",
+                "precision": 0.9556786703601108,
+                "recall": 0.9745762711864406,
+                "f1": 0.965034965034965,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                3071,
+                0,
+                16
+              ],
+              [
+                0,
+                11,
+                0
+              ],
+              [
+                9,
+                0,
+                345
+              ]
+            ],
+            "level": "class",
+            "rule": "top1_genus",
+            "n_classes": 3,
+            "macro_precision": 0.9842521974793442,
+            "macro_recall": 0.9897977485317506,
+            "genera_per_taxon": {
+              "Agaricomycetes": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ],
+              "Pezizomycetes": [
+                "Morchella"
+              ],
+              "Sordariomycetes": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9675772180131309,
+              "accuracy": 0.9907300115874855,
+              "balanced_accuracy": 0.9488431613993704,
+              "top1_accuracy": 0.9907300115874855,
+              "disagreements_with_top1_genus": 19
+            },
+            "macro_f1_ci95": [
+              0.982208663950491,
+              0.9917070077835569
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "phylum": {
+            "n": 3452,
+            "macro_f1": 0.9810124312470696,
+            "accuracy": 0.9927578215527231,
+            "balanced_accuracy": 0.9850797200811179,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Ascomycota",
+                "precision": 0.956989247311828,
+                "recall": 0.9753424657534246,
+                "f1": 0.966078697421981,
+                "support": 365
+              },
+              {
+                "label_id": 1,
+                "taxon": "Basidiomycota",
+                "precision": 0.9970779220779221,
+                "recall": 0.9948169744088111,
+                "f1": 0.9959461650721583,
+                "support": 3087
+              }
+            ],
+            "confusion_matrix": [
+              [
+                356,
+                9
+              ],
+              [
+                16,
+                3071
+              ]
+            ],
+            "level": "phylum",
+            "rule": "top1_genus",
+            "n_classes": 2,
+            "macro_precision": 0.977033584694875,
+            "macro_recall": 0.9850797200811179,
+            "genera_per_taxon": {
+              "Ascomycota": [
+                "Morchella",
+                "Xylaria"
+              ],
+              "Basidiomycota": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9767410521776628,
+              "accuracy": 0.9913093858632677,
+              "balanced_accuracy": 0.9709830442287809,
+              "top1_accuracy": 0.9913093858632677,
+              "disagreements_with_top1_genus": 17
+            },
+            "macro_f1_ci95": [
+              0.9741570505010139,
+              0.9878624834225646
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          }
+        }
+      }
+    },
+    {
+      "model": "ma_resnet18_v002",
+      "architecture": "resnet18",
+      "split": "test",
+      "run_id": "20261004T133123181686Z_ma_resnet18_v002",
+      "source": "development run",
+      "predictions": "runs/20261004T133123181686Z_ma_resnet18_v002/predictions_test.csv",
+      "predictions_sha256": "ae3f098934839ac9c08ca12f8d00a43651eeb97f06cdbff340e2f52c6a608fb2",
+      "observations": 4039,
+      "images": 7159,
+      "genus_reproduction": {
+        "image_level": {
+          "confusion_identical": true,
+          "max_abs_diff": 0.0
+        },
+        "observation_level": {
+          "confusion_identical": true,
+          "max_abs_diff": 0.0
+        }
+      },
+      "metrics": {
+        "image_level": {
+          "genus": {
+            "n": 7159,
+            "macro_f1": 0.8874550763291944,
+            "accuracy": 0.9108814080178796,
+            "balanced_accuracy": 0.8865396510079357,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanita",
+                "precision": 0.9717636837532581,
+                "recall": 0.9348098620977852,
+                "f1": 0.9529286474973376,
+                "support": 2393
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auricularia",
+                "precision": 0.9470046082949308,
+                "recall": 0.8652631578947368,
+                "f1": 0.9042904290429042,
+                "support": 475
+              },
+              {
+                "label_id": 2,
+                "taxon": "Ganoderma",
+                "precision": 0.8673780487804879,
+                "recall": 0.8713629402756509,
+                "f1": 0.8693659281894576,
+                "support": 653
+              },
+              {
+                "label_id": 3,
+                "taxon": "Geastrum",
+                "precision": 0.9005681818181818,
+                "recall": 0.8408488063660478,
+                "f1": 0.869684499314129,
+                "support": 377
+              },
+              {
+                "label_id": 4,
+                "taxon": "Hericium",
+                "precision": 0.9157894736842105,
+                "recall": 0.8613861386138614,
+                "f1": 0.8877551020408163,
+                "support": 101
+              },
+              {
+                "label_id": 5,
+                "taxon": "Lycoperdon",
+                "precision": 0.757396449704142,
+                "recall": 0.9696969696969697,
+                "f1": 0.8504983388704319,
+                "support": 660
+              },
+              {
+                "label_id": 6,
+                "taxon": "Morchella",
+                "precision": 0.8484848484848485,
+                "recall": 0.8235294117647058,
+                "f1": 0.835820895522388,
+                "support": 34
+              },
+              {
+                "label_id": 7,
+                "taxon": "Pleurotus",
+                "precision": 0.8925081433224755,
+                "recall": 0.8896103896103896,
+                "f1": 0.8910569105691057,
+                "support": 616
+              },
+              {
+                "label_id": 8,
+                "taxon": "Trametes",
+                "precision": 0.9344141488577745,
+                "recall": 0.9161849710982659,
+                "f1": 0.9252097774534841,
+                "support": 1384
+              },
+              {
+                "label_id": 9,
+                "taxon": "Xylaria",
+                "precision": 0.8832271762208068,
+                "recall": 0.8927038626609443,
+                "f1": 0.887940234791889,
+                "support": 466
+              }
+            ],
+            "confusion_matrix": [
+              [
+                2237,
+                7,
+                4,
+                17,
+                0,
+                95,
+                2,
+                14,
+                11,
+                6
+              ],
+              [
+                5,
+                411,
+                11,
+                4,
+                2,
+                5,
+                0,
+                12,
+                12,
+                13
+              ],
+              [
+                12,
+                5,
+                569,
+                3,
+                0,
+                17,
+                0,
+                5,
+                32,
+                10
+              ],
+              [
+                9,
+                0,
+                8,
+                317,
+                1,
+                27,
+                1,
+                3,
+                5,
+                6
+              ],
+              [
+                2,
+                0,
+                2,
+                0,
+                87,
+                1,
+                0,
+                3,
+                6,
+                0
+              ],
+              [
+                7,
+                0,
+                3,
+                2,
+                1,
+                640,
+                1,
+                3,
+                2,
+                1
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                0,
+                1,
+                28,
+                0,
+                2,
+                0
+              ],
+              [
+                21,
+                6,
+                10,
+                3,
+                3,
+                8,
+                0,
+                548,
+                13,
+                4
+              ],
+              [
+                3,
+                5,
+                37,
+                1,
+                1,
+                32,
+                1,
+                21,
+                1268,
+                15
+              ],
+              [
+                3,
+                0,
+                12,
+                5,
+                0,
+                19,
+                0,
+                5,
+                6,
+                416
+              ]
+            ],
+            "level": "genus",
+            "rule": "top1_genus",
+            "n_classes": 10,
+            "macro_precision": 0.8918534762921115,
+            "macro_recall": 0.8865396510079357,
+            "genera_per_taxon": {
+              "Amanita": [
+                "Amanita"
+              ],
+              "Auricularia": [
+                "Auricularia"
+              ],
+              "Ganoderma": [
+                "Ganoderma"
+              ],
+              "Geastrum": [
+                "Geastrum"
+              ],
+              "Hericium": [
+                "Hericium"
+              ],
+              "Lycoperdon": [
+                "Lycoperdon"
+              ],
+              "Morchella": [
+                "Morchella"
+              ],
+              "Pleurotus": [
+                "Pleurotus"
+              ],
+              "Trametes": [
+                "Trametes"
+              ],
+              "Xylaria": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.8874550763291944,
+              "accuracy": 0.9108814080178796,
+              "balanced_accuracy": 0.8865396510079357,
+              "top1_accuracy": 0.9108814080178796,
+              "top3_accuracy": 0.9842156725799692,
+              "disagreements_with_top1_genus": 0
+            }
+          },
+          "family": {
+            "n": 7159,
+            "macro_f1": 0.8912455139500263,
+            "accuracy": 0.92051962564604,
+            "balanced_accuracy": 0.8903931487243213,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanitaceae",
+                "precision": 0.9717636837532581,
+                "recall": 0.9348098620977852,
+                "f1": 0.9529286474973376,
+                "support": 2393
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariaceae",
+                "precision": 0.9470046082949308,
+                "recall": 0.8652631578947368,
+                "f1": 0.9042904290429042,
+                "support": 475
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastraceae",
+                "precision": 0.9005681818181818,
+                "recall": 0.8408488063660478,
+                "f1": 0.869684499314129,
+                "support": 377
+              },
+              {
+                "label_id": 3,
+                "taxon": "Hericiaceae",
+                "precision": 0.9157894736842105,
+                "recall": 0.8613861386138614,
+                "f1": 0.8877551020408163,
+                "support": 101
+              },
+              {
+                "label_id": 4,
+                "taxon": "Lycoperdaceae",
+                "precision": 0.757396449704142,
+                "recall": 0.9696969696969697,
+                "f1": 0.8504983388704319,
+                "support": 660
+              },
+              {
+                "label_id": 5,
+                "taxon": "Morchellaceae",
+                "precision": 0.8484848484848485,
+                "recall": 0.8235294117647058,
+                "f1": 0.835820895522388,
+                "support": 34
+              },
+              {
+                "label_id": 6,
+                "taxon": "Pleurotaceae",
+                "precision": 0.8925081433224755,
+                "recall": 0.8896103896103896,
+                "f1": 0.8910569105691057,
+                "support": 616
+              },
+              {
+                "label_id": 7,
+                "taxon": "Polyporaceae",
+                "precision": 0.9468455042225534,
+                "recall": 0.9356897398134512,
+                "f1": 0.9412345679012346,
+                "support": 2037
+              },
+              {
+                "label_id": 8,
+                "taxon": "Xylariaceae",
+                "precision": 0.8832271762208068,
+                "recall": 0.8927038626609443,
+                "f1": 0.887940234791889,
+                "support": 466
+              }
+            ],
+            "confusion_matrix": [
+              [
+                2237,
+                7,
+                17,
+                0,
+                95,
+                2,
+                14,
+                15,
+                6
+              ],
+              [
+                5,
+                411,
+                4,
+                2,
+                5,
+                0,
+                12,
+                23,
+                13
+              ],
+              [
+                9,
+                0,
+                317,
+                1,
+                27,
+                1,
+                3,
+                13,
+                6
+              ],
+              [
+                2,
+                0,
+                0,
+                87,
+                1,
+                0,
+                3,
+                8,
+                0
+              ],
+              [
+                7,
+                0,
+                2,
+                1,
+                640,
+                1,
+                3,
+                5,
+                1
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                1,
+                28,
+                0,
+                2,
+                0
+              ],
+              [
+                21,
+                6,
+                3,
+                3,
+                8,
+                0,
+                548,
+                23,
+                4
+              ],
+              [
+                15,
+                10,
+                4,
+                1,
+                49,
+                1,
+                26,
+                1906,
+                25
+              ],
+              [
+                3,
+                0,
+                5,
+                0,
+                19,
+                0,
+                5,
+                18,
+                416
+              ]
+            ],
+            "level": "family",
+            "rule": "top1_genus",
+            "n_classes": 9,
+            "macro_precision": 0.8959542299450453,
+            "macro_recall": 0.8903931487243213,
+            "genera_per_taxon": {
+              "Amanitaceae": [
+                "Amanita"
+              ],
+              "Auriculariaceae": [
+                "Auricularia"
+              ],
+              "Geastraceae": [
+                "Geastrum"
+              ],
+              "Hericiaceae": [
+                "Hericium"
+              ],
+              "Lycoperdaceae": [
+                "Lycoperdon"
+              ],
+              "Morchellaceae": [
+                "Morchella"
+              ],
+              "Pleurotaceae": [
+                "Pleurotus"
+              ],
+              "Polyporaceae": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Xylariaceae": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.8923613945857325,
+              "accuracy": 0.921916468780556,
+              "balanced_accuracy": 0.8904450056243264,
+              "top1_accuracy": 0.921916468780556,
+              "top3_accuracy": 0.9872887274759045,
+              "disagreements_with_top1_genus": 18
+            }
+          },
+          "order": {
+            "n": 7159,
+            "macro_f1": 0.8983574728628584,
+            "accuracy": 0.9411929040368766,
+            "balanced_accuracy": 0.8847508499275918,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricales",
+                "precision": 0.9500132943366126,
+                "recall": 0.9738348323793949,
+                "f1": 0.9617765814266487,
+                "support": 3669
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariales",
+                "precision": 0.9470046082949308,
+                "recall": 0.8652631578947368,
+                "f1": 0.9042904290429042,
+                "support": 475
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastrales",
+                "precision": 0.9005681818181818,
+                "recall": 0.8408488063660478,
+                "f1": 0.869684499314129,
+                "support": 377
+              },
+              {
+                "label_id": 3,
+                "taxon": "Pezizales",
+                "precision": 0.8484848484848485,
+                "recall": 0.8235294117647058,
+                "f1": 0.835820895522388,
+                "support": 34
+              },
+              {
+                "label_id": 4,
+                "taxon": "Polyporales",
+                "precision": 0.9468455042225534,
+                "recall": 0.9356897398134512,
+                "f1": 0.9412345679012346,
+                "support": 2037
+              },
+              {
+                "label_id": 5,
+                "taxon": "Russulales",
+                "precision": 0.9157894736842105,
+                "recall": 0.8613861386138614,
+                "f1": 0.8877551020408163,
+                "support": 101
+              },
+              {
+                "label_id": 6,
+                "taxon": "Xylariales",
+                "precision": 0.8832271762208068,
+                "recall": 0.8927038626609443,
+                "f1": 0.887940234791889,
+                "support": 466
+              }
+            ],
+            "confusion_matrix": [
+              [
+                3573,
+                13,
+                22,
+                3,
+                43,
+                4,
+                11
+              ],
+              [
+                22,
+                411,
+                4,
+                0,
+                23,
+                2,
+                13
+              ],
+              [
+                39,
+                0,
+                317,
+                1,
+                13,
+                1,
+                6
+              ],
+              [
+                4,
+                0,
+                0,
+                28,
+                2,
+                0,
+                0
+              ],
+              [
+                90,
+                10,
+                4,
+                1,
+                1906,
+                1,
+                25
+              ],
+              [
+                6,
+                0,
+                0,
+                0,
+                8,
+                87,
+                0
+              ],
+              [
+                27,
+                0,
+                5,
+                0,
+                18,
+                0,
+                416
+              ]
+            ],
+            "level": "order",
+            "rule": "top1_genus",
+            "n_classes": 7,
+            "macro_precision": 0.9131332981517348,
+            "macro_recall": 0.8847508499275918,
+            "genera_per_taxon": {
+              "Agaricales": [
+                "Amanita",
+                "Lycoperdon",
+                "Pleurotus"
+              ],
+              "Auriculariales": [
+                "Auricularia"
+              ],
+              "Geastrales": [
+                "Geastrum"
+              ],
+              "Pezizales": [
+                "Morchella"
+              ],
+              "Polyporales": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Russulales": [
+                "Hericium"
+              ],
+              "Xylariales": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9035487919049753,
+              "accuracy": 0.9423103785444894,
+              "balanced_accuracy": 0.8803769558354233,
+              "top1_accuracy": 0.9423103785444894,
+              "top3_accuracy": 0.9932951529543232,
+              "disagreements_with_top1_genus": 61
+            }
+          },
+          "class": {
+            "n": 7159,
+            "macro_f1": 0.9050161656653218,
+            "accuracy": 0.9837966196396145,
+            "balanced_accuracy": 0.9024076375031488,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricomycetes",
+                "precision": 0.9915852742299023,
+                "recall": 0.9909896380837964,
+                "f1": 0.9912873666816885,
+                "support": 6659
+              },
+              {
+                "label_id": 1,
+                "taxon": "Pezizomycetes",
+                "precision": 0.8484848484848485,
+                "recall": 0.8235294117647058,
+                "f1": 0.835820895522388,
+                "support": 34
+              },
+              {
+                "label_id": 2,
+                "taxon": "Sordariomycetes",
+                "precision": 0.8832271762208068,
+                "recall": 0.8927038626609443,
+                "f1": 0.887940234791889,
+                "support": 466
+              }
+            ],
+            "confusion_matrix": [
+              [
+                6599,
+                5,
+                55
+              ],
+              [
+                6,
+                28,
+                0
+              ],
+              [
+                50,
+                0,
+                416
+              ]
+            ],
+            "level": "class",
+            "rule": "top1_genus",
+            "n_classes": 3,
+            "macro_precision": 0.9077657663118526,
+            "macro_recall": 0.9024076375031488,
+            "genera_per_taxon": {
+              "Agaricomycetes": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ],
+              "Pezizomycetes": [
+                "Morchella"
+              ],
+              "Sordariomycetes": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9034541885692168,
+              "accuracy": 0.9857522000279368,
+              "balanced_accuracy": 0.8645333511978563,
+              "top1_accuracy": 0.9857522000279368,
+              "disagreements_with_top1_genus": 48
+            }
+          },
+          "phylum": {
+            "n": 7159,
+            "macro_f1": 0.9378747590380554,
+            "accuracy": 0.9837966196396145,
+            "balanced_accuracy": 0.9394948190418981,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Ascomycota",
+                "precision": 0.8809523809523809,
+                "recall": 0.888,
+                "f1": 0.8844621513944223,
+                "support": 500
+              },
+              {
+                "label_id": 1,
+                "taxon": "Basidiomycota",
+                "precision": 0.9915852742299023,
+                "recall": 0.9909896380837964,
+                "f1": 0.9912873666816885,
+                "support": 6659
+              }
+            ],
+            "confusion_matrix": [
+              [
+                444,
+                56
+              ],
+              [
+                60,
+                6599
+              ]
+            ],
+            "level": "phylum",
+            "rule": "top1_genus",
+            "n_classes": 2,
+            "macro_precision": 0.9362688275911416,
+            "macro_recall": 0.9394948190418981,
+            "genera_per_taxon": {
+              "Ascomycota": [
+                "Morchella",
+                "Xylaria"
+              ],
+              "Basidiomycota": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9429467265885765,
+              "accuracy": 0.9857522000279368,
+              "balanced_accuracy": 0.925747409520949,
+              "top1_accuracy": 0.9857522000279368,
+              "disagreements_with_top1_genus": 46
+            }
+          }
+        },
+        "observation_level": {
+          "genus": {
+            "n": 4039,
+            "macro_f1": 0.9463480723480707,
+            "accuracy": 0.9579103738549146,
+            "balanced_accuracy": 0.9399890319402247,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanita",
+                "precision": 0.9861325115562404,
+                "recall": 0.973384030418251,
+                "f1": 0.979716800612323,
+                "support": 1315
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auricularia",
+                "precision": 0.9897610921501706,
+                "recall": 0.9090909090909091,
+                "f1": 0.9477124183006536,
+                "support": 319
+              },
+              {
+                "label_id": 2,
+                "taxon": "Ganoderma",
+                "precision": 0.9406528189910979,
+                "recall": 0.9161849710982659,
+                "f1": 0.9282576866764275,
+                "support": 346
+              },
+              {
+                "label_id": 3,
+                "taxon": "Geastrum",
+                "precision": 0.9456521739130435,
+                "recall": 0.9560439560439561,
+                "f1": 0.9508196721311475,
+                "support": 182
+              },
+              {
+                "label_id": 4,
+                "taxon": "Hericium",
+                "precision": 0.9574468085106383,
+                "recall": 0.8823529411764706,
+                "f1": 0.9183673469387755,
+                "support": 51
+              },
+              {
+                "label_id": 5,
+                "taxon": "Lycoperdon",
+                "precision": 0.8933333333333333,
+                "recall": 0.9877149877149877,
+                "f1": 0.9381563593932322,
+                "support": 407
+              },
+              {
+                "label_id": 6,
+                "taxon": "Morchella",
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1": 0.9473684210526315,
+                "support": 20
+              },
+              {
+                "label_id": 7,
+                "taxon": "Pleurotus",
+                "precision": 0.946875,
+                "recall": 0.9498432601880877,
+                "f1": 0.9483568075117371,
+                "support": 319
+              },
+              {
+                "label_id": 8,
+                "taxon": "Trametes",
+                "precision": 0.9645569620253165,
+                "recall": 0.9633375474083439,
+                "f1": 0.9639468690702088,
+                "support": 791
+              },
+              {
+                "label_id": 9,
+                "taxon": "Xylaria",
+                "precision": 0.9205298013245033,
+                "recall": 0.9619377162629758,
+                "f1": 0.9407783417935702,
+                "support": 289
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1280,
+                0,
+                0,
+                6,
+                0,
+                26,
+                0,
+                2,
+                1,
+                0
+              ],
+              [
+                2,
+                290,
+                4,
+                1,
+                1,
+                1,
+                0,
+                6,
+                4,
+                10
+              ],
+              [
+                5,
+                2,
+                317,
+                0,
+                0,
+                4,
+                0,
+                2,
+                13,
+                3
+              ],
+              [
+                1,
+                0,
+                0,
+                174,
+                0,
+                5,
+                0,
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                45,
+                1,
+                0,
+                1,
+                4,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                0,
+                1,
+                402,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                18,
+                0,
+                1,
+                0
+              ],
+              [
+                5,
+                1,
+                1,
+                1,
+                0,
+                2,
+                0,
+                303,
+                3,
+                3
+              ],
+              [
+                1,
+                0,
+                11,
+                0,
+                0,
+                7,
+                0,
+                3,
+                762,
+                7
+              ],
+              [
+                0,
+                0,
+                4,
+                2,
+                0,
+                2,
+                0,
+                1,
+                2,
+                278
+              ]
+            ],
+            "level": "genus",
+            "rule": "top1_genus",
+            "n_classes": 10,
+            "macro_precision": 0.9544940501804344,
+            "macro_recall": 0.9399890319402247,
+            "genera_per_taxon": {
+              "Amanita": [
+                "Amanita"
+              ],
+              "Auricularia": [
+                "Auricularia"
+              ],
+              "Ganoderma": [
+                "Ganoderma"
+              ],
+              "Geastrum": [
+                "Geastrum"
+              ],
+              "Hericium": [
+                "Hericium"
+              ],
+              "Lycoperdon": [
+                "Lycoperdon"
+              ],
+              "Morchella": [
+                "Morchella"
+              ],
+              "Pleurotus": [
+                "Pleurotus"
+              ],
+              "Trametes": [
+                "Trametes"
+              ],
+              "Xylaria": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9463480723480707,
+              "accuracy": 0.9579103738549146,
+              "balanced_accuracy": 0.9399890319402247,
+              "top1_accuracy": 0.9579103738549146,
+              "top3_accuracy": 0.994305521168606,
+              "disagreements_with_top1_genus": 0
+            },
+            "macro_f1_ci95": [
+              0.932935118825495,
+              0.9567465279707094
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "family": {
+            "n": 4039,
+            "macro_f1": 0.9495175325750852,
+            "accuracy": 0.9638524387224561,
+            "balanced_accuracy": 0.9433849496353308,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanitaceae",
+                "precision": 0.9861325115562404,
+                "recall": 0.973384030418251,
+                "f1": 0.979716800612323,
+                "support": 1315
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariaceae",
+                "precision": 0.9897610921501706,
+                "recall": 0.9090909090909091,
+                "f1": 0.9477124183006536,
+                "support": 319
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastraceae",
+                "precision": 0.9456521739130435,
+                "recall": 0.9560439560439561,
+                "f1": 0.9508196721311475,
+                "support": 182
+              },
+              {
+                "label_id": 3,
+                "taxon": "Hericiaceae",
+                "precision": 0.9574468085106383,
+                "recall": 0.8823529411764706,
+                "f1": 0.9183673469387755,
+                "support": 51
+              },
+              {
+                "label_id": 4,
+                "taxon": "Lycoperdaceae",
+                "precision": 0.8933333333333333,
+                "recall": 0.9877149877149877,
+                "f1": 0.9381563593932322,
+                "support": 407
+              },
+              {
+                "label_id": 5,
+                "taxon": "Morchellaceae",
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1": 0.9473684210526315,
+                "support": 20
+              },
+              {
+                "label_id": 6,
+                "taxon": "Pleurotaceae",
+                "precision": 0.946875,
+                "recall": 0.9498432601880877,
+                "f1": 0.9483568075117371,
+                "support": 319
+              },
+              {
+                "label_id": 7,
+                "taxon": "Polyporaceae",
+                "precision": 0.9787045252883763,
+                "recall": 0.9700967458223395,
+                "f1": 0.9743816254416962,
+                "support": 1137
+              },
+              {
+                "label_id": 8,
+                "taxon": "Xylariaceae",
+                "precision": 0.9205298013245033,
+                "recall": 0.9619377162629758,
+                "f1": 0.9407783417935702,
+                "support": 289
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1280,
+                0,
+                6,
+                0,
+                26,
+                0,
+                2,
+                1,
+                0
+              ],
+              [
+                2,
+                290,
+                1,
+                1,
+                1,
+                0,
+                6,
+                8,
+                10
+              ],
+              [
+                1,
+                0,
+                174,
+                0,
+                5,
+                0,
+                1,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                45,
+                1,
+                0,
+                1,
+                4,
+                0
+              ],
+              [
+                3,
+                0,
+                0,
+                1,
+                402,
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                18,
+                0,
+                1,
+                0
+              ],
+              [
+                5,
+                1,
+                1,
+                0,
+                2,
+                0,
+                303,
+                4,
+                3
+              ],
+              [
+                6,
+                2,
+                0,
+                0,
+                11,
+                0,
+                5,
+                1103,
+                10
+              ],
+              [
+                0,
+                0,
+                2,
+                0,
+                2,
+                0,
+                1,
+                6,
+                278
+              ]
+            ],
+            "level": "family",
+            "rule": "top1_genus",
+            "n_classes": 9,
+            "macro_precision": 0.9576039162307006,
+            "macro_recall": 0.9433849496353308,
+            "genera_per_taxon": {
+              "Amanitaceae": [
+                "Amanita"
+              ],
+              "Auriculariaceae": [
+                "Auricularia"
+              ],
+              "Geastraceae": [
+                "Geastrum"
+              ],
+              "Hericiaceae": [
+                "Hericium"
+              ],
+              "Lycoperdaceae": [
+                "Lycoperdon"
+              ],
+              "Morchellaceae": [
+                "Morchella"
+              ],
+              "Pleurotaceae": [
+                "Pleurotus"
+              ],
+              "Polyporaceae": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Xylariaceae": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.950598625109206,
+              "accuracy": 0.9650903689031939,
+              "balanced_accuracy": 0.9436229772594016,
+              "top1_accuracy": 0.9650903689031939,
+              "top3_accuracy": 0.9957910373854915,
+              "disagreements_with_top1_genus": 8
+            },
+            "macro_f1_ci95": [
+              0.9345821273082421,
+              0.9608112920431087
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "order": {
+            "n": 4039,
+            "macro_f1": 0.9520831949251007,
+            "accuracy": 0.973508294132211,
+            "balanced_accuracy": 0.9387418597184548,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricales",
+                "precision": 0.9787234042553191,
+                "recall": 0.9916707496325331,
+                "f1": 0.9851545388172305,
+                "support": 2041
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariales",
+                "precision": 0.9897610921501706,
+                "recall": 0.9090909090909091,
+                "f1": 0.9477124183006536,
+                "support": 319
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastrales",
+                "precision": 0.9456521739130435,
+                "recall": 0.9560439560439561,
+                "f1": 0.9508196721311475,
+                "support": 182
+              },
+              {
+                "label_id": 3,
+                "taxon": "Pezizales",
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1": 0.9473684210526315,
+                "support": 20
+              },
+              {
+                "label_id": 4,
+                "taxon": "Polyporales",
+                "precision": 0.9787045252883763,
+                "recall": 0.9700967458223395,
+                "f1": 0.9743816254416962,
+                "support": 1137
+              },
+              {
+                "label_id": 5,
+                "taxon": "Russulales",
+                "precision": 0.9574468085106383,
+                "recall": 0.8823529411764706,
+                "f1": 0.9183673469387755,
+                "support": 51
+              },
+              {
+                "label_id": 6,
+                "taxon": "Xylariales",
+                "precision": 0.9205298013245033,
+                "recall": 0.9619377162629758,
+                "f1": 0.9407783417935702,
+                "support": 289
+              }
+            ],
+            "confusion_matrix": [
+              [
+                2024,
+                1,
+                7,
+                0,
+                5,
+                1,
+                3
+              ],
+              [
+                9,
+                290,
+                1,
+                0,
+                8,
+                1,
+                10
+              ],
+              [
+                7,
+                0,
+                174,
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                1,
+                0,
+                0,
+                18,
+                1,
+                0,
+                0
+              ],
+              [
+                22,
+                2,
+                0,
+                0,
+                1103,
+                0,
+                10
+              ],
+              [
+                2,
+                0,
+                0,
+                0,
+                4,
+                45,
+                0
+              ],
+              [
+                3,
+                0,
+                2,
+                0,
+                6,
+                0,
+                278
+              ]
+            ],
+            "level": "order",
+            "rule": "top1_genus",
+            "n_classes": 7,
+            "macro_precision": 0.9672596864917214,
+            "macro_recall": 0.9387418597184548,
+            "genera_per_taxon": {
+              "Agaricales": [
+                "Amanita",
+                "Lycoperdon",
+                "Pleurotus"
+              ],
+              "Auriculariales": [
+                "Auricularia"
+              ],
+              "Geastrales": [
+                "Geastrum"
+              ],
+              "Pezizales": [
+                "Morchella"
+              ],
+              "Polyporales": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Russulales": [
+                "Hericium"
+              ],
+              "Xylariales": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9532643179410846,
+              "accuracy": 0.9732607080960634,
+              "balanced_accuracy": 0.9354210447062392,
+              "top1_accuracy": 0.9732607080960634,
+              "top3_accuracy": 0.9972765536023769,
+              "disagreements_with_top1_genus": 20
+            },
+            "macro_f1_ci95": [
+              0.9338129208647833,
+              0.9654806036548826
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "class": {
+            "n": 4039,
+            "macro_f1": 0.9610598843890168,
+            "accuracy": 0.9908393166625402,
+            "balanced_accuracy": 0.9518344666363628,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricomycetes",
+                "precision": 0.996504436676526,
+                "recall": 0.9935656836461126,
+                "f1": 0.9950328903208484,
+                "support": 3730
+              },
+              {
+                "label_id": 1,
+                "taxon": "Pezizomycetes",
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1": 0.9473684210526315,
+                "support": 20
+              },
+              {
+                "label_id": 2,
+                "taxon": "Sordariomycetes",
+                "precision": 0.9205298013245033,
+                "recall": 0.9619377162629758,
+                "f1": 0.9407783417935702,
+                "support": 289
+              }
+            ],
+            "confusion_matrix": [
+              [
+                3706,
+                0,
+                24
+              ],
+              [
+                2,
+                18,
+                0
+              ],
+              [
+                11,
+                0,
+                278
+              ]
+            ],
+            "level": "class",
+            "rule": "top1_genus",
+            "n_classes": 3,
+            "macro_precision": 0.972344746000343,
+            "macro_recall": 0.9518344666363628,
+            "genera_per_taxon": {
+              "Agaricomycetes": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ],
+              "Pezizomycetes": [
+                "Morchella"
+              ],
+              "Sordariomycetes": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9473317033175027,
+              "accuracy": 0.9893538004456549,
+              "balanced_accuracy": 0.9166323428914224,
+              "top1_accuracy": 0.9893538004456549,
+              "disagreements_with_top1_genus": 30
+            },
+            "macro_f1_ci95": [
+              0.9249180487434094,
+              0.9820124374317709
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "phylum": {
+            "n": 4039,
+            "macro_f1": 0.9681046804545419,
+            "accuracy": 0.9908393166625402,
+            "balanced_accuracy": 0.9757472431175547,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Ascomycota",
+                "precision": 0.925,
+                "recall": 0.9579288025889967,
+                "f1": 0.9411764705882353,
+                "support": 309
+              },
+              {
+                "label_id": 1,
+                "taxon": "Basidiomycota",
+                "precision": 0.996504436676526,
+                "recall": 0.9935656836461126,
+                "f1": 0.9950328903208484,
+                "support": 3730
+              }
+            ],
+            "confusion_matrix": [
+              [
+                296,
+                13
+              ],
+              [
+                24,
+                3706
+              ]
+            ],
+            "level": "phylum",
+            "rule": "top1_genus",
+            "n_classes": 2,
+            "macro_precision": 0.9607522183382631,
+            "macro_recall": 0.9757472431175547,
+            "genera_per_taxon": {
+              "Ascomycota": [
+                "Morchella",
+                "Xylaria"
+              ],
+              "Basidiomycota": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9621917625033432,
+              "accuracy": 0.9896013864818024,
+              "balanced_accuracy": 0.9498477315911398,
+              "top1_accuracy": 0.9896013864818024,
+              "disagreements_with_top1_genus": 29
+            },
+            "macro_f1_ci95": [
+              0.9570078821536487,
+              0.9772148074285656
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          }
+        }
+      }
+    },
+    {
+      "model": "s5_mobilenet_v3_large_v002_a",
+      "architecture": "mobilenet_v3_large",
+      "split": "val",
+      "run_id": "20261012T161041257797Z_s5_mobilenet_v3_large_v002_a",
+      "source": "development run",
+      "predictions": "runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/predictions_val.csv",
+      "predictions_sha256": "5cfac008fdc3b7a64d6c513d4f3e001a9248937f8594a22704d06bafcaf3e5b6",
+      "observations": 3452,
+      "images": 6290,
+      "genus_reproduction": {
+        "image_level": {
+          "confusion_identical": true,
+          "max_abs_diff": 0.0
+        },
+        "observation_level": {
+          "confusion_identical": true,
+          "max_abs_diff": 0.0
+        }
+      },
+      "metrics": {
+        "image_level": {
+          "genus": {
+            "n": 6290,
+            "macro_f1": 0.9254456516198706,
+            "accuracy": 0.946899841017488,
+            "balanced_accuracy": 0.9222248746338393,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanita",
+                "precision": 0.9776601998824221,
+                "recall": 0.973083674663546,
+                "f1": 0.975366568914956,
+                "support": 1709
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auricularia",
+                "precision": 0.9768041237113402,
+                "recall": 0.9221411192214112,
+                "f1": 0.9486858573216521,
+                "support": 411
+              },
+              {
+                "label_id": 2,
+                "taxon": "Ganoderma",
+                "precision": 0.9057873485868102,
+                "recall": 0.9119241192411924,
+                "f1": 0.9088453747467927,
+                "support": 738
+              },
+              {
+                "label_id": 3,
+                "taxon": "Geastrum",
+                "precision": 0.8853503184713376,
+                "recall": 0.8853503184713376,
+                "f1": 0.8853503184713376,
+                "support": 157
+              },
+              {
+                "label_id": 4,
+                "taxon": "Hericium",
+                "precision": 0.8823529411764706,
+                "recall": 0.9210526315789473,
+                "f1": 0.9012875536480687,
+                "support": 114
+              },
+              {
+                "label_id": 5,
+                "taxon": "Lycoperdon",
+                "precision": 0.9381294964028777,
+                "recall": 0.9504373177842566,
+                "f1": 0.944243301955105,
+                "support": 686
+              },
+              {
+                "label_id": 6,
+                "taxon": "Morchella",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 7,
+                "taxon": "Pleurotus",
+                "precision": 0.9375,
+                "recall": 0.9393939393939394,
+                "f1": 0.9384460141271443,
+                "support": 495
+              },
+              {
+                "label_id": 8,
+                "taxon": "Trametes",
+                "precision": 0.9412176347095871,
+                "recall": 0.9465165376495426,
+                "f1": 0.9438596491228071,
+                "support": 1421
+              },
+              {
+                "label_id": 9,
+                "taxon": "Xylaria",
+                "precision": 0.9539594843462247,
+                "recall": 0.9628252788104089,
+                "f1": 0.9583718778908418,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1663,
+                0,
+                6,
+                3,
+                3,
+                21,
+                2,
+                4,
+                5,
+                2
+              ],
+              [
+                1,
+                379,
+                6,
+                0,
+                2,
+                1,
+                0,
+                10,
+                7,
+                5
+              ],
+              [
+                5,
+                4,
+                673,
+                1,
+                1,
+                6,
+                0,
+                4,
+                41,
+                3
+              ],
+              [
+                4,
+                0,
+                1,
+                139,
+                0,
+                6,
+                0,
+                0,
+                2,
+                5
+              ],
+              [
+                0,
+                0,
+                1,
+                1,
+                105,
+                1,
+                0,
+                0,
+                6,
+                0
+              ],
+              [
+                9,
+                0,
+                5,
+                9,
+                1,
+                652,
+                0,
+                0,
+                8,
+                2
+              ],
+              [
+                1,
+                0,
+                1,
+                0,
+                0,
+                0,
+                17,
+                1,
+                1,
+                0
+              ],
+              [
+                4,
+                2,
+                7,
+                1,
+                1,
+                3,
+                0,
+                465,
+                9,
+                3
+              ],
+              [
+                10,
+                3,
+                36,
+                2,
+                6,
+                4,
+                0,
+                10,
+                1345,
+                5
+              ],
+              [
+                4,
+                0,
+                7,
+                1,
+                0,
+                1,
+                0,
+                2,
+                5,
+                518
+              ]
+            ],
+            "level": "genus",
+            "rule": "top1_genus",
+            "n_classes": 10,
+            "macro_precision": 0.9293498389392333,
+            "macro_recall": 0.9222248746338393,
+            "genera_per_taxon": {
+              "Amanita": [
+                "Amanita"
+              ],
+              "Auricularia": [
+                "Auricularia"
+              ],
+              "Ganoderma": [
+                "Ganoderma"
+              ],
+              "Geastrum": [
+                "Geastrum"
+              ],
+              "Hericium": [
+                "Hericium"
+              ],
+              "Lycoperdon": [
+                "Lycoperdon"
+              ],
+              "Morchella": [
+                "Morchella"
+              ],
+              "Pleurotus": [
+                "Pleurotus"
+              ],
+              "Trametes": [
+                "Trametes"
+              ],
+              "Xylaria": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9254456516198706,
+              "accuracy": 0.946899841017488,
+              "balanced_accuracy": 0.9222248746338393,
+              "top1_accuracy": 0.946899841017488,
+              "top3_accuracy": 0.9899841017488076,
+              "disagreements_with_top1_genus": 0
+            }
+          },
+          "family": {
+            "n": 6290,
+            "macro_f1": 0.9299106111823637,
+            "accuracy": 0.959141494435612,
+            "balanced_accuracy": 0.9260183040048113,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanitaceae",
+                "precision": 0.9776601998824221,
+                "recall": 0.973083674663546,
+                "f1": 0.975366568914956,
+                "support": 1709
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariaceae",
+                "precision": 0.9768041237113402,
+                "recall": 0.9221411192214112,
+                "f1": 0.9486858573216521,
+                "support": 411
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastraceae",
+                "precision": 0.8853503184713376,
+                "recall": 0.8853503184713376,
+                "f1": 0.8853503184713376,
+                "support": 157
+              },
+              {
+                "label_id": 3,
+                "taxon": "Hericiaceae",
+                "precision": 0.8823529411764706,
+                "recall": 0.9210526315789473,
+                "f1": 0.9012875536480687,
+                "support": 114
+              },
+              {
+                "label_id": 4,
+                "taxon": "Lycoperdaceae",
+                "precision": 0.9381294964028777,
+                "recall": 0.9504373177842566,
+                "f1": 0.944243301955105,
+                "support": 686
+              },
+              {
+                "label_id": 5,
+                "taxon": "Morchellaceae",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 6,
+                "taxon": "Pleurotaceae",
+                "precision": 0.9375,
+                "recall": 0.9393939393939394,
+                "f1": 0.9384460141271443,
+                "support": 495
+              },
+              {
+                "label_id": 7,
+                "taxon": "Polyporaceae",
+                "precision": 0.964548802946593,
+                "recall": 0.9703566465956461,
+                "f1": 0.967444008312168,
+                "support": 2159
+              },
+              {
+                "label_id": 8,
+                "taxon": "Xylariaceae",
+                "precision": 0.9539594843462247,
+                "recall": 0.9628252788104089,
+                "f1": 0.9583718778908418,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1663,
+                0,
+                3,
+                3,
+                21,
+                2,
+                4,
+                11,
+                2
+              ],
+              [
+                1,
+                379,
+                0,
+                2,
+                1,
+                0,
+                10,
+                13,
+                5
+              ],
+              [
+                4,
+                0,
+                139,
+                0,
+                6,
+                0,
+                0,
+                3,
+                5
+              ],
+              [
+                0,
+                0,
+                1,
+                105,
+                1,
+                0,
+                0,
+                7,
+                0
+              ],
+              [
+                9,
+                0,
+                9,
+                1,
+                652,
+                0,
+                0,
+                13,
+                2
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                17,
+                1,
+                2,
+                0
+              ],
+              [
+                4,
+                2,
+                1,
+                1,
+                3,
+                0,
+                465,
+                16,
+                3
+              ],
+              [
+                15,
+                7,
+                3,
+                7,
+                10,
+                0,
+                14,
+                2095,
+                8
+              ],
+              [
+                4,
+                0,
+                1,
+                0,
+                1,
+                0,
+                2,
+                12,
+                518
+              ]
+            ],
+            "level": "family",
+            "rule": "top1_genus",
+            "n_classes": 9,
+            "macro_precision": 0.9345602454491699,
+            "macro_recall": 0.9260183040048113,
+            "genera_per_taxon": {
+              "Amanitaceae": [
+                "Amanita"
+              ],
+              "Auriculariaceae": [
+                "Auricularia"
+              ],
+              "Geastraceae": [
+                "Geastrum"
+              ],
+              "Hericiaceae": [
+                "Hericium"
+              ],
+              "Lycoperdaceae": [
+                "Lycoperdon"
+              ],
+              "Morchellaceae": [
+                "Morchella"
+              ],
+              "Pleurotaceae": [
+                "Pleurotus"
+              ],
+              "Polyporaceae": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Xylariaceae": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9304892795140342,
+              "accuracy": 0.9599364069952305,
+              "balanced_accuracy": 0.9262620736575161,
+              "top1_accuracy": 0.9599364069952305,
+              "top3_accuracy": 0.9936406995230525,
+              "disagreements_with_top1_genus": 9
+            }
+          },
+          "order": {
+            "n": 6290,
+            "macro_f1": 0.9267037915119335,
+            "accuracy": 0.9656597774244833,
+            "balanced_accuracy": 0.9210534816679441,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricales",
+                "precision": 0.9754495159059474,
+                "recall": 0.9761245674740484,
+                "f1": 0.9757869249394673,
+                "support": 2890
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariales",
+                "precision": 0.9768041237113402,
+                "recall": 0.9221411192214112,
+                "f1": 0.9486858573216521,
+                "support": 411
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastrales",
+                "precision": 0.8853503184713376,
+                "recall": 0.8853503184713376,
+                "f1": 0.8853503184713376,
+                "support": 157
+              },
+              {
+                "label_id": 3,
+                "taxon": "Pezizales",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 4,
+                "taxon": "Polyporales",
+                "precision": 0.964548802946593,
+                "recall": 0.9703566465956461,
+                "f1": 0.967444008312168,
+                "support": 2159
+              },
+              {
+                "label_id": 5,
+                "taxon": "Russulales",
+                "precision": 0.8823529411764706,
+                "recall": 0.9210526315789473,
+                "f1": 0.9012875536480687,
+                "support": 114
+              },
+              {
+                "label_id": 6,
+                "taxon": "Xylariales",
+                "precision": 0.9539594843462247,
+                "recall": 0.9628252788104089,
+                "f1": 0.9583718778908418,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                2821,
+                2,
+                13,
+                2,
+                40,
+                5,
+                7
+              ],
+              [
+                12,
+                379,
+                0,
+                0,
+                13,
+                2,
+                5
+              ],
+              [
+                10,
+                0,
+                139,
+                0,
+                3,
+                0,
+                5
+              ],
+              [
+                2,
+                0,
+                0,
+                17,
+                2,
+                0,
+                0
+              ],
+              [
+                39,
+                7,
+                3,
+                0,
+                2095,
+                7,
+                8
+              ],
+              [
+                1,
+                0,
+                1,
+                0,
+                7,
+                105,
+                0
+              ],
+              [
+                7,
+                0,
+                1,
+                0,
+                12,
+                0,
+                518
+              ]
+            ],
+            "level": "order",
+            "rule": "top1_genus",
+            "n_classes": 7,
+            "macro_precision": 0.9333145755233109,
+            "macro_recall": 0.9210534816679441,
+            "genera_per_taxon": {
+              "Agaricales": [
+                "Amanita",
+                "Lycoperdon",
+                "Pleurotus"
+              ],
+              "Auriculariales": [
+                "Auricularia"
+              ],
+              "Geastrales": [
+                "Geastrum"
+              ],
+              "Pezizales": [
+                "Morchella"
+              ],
+              "Polyporales": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Russulales": [
+                "Hericium"
+              ],
+              "Xylariales": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9269258830235645,
+              "accuracy": 0.9664546899841018,
+              "balanced_accuracy": 0.9199477825232968,
+              "top1_accuracy": 0.9664546899841018,
+              "top3_accuracy": 0.9963434022257551,
+              "disagreements_with_top1_genus": 13
+            }
+          },
+          "class": {
+            "n": 6290,
+            "macro_f1": 0.9346404092489501,
+            "accuracy": 0.9918918918918919,
+            "balanced_accuracy": 0.9225459562172632,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricomycetes",
+                "precision": 0.9958100558659218,
+                "recall": 0.9952887803175711,
+                "f1": 0.9955493498560084,
+                "support": 5731
+              },
+              {
+                "label_id": 1,
+                "taxon": "Pezizomycetes",
+                "precision": 0.8947368421052632,
+                "recall": 0.8095238095238095,
+                "f1": 0.85,
+                "support": 21
+              },
+              {
+                "label_id": 2,
+                "taxon": "Sordariomycetes",
+                "precision": 0.9539594843462247,
+                "recall": 0.9628252788104089,
+                "f1": 0.9583718778908418,
+                "support": 538
+              }
+            ],
+            "confusion_matrix": [
+              [
+                5704,
+                2,
+                25
+              ],
+              [
+                4,
+                17,
+                0
+              ],
+              [
+                20,
+                0,
+                518
+              ]
+            ],
+            "level": "class",
+            "rule": "top1_genus",
+            "n_classes": 3,
+            "macro_precision": 0.9481687941058032,
+            "macro_recall": 0.9225459562172632,
+            "genera_per_taxon": {
+              "Agaricomycetes": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ],
+              "Pezizomycetes": [
+                "Morchella"
+              ],
+              "Sordariomycetes": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9324867559738177,
+              "accuracy": 0.9922098569157393,
+              "balanced_accuracy": 0.9029175215983541,
+              "top1_accuracy": 0.9922098569157393,
+              "disagreements_with_top1_genus": 18
+            }
+          },
+          "phylum": {
+            "n": 6290,
+            "macro_f1": 0.9750271280948195,
+            "accuracy": 0.9918918918918919,
+            "balanced_accuracy": 0.9761774849709501,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Ascomycota",
+                "precision": 0.9519572953736655,
+                "recall": 0.9570661896243292,
+                "f1": 0.9545049063336307,
+                "support": 559
+              },
+              {
+                "label_id": 1,
+                "taxon": "Basidiomycota",
+                "precision": 0.9958100558659218,
+                "recall": 0.9952887803175711,
+                "f1": 0.9955493498560084,
+                "support": 5731
+              }
+            ],
+            "confusion_matrix": [
+              [
+                535,
+                24
+              ],
+              [
+                27,
+                5704
+              ]
+            ],
+            "level": "phylum",
+            "rule": "top1_genus",
+            "n_classes": 2,
+            "macro_precision": 0.9738836756197936,
+            "macro_recall": 0.9761774849709501,
+            "genera_per_taxon": {
+              "Ascomycota": [
+                "Morchella",
+                "Xylaria"
+              ],
+              "Basidiomycota": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9761695485474412,
+              "accuracy": 0.992368839427663,
+              "balanced_accuracy": 0.9707887523805034,
+              "top1_accuracy": 0.992368839427663,
+              "disagreements_with_top1_genus": 17
+            }
+          }
+        },
+        "observation_level": {
+          "genus": {
+            "n": 3452,
+            "macro_f1": 0.9705519051264352,
+            "accuracy": 0.9797219003476245,
+            "balanced_accuracy": 0.9664570599997333,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanita",
+                "precision": 0.9922480620155039,
+                "recall": 0.9911504424778761,
+                "f1": 0.991698948533481,
+                "support": 904
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auricularia",
+                "precision": 0.992619926199262,
+                "recall": 0.9340277777777778,
+                "f1": 0.962432915921288,
+                "support": 288
+              },
+              {
+                "label_id": 2,
+                "taxon": "Ganoderma",
+                "precision": 0.9530791788856305,
+                "recall": 0.9701492537313433,
+                "f1": 0.9615384615384616,
+                "support": 335
+              },
+              {
+                "label_id": 3,
+                "taxon": "Geastrum",
+                "precision": 0.9493670886075949,
+                "recall": 0.9493670886075949,
+                "f1": 0.9493670886075949,
+                "support": 79
+              },
+              {
+                "label_id": 4,
+                "taxon": "Hericium",
+                "precision": 0.9552238805970149,
+                "recall": 0.9696969696969697,
+                "f1": 0.9624060150375939,
+                "support": 66
+              },
+              {
+                "label_id": 5,
+                "taxon": "Lycoperdon",
+                "precision": 0.975609756097561,
+                "recall": 0.9803921568627451,
+                "f1": 0.9779951100244498,
+                "support": 408
+              },
+              {
+                "label_id": 6,
+                "taxon": "Morchella",
+                "precision": 1.0,
+                "recall": 0.9090909090909091,
+                "f1": 0.9523809523809523,
+                "support": 11
+              },
+              {
+                "label_id": 7,
+                "taxon": "Pleurotus",
+                "precision": 0.96875,
+                "recall": 0.9880478087649402,
+                "f1": 0.9783037475345168,
+                "support": 251
+              },
+              {
+                "label_id": 8,
+                "taxon": "Trametes",
+                "precision": 0.9802890932982917,
+                "recall": 0.9867724867724867,
+                "f1": 0.983520105471325,
+                "support": 756
+              },
+              {
+                "label_id": 9,
+                "taxon": "Xylaria",
+                "precision": 0.9858757062146892,
+                "recall": 0.9858757062146892,
+                "f1": 0.9858757062146892,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                896,
+                0,
+                1,
+                0,
+                0,
+                6,
+                0,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                269,
+                3,
+                0,
+                2,
+                1,
+                0,
+                6,
+                4,
+                3
+              ],
+              [
+                0,
+                1,
+                325,
+                0,
+                0,
+                1,
+                0,
+                1,
+                5,
+                2
+              ],
+              [
+                2,
+                0,
+                0,
+                75,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                64,
+                0,
+                0,
+                0,
+                2,
+                0
+              ],
+              [
+                4,
+                0,
+                0,
+                4,
+                0,
+                400,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                10,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                1,
+                0,
+                0,
+                0,
+                0,
+                248,
+                1,
+                0
+              ],
+              [
+                0,
+                0,
+                8,
+                0,
+                1,
+                0,
+                0,
+                1,
+                746,
+                0
+              ],
+              [
+                1,
+                0,
+                3,
+                0,
+                0,
+                0,
+                0,
+                0,
+                1,
+                349
+              ]
+            ],
+            "level": "genus",
+            "rule": "top1_genus",
+            "n_classes": 10,
+            "macro_precision": 0.9753062691915548,
+            "macro_recall": 0.9664570599997333,
+            "genera_per_taxon": {
+              "Amanita": [
+                "Amanita"
+              ],
+              "Auricularia": [
+                "Auricularia"
+              ],
+              "Ganoderma": [
+                "Ganoderma"
+              ],
+              "Geastrum": [
+                "Geastrum"
+              ],
+              "Hericium": [
+                "Hericium"
+              ],
+              "Lycoperdon": [
+                "Lycoperdon"
+              ],
+              "Morchella": [
+                "Morchella"
+              ],
+              "Pleurotus": [
+                "Pleurotus"
+              ],
+              "Trametes": [
+                "Trametes"
+              ],
+              "Xylaria": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9705519051264352,
+              "accuracy": 0.9797219003476245,
+              "balanced_accuracy": 0.9664570599997333,
+              "top1_accuracy": 0.9797219003476245,
+              "top3_accuracy": 0.9976825028968713,
+              "disagreements_with_top1_genus": 0
+            },
+            "macro_f1_ci95": [
+              0.9562600684014264,
+              0.9808536464173236
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "family": {
+            "n": 3452,
+            "macro_f1": 0.9721178417170928,
+            "accuracy": 0.9834878331402086,
+            "balanced_accuracy": 0.9668036363893892,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Amanitaceae",
+                "precision": 0.9922480620155039,
+                "recall": 0.9911504424778761,
+                "f1": 0.991698948533481,
+                "support": 904
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariaceae",
+                "precision": 0.992619926199262,
+                "recall": 0.9340277777777778,
+                "f1": 0.962432915921288,
+                "support": 288
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastraceae",
+                "precision": 0.9493670886075949,
+                "recall": 0.9493670886075949,
+                "f1": 0.9493670886075949,
+                "support": 79
+              },
+              {
+                "label_id": 3,
+                "taxon": "Hericiaceae",
+                "precision": 0.9552238805970149,
+                "recall": 0.9696969696969697,
+                "f1": 0.9624060150375939,
+                "support": 66
+              },
+              {
+                "label_id": 4,
+                "taxon": "Lycoperdaceae",
+                "precision": 0.975609756097561,
+                "recall": 0.9803921568627451,
+                "f1": 0.9779951100244498,
+                "support": 408
+              },
+              {
+                "label_id": 5,
+                "taxon": "Morchellaceae",
+                "precision": 1.0,
+                "recall": 0.9090909090909091,
+                "f1": 0.9523809523809523,
+                "support": 11
+              },
+              {
+                "label_id": 6,
+                "taxon": "Pleurotaceae",
+                "precision": 0.96875,
+                "recall": 0.9880478087649402,
+                "f1": 0.9783037475345168,
+                "support": 251
+              },
+              {
+                "label_id": 7,
+                "taxon": "Polyporaceae",
+                "precision": 0.9836660617059891,
+                "recall": 0.9935838680109991,
+                "f1": 0.9886000911992704,
+                "support": 1091
+              },
+              {
+                "label_id": 8,
+                "taxon": "Xylariaceae",
+                "precision": 0.9858757062146892,
+                "recall": 0.9858757062146892,
+                "f1": 0.9858757062146892,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                896,
+                0,
+                0,
+                0,
+                6,
+                0,
+                0,
+                2,
+                0
+              ],
+              [
+                0,
+                269,
+                0,
+                2,
+                1,
+                0,
+                6,
+                7,
+                3
+              ],
+              [
+                2,
+                0,
+                75,
+                0,
+                2,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                64,
+                0,
+                0,
+                0,
+                2,
+                0
+              ],
+              [
+                4,
+                0,
+                4,
+                0,
+                400,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                0,
+                10,
+                0,
+                1,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0,
+                0,
+                0,
+                248,
+                2,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                1,
+                1,
+                0,
+                2,
+                1084,
+                2
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                0,
+                0,
+                0,
+                4,
+                349
+              ]
+            ],
+            "level": "family",
+            "rule": "top1_genus",
+            "n_classes": 9,
+            "macro_precision": 0.9781511646041794,
+            "macro_recall": 0.9668036363893892,
+            "genera_per_taxon": {
+              "Amanitaceae": [
+                "Amanita"
+              ],
+              "Auriculariaceae": [
+                "Auricularia"
+              ],
+              "Geastraceae": [
+                "Geastrum"
+              ],
+              "Hericiaceae": [
+                "Hericium"
+              ],
+              "Lycoperdaceae": [
+                "Lycoperdon"
+              ],
+              "Morchellaceae": [
+                "Morchella"
+              ],
+              "Pleurotaceae": [
+                "Pleurotus"
+              ],
+              "Polyporaceae": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Xylariaceae": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9716544127056722,
+              "accuracy": 0.9829084588644265,
+              "balanced_accuracy": 0.9660886314852584,
+              "top1_accuracy": 0.9829084588644265,
+              "top3_accuracy": 0.9982618771726536,
+              "disagreements_with_top1_genus": 2
+            },
+            "macro_f1_ci95": [
+              0.9566767521907018,
+              0.9831061761859033
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "order": {
+            "n": 3452,
+            "macro_f1": 0.9704857048731924,
+            "accuracy": 0.9863847045191193,
+            "balanced_accuracy": 0.9622691660013293,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricales",
+                "precision": 0.9904397705544933,
+                "recall": 0.9942418426103646,
+                "f1": 0.9923371647509579,
+                "support": 1563
+              },
+              {
+                "label_id": 1,
+                "taxon": "Auriculariales",
+                "precision": 0.992619926199262,
+                "recall": 0.9340277777777778,
+                "f1": 0.962432915921288,
+                "support": 288
+              },
+              {
+                "label_id": 2,
+                "taxon": "Geastrales",
+                "precision": 0.9493670886075949,
+                "recall": 0.9493670886075949,
+                "f1": 0.9493670886075949,
+                "support": 79
+              },
+              {
+                "label_id": 3,
+                "taxon": "Pezizales",
+                "precision": 1.0,
+                "recall": 0.9090909090909091,
+                "f1": 0.9523809523809523,
+                "support": 11
+              },
+              {
+                "label_id": 4,
+                "taxon": "Polyporales",
+                "precision": 0.9836660617059891,
+                "recall": 0.9935838680109991,
+                "f1": 0.9886000911992704,
+                "support": 1091
+              },
+              {
+                "label_id": 5,
+                "taxon": "Russulales",
+                "precision": 0.9552238805970149,
+                "recall": 0.9696969696969697,
+                "f1": 0.9624060150375939,
+                "support": 66
+              },
+              {
+                "label_id": 6,
+                "taxon": "Xylariales",
+                "precision": 0.9858757062146892,
+                "recall": 0.9858757062146892,
+                "f1": 0.9858757062146892,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                1554,
+                1,
+                4,
+                0,
+                4,
+                0,
+                0
+              ],
+              [
+                7,
+                269,
+                0,
+                0,
+                7,
+                2,
+                3
+              ],
+              [
+                4,
+                0,
+                75,
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10,
+                1,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                0,
+                0,
+                1084,
+                1,
+                2
+              ],
+              [
+                0,
+                0,
+                0,
+                0,
+                2,
+                64,
+                0
+              ],
+              [
+                1,
+                0,
+                0,
+                0,
+                4,
+                0,
+                349
+              ]
+            ],
+            "level": "order",
+            "rule": "top1_genus",
+            "n_classes": 7,
+            "macro_precision": 0.9795989191255777,
+            "macro_recall": 0.9622691660013293,
+            "genera_per_taxon": {
+              "Agaricales": [
+                "Amanita",
+                "Lycoperdon",
+                "Pleurotus"
+              ],
+              "Auriculariales": [
+                "Auricularia"
+              ],
+              "Geastrales": [
+                "Geastrum"
+              ],
+              "Pezizales": [
+                "Morchella"
+              ],
+              "Polyporales": [
+                "Ganoderma",
+                "Trametes"
+              ],
+              "Russulales": [
+                "Hericium"
+              ],
+              "Xylariales": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9703936691933832,
+              "accuracy": 0.9863847045191193,
+              "balanced_accuracy": 0.9605522470609598,
+              "top1_accuracy": 0.9863847045191193,
+              "top3_accuracy": 0.9982618771726536,
+              "disagreements_with_top1_genus": 2
+            },
+            "macro_f1_ci95": [
+              0.9512996111806752,
+              0.983834023057082
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "class": {
+            "n": 3452,
+            "macro_f1": 0.9788250940258076,
+            "accuracy": 0.9968134414831982,
+            "balanced_accuracy": 0.9644489732694504,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Agaricomycetes",
+                "precision": 0.9980569948186528,
+                "recall": 0.9983803045027535,
+                "f1": 0.9982186234817814,
+                "support": 3087
+              },
+              {
+                "label_id": 1,
+                "taxon": "Pezizomycetes",
+                "precision": 1.0,
+                "recall": 0.9090909090909091,
+                "f1": 0.9523809523809523,
+                "support": 11
+              },
+              {
+                "label_id": 2,
+                "taxon": "Sordariomycetes",
+                "precision": 0.9858757062146892,
+                "recall": 0.9858757062146892,
+                "f1": 0.9858757062146892,
+                "support": 354
+              }
+            ],
+            "confusion_matrix": [
+              [
+                3082,
+                0,
+                5
+              ],
+              [
+                1,
+                10,
+                0
+              ],
+              [
+                5,
+                0,
+                349
+              ]
+            ],
+            "level": "class",
+            "rule": "top1_genus",
+            "n_classes": 3,
+            "macro_precision": 0.9946442336777807,
+            "macro_recall": 0.9644489732694504,
+            "genera_per_taxon": {
+              "Agaricomycetes": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ],
+              "Pezizomycetes": [
+                "Morchella"
+              ],
+              "Sordariomycetes": [
+                "Xylaria"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9761315967853653,
+              "accuracy": 0.9953650057937428,
+              "balanced_accuracy": 0.9589072354551428,
+              "top1_accuracy": 0.9953650057937428,
+              "disagreements_with_top1_genus": 7
+            },
+            "macro_f1_ci95": [
+              0.9371875023190991,
+              0.996981910688139
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          },
+          "phylum": {
+            "n": 3452,
+            "macro_f1": 0.991564730122235,
+            "accuracy": 0.9968134414831982,
+            "balanced_accuracy": 0.990970974169185,
+            "per_class": [
+              {
+                "label_id": 0,
+                "taxon": "Ascomycota",
+                "precision": 0.9862637362637363,
+                "recall": 0.9835616438356164,
+                "f1": 0.9849108367626886,
+                "support": 365
+              },
+              {
+                "label_id": 1,
+                "taxon": "Basidiomycota",
+                "precision": 0.9980569948186528,
+                "recall": 0.9983803045027535,
+                "f1": 0.9982186234817814,
+                "support": 3087
+              }
+            ],
+            "confusion_matrix": [
+              [
+                359,
+                6
+              ],
+              [
+                5,
+                3082
+              ]
+            ],
+            "level": "phylum",
+            "rule": "top1_genus",
+            "n_classes": 2,
+            "macro_precision": 0.9921603655411946,
+            "macro_recall": 0.990970974169185,
+            "genera_per_taxon": {
+              "Ascomycota": [
+                "Morchella",
+                "Xylaria"
+              ],
+              "Basidiomycota": [
+                "Amanita",
+                "Auricularia",
+                "Ganoderma",
+                "Geastrum",
+                "Hericium",
+                "Lycoperdon",
+                "Pleurotus",
+                "Trametes"
+              ]
+            },
+            "marginal": {
+              "macro_f1": 0.9876255880041331,
+              "accuracy": 0.9953650057937428,
+              "balanced_accuracy": 0.9829137656367178,
+              "top1_accuracy": 0.9953650057937428,
+              "disagreements_with_top1_genus": 7
+            },
+            "macro_f1_ci95": [
+              0.9861110471241872,
+              0.9962122063183058
+            ],
+            "ci_method": "percentile bootstrap over observations, 1000 resamples, seed 42"
+          }
+        }
+      }
+    }
+  ]
+}
