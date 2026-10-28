@@ -1,0 +1,98 @@
+{
+  "config": {
+    "reference_selection": "reports/s5/selected_model.json",
+    "output_dir": "reports/crops_v002",
+    "evaluation": {
+      "batch_size": 64,
+      "num_workers": 2,
+      "amp": true,
+      "seed": 42
+    },
+    "bootstrap": {
+      "resamples": 10000,
+      "seed": 42
+    }
+  },
+  "checkpoint_sha256": "e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8",
+  "reference_run_sha256": "380d946607c54c3198341f0915589bfb1409e36c852a73c82fab04182c76255d",
+  "fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "classes": [
+    "Amanita",
+    "Auricularia",
+    "Ganoderma",
+    "Geastrum",
+    "Hericium",
+    "Lycoperdon",
+    "Morchella",
+    "Pleurotus",
+    "Trametes",
+    "Xylaria"
+  ],
+  "validation_order_sha256": "ebab07d49a4ad6f1dd2abb2c310e42114a826098b891528c02ab6f56e165fcad",
+  "views": [
+    [
+      "control",
+      1.0,
+      "center"
+    ],
+    [
+      "center75",
+      0.75,
+      "center"
+    ],
+    [
+      "center50",
+      0.5,
+      "center"
+    ],
+    [
+      "top_left50",
+      0.5,
+      "top_left"
+    ],
+    [
+      "top_right50",
+      0.5,
+      "top_right"
+    ],
+    [
+      "bottom_left50",
+      0.5,
+      "bottom_left"
+    ],
+    [
+      "bottom_right50",
+      0.5,
+      "bottom_right"
+    ]
+  ],
+  "device": "cuda",
+  "amp": true,
+  "environment": {
+    "versions": {
+      "python": "3.12.10",
+      "torch": "2.14.1+cu132",
+      "torchvision": "0.29.1+cu132",
+      "cuda": "13.2",
+      "cudnn": 92400
+    },
+    "gpu": "NVIDIA GeForce GTX 1650 SUPER"
+  },
+  "code_sha256": {
+    "evaluate_crop_sensitivity.py": "754ae272738b65c82a90e139ba46aaa9821d2e540c302f67f51e20181376ed57",
+    "pipeline/crops.py": "417b603dfbde586227331e9ab28ce0fb3ba326fbe025a2fb393e66b510341deb",
+    "pipeline/crop_state.py": "94db64b73e4cb3ffa8d5384de5a857bf907d3f69a251b947e9c1aa2a3e40e4bb",
+    "pipeline/transforms.py": "07cd947107167d2c8a88c45197074310c3f558ccd34d046a51ae4d22acc769b9",
+    "pipeline/models.py": "4c905ff98acd0e8dc1869d9ddf72514ec97077c8a2423fc10f30c8915f00872c",
+    "data.py": "12d29774c4d45b1780adec9158ec92f26867ce7c6dcc6d4485e87ffff0b64e56",
+    "progress_ui.py": "3477105d5da315dd6613889899b500ef4d8b0e58d1283291344c19763167fc18"
+  },
+  "inference_signature": "d617cccdf53313e6e91d185c12f6207cbc2c4bd2a5cd957e48b43adcfbfaa6f1",
+  "reference_run": "runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c",
+  "git": {
+    "commit": "ee808ad8f71941f63d280abbc7830573a5ea07a0",
+    "dirty": true
+  },
+  "test_images_opened": false,
+  "split": "val"
+}

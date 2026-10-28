@@ -1,7 +1,7 @@
 # Ejecuta solo el entrenamiento, en la terminal actual, con barras de tqdm.
 [CmdletBinding()]
-param([switch]$Smoke, [string]$Resume, [switch]$PauseAfterEpoch,
-      [string]$Config = 'configs/train/ma_resnet18_v002.yaml', [switch]$SkipInstall)
+param([switch]$Smoke, [string]$Resume, [string]$InitCheckpoint, [switch]$PauseAfterEpoch,
+      [string]$Config = 'configs/train/ma_resnet18_v002.yaml', [switch]$SkipInstall, [string]$Device)
 $ErrorActionPreference = 'Stop'
 Write-Host '[1/4] Iniciando lanzador de entrenamiento...' -ForegroundColor Cyan
 $repoDirectory = Split-Path -Parent $PSScriptRoot
@@ -34,6 +34,8 @@ try {
     $trainingArguments = @('-u', 'scripts/train/train_ma.py', '--config', $Config)
     if ($Smoke) { $trainingArguments += '--smoke' }
     if ($Resume) { $trainingArguments += @('--resume', $Resume) }
+    if ($InitCheckpoint) { $trainingArguments += @('--init-checkpoint', $InitCheckpoint) }
+    if ($Device) { $trainingArguments += @('--device', $Device) }
     if ($PauseAfterEpoch) { $trainingArguments += '--pause-after-epoch' }
     $shellProcess = Get-Process -Id $PID
     New-Item -ItemType Directory -Path 'runs' -Force | Out-Null

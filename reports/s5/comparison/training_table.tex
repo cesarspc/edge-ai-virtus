@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Duración y selección del checkpoint. Todos los entrenamientos finalizaron por parada temprana; las horas incluyen entrenamiento y validación por época.}
+\label{tab:training}
+\begin{tabularx}{\linewidth}{Y r r r l}
+\toprule
+\textbf{Modelo} & \textbf{Mejor vuelta} & \textbf{Vueltas} & \textbf{Horas} & \textbf{Dispositivo / precisión}\\
+\midrule
+ResNet-18 & 11 & 16 & 14,80 & CPU / FP32\\
+MobileNet A & 19 & 24 & 14,04 & CPU / FP32\\
+MobileNet B & 6 & 11 & 0,76 & GTX 1650 SUPER / AMP\\
+MobileNet C & 16 & 21 & 1,44 & GTX 1650 SUPER / AMP\\
+MobileNet D & 7 & 12 & 0,84 & GTX 1650 SUPER / AMP\\
+\bottomrule
+\end{tabularx}
+\source{reports/s5/comparison/validation_results.csv}
+\end{table}

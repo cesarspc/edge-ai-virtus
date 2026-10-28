@@ -1,0 +1,10 @@
+reference_selection: reports/s5/selected_model.json
+output_dir: reports/crops_v002
+evaluation:
+  batch_size: 64
+  num_workers: 2
+  amp: true
+  seed: 42
+bootstrap:
+  resamples: 10000
+  seed: 42

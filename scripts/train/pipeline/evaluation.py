@@ -11,7 +11,28 @@ from torch import nn
 from torch.utils.data import DataLoader
 
 from metrics import aggregate_observations, classification_metrics
-from progress_ui import bar
+from progress_ui import bar, ready_batches
+
+
+@torch.no_grad()
+def predict_batch(model: nn.Module, x: torch.Tensor, device: torch.device, amp: bool) -> np.ndarray:
+    """One photo score per row; forward each view separately to respect the GPU batch limit."""
+    if model.training:
+        raise ValueError("prediction requires eval mode (including BatchNorm)")
+    if x.ndim not in (4, 5):
+        raise ValueError("expected B,C,H,W images or B,V,C,H,W views")
+    views = [x] if x.ndim == 4 else x.unbind(dim=1)
+    photo_probs = []
+    for view in views:
+        with torch.autocast(device_type=device.type, enabled=amp):
+            logits = model(view.contiguous().to(device, non_blocking=True))
+        if not torch.isfinite(logits).all():
+            raise FloatingPointError("Non-finite logits during evaluation; reduce evaluation.batch_size or disable AMP.")
+        probs = torch.softmax(logits.float(), dim=1)
+        if not torch.isfinite(probs).all():
+            raise FloatingPointError("Non-finite probabilities during evaluation; reduce evaluation.batch_size or disable AMP.")
+        photo_probs.append(probs.cpu().numpy())
+    return photo_probs[0] if len(photo_probs) == 1 else np.stack(photo_probs).mean(0)
 
 
 @torch.no_grad()
@@ -19,10 +40,9 @@ def predict(model: nn.Module, loader: DataLoader, device: torch.device, amp: boo
             description: str = "Evaluacion") -> np.ndarray:
     model.eval()
     out = []
-    for x, _ in bar(loader, desc=description, unit="lote"):
-        with torch.autocast(device_type=device.type, enabled=amp):
-            logits = model(x.to(device, non_blocking=True))
-        out.append(torch.softmax(logits.float(), dim=1).cpu().numpy())
+    for x, _ in bar(ready_batches(loader, f"Preparando primer lote: {description}"),
+                    total=len(loader), desc=description, unit="lote"):
+        out.append(predict_batch(model, x, device, amp))
     return np.concatenate(out) if out else np.zeros((0, 0))
 
 

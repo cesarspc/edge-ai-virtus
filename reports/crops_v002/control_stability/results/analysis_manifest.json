@@ -1,0 +1,99 @@
+{
+  "signature": "daa783774f6cfa9ebf60b6445759f15b3588a9e91d8455f2f56e356efd106c08",
+  "source_sha256": {
+    "reports\\crops_v002\\control_stability\\campaign.json": "fa3198bea34c3d8139b2db9b43529010f706016bb903135af853dd98b86e6aac",
+    "reports\\crops_v002\\control_stability\\protocol.json": "1525161d4b14910d71183d2de24b8a076b2527e076bce25abab8eb3ebbb52acd",
+    "scripts\\train\\analyze_control_stability.py": "d73302c40aa15dd94426e1afb7f8e07b706cef31920c088c57f95c8328800f69",
+    "scripts\\train\\run_control_stability.py": "1e37b60a13c3df29d4b9e1702c07f5c5c2d3811b461c8b3780072c4b71c4d688",
+    "data\\versions\\v002\\manifest.json": "5dd41b1a824dcd825eef81e8439c69db53c727ced42b3aa8014a85a3db2567b1",
+    "data\\processed\\v002\\images.csv": "a7d5546d005d996a0e10cfabcb79d524fce2030dd4c7d4f060fd19765d7092f6",
+    "data\\versions\\v002\\classes.csv": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd",
+    "runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c\\best.pt": "e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8",
+    "runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c\\run.json": "380d946607c54c3198341f0915589bfb1409e36c852a73c82fab04182c76255d",
+    "runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c\\predictions_val.csv": "2378eecb175384c4a66462cd80d7761d99035cff7edb5d7a66c24ae0c0e60c8b",
+    "runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c\\metrics_val.json": "81e128145bbe3e0ad4ebd15e4db3b11ba50beb649917c25f61ffaedb35fffcd9",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\run.json": "f2085d1d8dfbecede66bf4459f152f9585a28bad36291b958f533da464532ea4",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\completed.json": "a4b2ccf9c4e2ee7ced8d6e3bfd8c82d0552b6783039ac060ae5caf4ba1b90f19",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\initialization.json": "55ed913be2d0ab4423276b6579380cafe733cce29bc5a2261629fd2db6696ff7",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\class_balance.json": "84e67872945106589db64ad6be460077046993fca6e1ba788fea0b91ef3fc3cd",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\predictions_val.csv": "32ed2714d8bbf548dd530fe2b249a918d5614d3dd7313994ed089a2f150574b6",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\metrics_val.json": "d0301e8373e7ca0605ff5e8ffbf4fc034fc6a0fe7844393496bfa0809b96ae98",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\history.csv": "059a249e0db41363dd0504b183da96a32d5c12390c3717a6304bd2d2b726fad2",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\best.pt": "d3bc316a89a03ffb7d4bd1d580e823a0694cd10d370a893bb0d09bed5c1e1330",
+    "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42\\parameter_drift_summary.csv": "b83f4d36cdcdf22a8b1e7c8548a8de28a9f3e35e98c70dad3b9a12539416a774",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\run.json": "eb8f126bd64d254aba55f3a1edcfff7c2832b65d0b2883985471e04e1f9970c7",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\completed.json": "631640d4d214d17ae721e4f3871b29918e427e553aa97e5ab78ee441f42ec96c",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\initialization.json": "55ed913be2d0ab4423276b6579380cafe733cce29bc5a2261629fd2db6696ff7",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\class_balance.json": "84e67872945106589db64ad6be460077046993fca6e1ba788fea0b91ef3fc3cd",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\predictions_val.csv": "ac703b3c8aabee83bc1635fc76b953d61ecb416be75aa2621b62ecfdf771a39a",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\metrics_val.json": "a6c01fec5f98d4c979e2df5ba928b59092985b477f3b45624988071c38f101b4",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\history.csv": "0e433bfab9e34910d3e827ad782c1492a11d828a3a7ee6ac6ba8a41f3f4ee1fe",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\best.pt": "3102bbbf71ca1840b487a62ab63a0fa20b4e6015e52960a9db2e9d47eb4755b3",
+    "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43\\parameter_drift_summary.csv": "143e27e6accfb570a9da96101a43a723fccc2851c6077bb7626b9c7ff4f987da",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\run.json": "1e16cc8818f5454c83294382bbae9435a9d4a5d6cfa00bae380b85b945a623c1",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\completed.json": "35f5afe259a6e05368173063b23ed48e06fa8a050f035756ed048c110c04b890",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\initialization.json": "55ed913be2d0ab4423276b6579380cafe733cce29bc5a2261629fd2db6696ff7",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\class_balance.json": "84e67872945106589db64ad6be460077046993fca6e1ba788fea0b91ef3fc3cd",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\predictions_val.csv": "0f0ea50066dd4c175d402b653e22da654c275b88d2b533b0e8f07b8c7bc3edb9",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\metrics_val.json": "86764aea7a82340a8e0745e6b96249d4643584c47b3595bc86ef8d6da1c49006",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\history.csv": "695f277ddf332ee3e1027364c1e6ce49905954cdd567c4ce91aab9c9dc3d6f75",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\best.pt": "71f5ec205b70bd46bf0529985a8e5bb7ff4bfa8a2af9876705b943b6b54b312a",
+    "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44\\parameter_drift_summary.csv": "6f902fde74080635b42a175e7a0f75082ac5a3f5d83e72c5918698c0d109d094",
+    "scripts\\train\\analyze_crop_experiments.py": "d3f9448307c423282a5183009ccabdf2717afa3831fca0796c11fa028ba2a5a0"
+  },
+  "test_evaluations": 0,
+  "image_inference_executed": false,
+  "classes": [
+    "Amanita",
+    "Auricularia",
+    "Ganoderma",
+    "Geastrum",
+    "Hericium",
+    "Lycoperdon",
+    "Morchella",
+    "Pleurotus",
+    "Trametes",
+    "Xylaria"
+  ],
+  "n_observations": 3452,
+  "n_images": 6290,
+  "scope": "Variation of fine tuning from the same selected C checkpoint; not full retraining variance.",
+  "selection_policy": "Keep seed 42 as the preselected candidate; use 43 and 44 to describe fine-tuning stability, not to choose the highest-scoring seed. No ensembling or test evaluation.",
+  "initializations_identical": true,
+  "class_weights_identical": true,
+  "environments": {
+    "42": {
+      "versions": {
+        "python": "3.12.10",
+        "torch": "2.14.1+cu132",
+        "torchvision": "0.29.1+cu132",
+        "cuda": "13.2",
+        "cudnn": 92400
+      },
+      "gpu": "NVIDIA GeForce GTX 1650 SUPER",
+      "amp": true
+    },
+    "43": {
+      "versions": {
+        "python": "3.12.10",
+        "torch": "2.14.1+cu132",
+        "torchvision": "0.29.1+cu132",
+        "cuda": "13.2",
+        "cudnn": 92400
+      },
+      "gpu": "NVIDIA GeForce GTX 1650 SUPER",
+      "amp": true
+    },
+    "44": {
+      "versions": {
+        "python": "3.12.10",
+        "torch": "2.14.1+cu132",
+        "torchvision": "0.29.1+cu132",
+        "cuda": "13.2",
+        "cudnn": 92400
+      },
+      "gpu": "NVIDIA GeForce GTX 1650 SUPER",
+      "amp": true
+    }
+  }
+}

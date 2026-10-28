@@ -1,0 +1,7 @@
+{
+  "run_id": "20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43",
+  "evaluated_splits": [
+    "val"
+  ],
+  "test_evaluations": 0
+}

@@ -1,0 +1,8 @@
+{
+  "training_history_metrics_reproduced": true,
+  "source_C_unchanged": true,
+  "initializations_and_loss_weights_identical": true,
+  "both_pilots_paused": true,
+  "test_evaluations": 0,
+  "targeted_tests_passed": 12
+}

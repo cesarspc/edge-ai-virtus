@@ -1,0 +1,15 @@
+{
+  "winner_point_estimate": "control",
+  "clear_improvement_candidates": [],
+  "recommended_inference_policy": "control",
+  "test_used": false,
+  "weights_changed": false,
+  "inference_gate": "positive macro-F1 delta with paired percentile CI entirely above zero",
+  "training_conclusion": "Frozen sensitivity does not measure the effect of fine tuning.",
+  "limitations": [
+    "exploratory comparisons without multiplicity correction",
+    "one frozen checkpoint",
+    "bootstrap does not account for site-day dependence or training seed variation",
+    "forward timing excludes decoding/crop transforms and is not an Android measurement"
+  ]
+}

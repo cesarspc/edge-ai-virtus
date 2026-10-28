@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import hashlib
 import json
+from concurrent.futures import ThreadPoolExecutor
 from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
@@ -37,6 +38,17 @@ def sha256_file(path: Path, show_progress: bool = False) -> str:
 def resolve(path: str | Path) -> Path:
     p = Path(path)
     return p if p.is_absolute() else REPO_ROOT / p
+
+
+def image_hashes(paths, workers=1, show_progress=False):
+    """Fresh SHA-256 reads in input order; parallelism changes throughput, never integrity rules."""
+    if not isinstance(workers, int) or not 1 <= workers <= 32:
+        raise ValueError("data.integrity_workers must be an integer in [1,32]")
+    with ThreadPoolExecutor(max_workers=workers) as pool:
+        hashes = pool.map(sha256_file, (Path(p) for p in paths))
+        if show_progress:
+            hashes = bar(hashes, total=len(paths), desc=f"Integridad SHA-256 ({workers} hilos)", unit="imagen")
+        return list(hashes)
 
 
 @dataclass
@@ -115,7 +127,7 @@ def load_tables(cfg: dict[str, Any], show_progress: bool = False,
         if show_progress:
             print("Verificando SHA-256 de las imagenes; puede tardar varios minutos...", flush=True)
         paths = img.loc[available, "path"]
-        actual = pd.Series([sha256_file(Path(p)) for p in visible_rows(paths, "Integridad SHA-256")], index=paths.index, dtype=str)
+        actual = pd.Series(image_hashes(paths, d.get("integrity_workers", 1), show_progress), index=paths.index, dtype=str)
         bad = available & ~expected.eq(actual.reindex(img.index))
         img.loc[bad, "status"] = "hash_mismatch"
         available &= ~bad

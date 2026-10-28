@@ -1,0 +1,11 @@
+{
+  "signature": "daa783774f6cfa9ebf60b6445759f15b3588a9e91d8455f2f56e356efd106c08",
+  "seeds_completed": [
+    42,
+    43,
+    44
+  ],
+  "candidate_seed_unchanged": 42,
+  "test_evaluations": 0,
+  "image_inference_executed": false
+}

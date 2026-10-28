@@ -1,0 +1,27 @@
+{
+  "status": "validation_candidate_with_seed_study",
+  "seed": 42,
+  "run": "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42",
+  "epochs_executed": 4,
+  "best_epoch": 1,
+  "early_stopping": true,
+  "macro_f1_observation": 0.9773043810494901,
+  "macro_f1_image": 0.9331767373140754,
+  "accuracy_observation": 0.9803012746234068,
+  "checkpoint_sha256": "d3bc316a89a03ffb7d4bd1d580e823a0694cd10d370a893bb0d09bed5c1e1330",
+  "gpu": "NVIDIA GeForce GTX 1650 SUPER",
+  "amp": true,
+  "ci95_low": 0.9701933789884051,
+  "ci95_high": 0.9833778257474134,
+  "inference_policy": "original",
+  "checkpoint": "best.pt",
+  "reference_checkpoint_sha256": "d3bc316a89a03ffb7d4bd1d580e823a0694cd10d370a893bb0d09bed5c1e1330",
+  "candidate_preserved_from_before_repeats": true,
+  "seeds_completed": [
+    42,
+    43,
+    44
+  ],
+  "test_used_for_selection": false,
+  "seed_score_averaging_is_not_an_ensemble": true
+}

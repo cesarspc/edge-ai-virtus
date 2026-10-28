@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Resultados de validación; IC percentil por observación.}
+\label{tab:results}
+\begin{tabularx}{\linewidth}{Y r r r}
+\toprule
+\textbf{Modelo} & \textbf{F1 obs. [IC 95\,\%]} & \textbf{F1 foto} & \textbf{Acierto obs.}\\
+\midrule
+ResNet-18 & 0,955 [0,945; 0,963] & 0,900 & 95,9\,\%\\
+MobileNet A & 0,971 [0,956; 0,980] & 0,925 & 98,0\,\%\\
+MobileNet B & 0,970 [0,956; 0,979] & 0,915 & 97,7\,\%\\
+MobileNet C & 0,972 [0,964; 0,979] & 0,919 & 97,7\,\%\\
+MobileNet D & 0,962 [0,947; 0,972] & 0,913 & 97,4\,\%\\
+\bottomrule
+\end{tabularx}
+\source{reports/s5/comparison/validation_results.csv}
+\end{table}

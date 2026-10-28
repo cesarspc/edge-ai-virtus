@@ -1,0 +1,20 @@
+{
+  "status": "validation_candidate",
+  "campaign": "cropping_mobilenet_v3_large_v002",
+  "run": "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42",
+  "checkpoint": "best.pt",
+  "branch": "control",
+  "inference_policy": "original",
+  "epochs_executed": 4,
+  "best_epoch": 1,
+  "max_epochs": 10,
+  "early_stopping": true,
+  "macro_f1_observation": 0.9773043810494901,
+  "macro_f1_image": 0.9331767373140754,
+  "accuracy_observation": 0.9803012746234068,
+  "checkpoint_sha256": "d3bc316a89a03ffb7d4bd1d580e823a0694cd10d370a893bb0d09bed5c1e1330",
+  "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "selection_metric": "val observation macro-F1",
+  "test_used_for_selection": false,
+  "additional_seeds_completed": false
+}

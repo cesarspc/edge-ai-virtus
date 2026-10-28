@@ -1,0 +1,18 @@
+{
+  "signature": "6babe2f3407625ed5d2f42c9a1641865b01ba5427d5013ca997150e13330e911",
+  "jobs": {
+    "42": {
+      "status": "completed",
+      "run": "runs\\crops_v002\\20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42"
+    },
+    "43": {
+      "status": "completed",
+      "run": "runs\\crops_v002\\20261028T161559294606Z_cropping_mobilenet_v3_large_v002_control_seed43"
+    },
+    "44": {
+      "status": "completed",
+      "run": "runs\\crops_v002\\20261028T163842294290Z_cropping_mobilenet_v3_large_v002_control_seed44"
+    }
+  },
+  "training_complete": true
+}

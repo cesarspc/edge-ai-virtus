@@ -4,6 +4,7 @@ from __future__ import annotations
 from typing import Any
 
 from torchvision import transforms
+from pipeline.crops import CropViews, ExtraCrop
 
 
 def build_transforms(cfg: dict[str, Any]):
@@ -18,4 +19,16 @@ def build_transforms(cfg: dict[str, Any]):
         train.append(transforms.ColorJitter(*aug["color_jitter"]))
     train += [transforms.ToTensor(), norm]
     evaluation = [transforms.Resize(inp["eval_resize"]), transforms.CenterCrop(inp["size"]), transforms.ToTensor(), norm]
-    return transforms.Compose(train), transforms.Compose(evaluation)
+    crop = inp.get("extra_crop")
+    if crop:
+        fraction = float(crop["area_fraction"])
+        train.insert(0, ExtraCrop(fraction, crop.get("train_anchors", ["center"])))
+        anchors = crop.get("eval_anchors", ["center"])
+        if len(anchors) > 1:
+            evaluation = CropViews(transforms.Compose(evaluation),
+                                   [(anchor, fraction, anchor) for anchor in anchors])
+        else:
+            evaluation = transforms.Compose([ExtraCrop(fraction, anchors), *evaluation])
+    else:
+        evaluation = transforms.Compose(evaluation)
+    return transforms.Compose(train), evaluation

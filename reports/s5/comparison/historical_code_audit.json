@@ -1,0 +1,14 @@
+{
+  "git_revision": "1031da4",
+  "path": "scripts/train/train_ma.py",
+  "recorded_A_code_sha256": "336425f1ccf9e261d1b17dfce0610d51003f3ef40095ef90114b0bea06f4da62",
+  "candidate_sha256": {
+    "LF": "ab6b3cbe9bb2eb3ad19bba264c8731ad989ffd39ef4251e315b128eefbd805f1",
+    "CRLF": "336425f1ccf9e261d1b17dfce0610d51003f3ef40095ef90114b0bea06f4da62"
+  },
+  "matches_run_record": true,
+  "evaluation_batch_rule": [
+    "loaders[s] = DataLoader(ImageTable(frames[s], tf_eval), batch_size=tr[\"batch_size\"] * 2, shuffle=False, **kw)"
+  ],
+  "effective_A_evaluation_batch": 128
+}

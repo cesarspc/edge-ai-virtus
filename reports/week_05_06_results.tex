@@ -1,279 +1,496 @@
 \documentclass[11pt,a4paper]{article}
-
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
 \usepackage[spanish,es-nodecimaldot]{babel}
 \usepackage{lmodern}
-\usepackage{geometry}
-\usepackage{booktabs}
-\usepackage{tabularx}
-\usepackage{array}
-\usepackage{enumitem}
-\usepackage{hyperref}
-\usepackage{float}
-\usepackage{amsmath}
-\usepackage{graphicx}
-\graphicspath{{figures/}}
-\usepackage[font=small, labelfont=bf]{caption}
-\setlist[itemize]{label=\textbullet}
-
-\geometry{top=2.3cm, bottom=2.3cm, left=2.4cm, right=2.4cm}
-\hypersetup{colorlinks=true, urlcolor=blue, linkcolor=black}
-
+\usepackage{geometry,booktabs,tabularx,array,enumitem,hyperref,float,amsmath,graphicx,xcolor,xurl,needspace}
+\usepackage[font=small,labelfont=bf]{caption}
+\geometry{top=2.2cm,bottom=2.2cm,left=2.2cm,right=2.2cm}
+\hypersetup{colorlinks=true,urlcolor=blue,linkcolor=black}
 \setlength{\parindent}{0pt}
-\setlength{\parskip}{0.6em}
-\renewcommand{\arraystretch}{1.2}
-\urlstyle{same}
-
+\setlength{\parskip}{0.55em}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.13}
+\setlist{leftmargin=*,topsep=3pt,itemsep=3pt}
 \newcolumntype{Y}{>{\raggedright\arraybackslash}X}
-\newcolumntype{R}{>{\raggedleft\arraybackslash}X}
-\newcommand{\code}[1]{\texttt{\small #1}}
+\newcommand{\source}[1]{\par\nobreak\begingroup\footnotesize\color{darkgray}(\path{#1}).\par\endgroup}
+\urlstyle{tt}
+\emergencystretch=2em
+\raggedbottom
 
-\title{
-    \textbf{Exploración de modelos de Inteligencia Artificial multimodal\\
-    para la identificación de macromicetos mediante dispositivos móviles}\\[0.6em]
-    \normalsize Resultados de las Semanas 5 y 6: modelo para celular, resultados por nivel taxonómico y orden del código
-}
-
-\author{
-    Daniel Esteban Camacho Ospina\\
-    Cesar Augusto Pulido Cuervo
-}
-
+\title{\textbf{Exploración de modelos de Inteligencia Artificial multimodal\\
+para la identificación de macromicetos mediante dispositivos móviles}\\[0.6em]
+\normalsize Resultados de las Semanas 5 y 6: ajuste del modelo visual y análisis taxonómico}
+\author{Daniel Esteban Camacho Ospina\\Cesar Augusto Pulido Cuervo}
 \date{}
 
 \begin{document}
-
 \maketitle
 
-% =========================================================
-\section{Objetivo}
-% =========================================================
+\section{Objetivo y protocolo de evaluación}
 
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Semana 5:} entrenar un modelo liviano que pueda funcionar en un
-    celular, ajustar su configuración y tratar el desequilibrio entre géneros.
-    \item \textbf{Semana 6:} medir los resultados no solo por género sino también
-    por familia, orden, clase y filo, y ordenar el código para la Fase 5.
-\end{itemize}
+La Semana 5 busca entrenar una arquitectura apta para dispositivos móviles, ajustar
+su configuración y estudiar el desequilibrio entre géneros. La Semana 6 amplía la
+evaluación a familia, orden, clase y filo y organiza el código para incorporar
+posteriormente información ambiental.
 
-Todo usa la versión \code{v002} del dataset: solo FungiTastic, los mismos diez
-géneros y las particiones oficiales (17\,799 observaciones para entrenar,
-3\,452 para validar y 4\,039 para la prueba final). Una \emph{observación} es un
-hongo encontrado por una persona; puede tener varias fotos. Los resultados
-principales se dan por observación.
+Se utiliza exclusivamente FungiTastic en la versión \texttt{v002}, con diez géneros
+y las particiones oficiales: 17\,799 observaciones de entrenamiento, 3\,452 de
+validación y 4\,039 de test, para un total de 25\,290. Hay, respectivamente,
+30\,172, 6\,290 y 7\,159 fotografías. Se conservan las particiones oficiales
+para mantener un protocolo común entre los modelos.
+\source{reports/s5/comparison/imbalance_ratios.csv}
 
-La métrica principal es el \textbf{F1 promedio por género}: para cada género se
-combina qué tanto acierta cuando lo nombra y qué tanto lo encuentra, y luego se
-promedia dando el mismo peso a los diez géneros. Así un género con pocas fotos
-cuenta igual que uno con muchas. Va de 0 a 1.
+Una observación agrupa las fotografías del mismo registro de un hongo. El modelo
+predice probabilidades por foto; para decidir el género de la observación se
+promedian esas probabilidades, con el mismo peso para cada foto, y se elige el
+género con el mayor promedio:
+\[
+\overline p_o(g)=\frac{1}{m_o}\sum_{i\in o}p_i(g),\qquad
+\widehat g_o=\operatorname*{arg\,max}_g\overline p_o(g).
+\]
+La decisión utiliza así la información conjunta de las fotografías del registro.
+La misma regla se aplica a ResNet-18 y a los ensayos A, B, C y D.
+\source{scripts/train/metrics.py}
 
-Las decisiones se toman solo con \textbf{validación}. La \textbf{prueba} se usa
-una sola vez al final, para que el resultado no esté influido por los ajustes.
+La métrica principal es el \textbf{F1 macro por observación}: se calcula el F1 de
+cada género y se promedian los resultados con igual peso por género. La
+\emph{precisión} mide qué proporción de las observaciones asignadas a un género
+pertenece realmente a él; la \emph{recuperación} o \emph{recall} mide qué proporción
+de las observaciones reales de ese género se encuentra. El F1 combina ambas.
+La exactitud o porcentaje de aciertos da, en cambio, el mismo peso a cada
+observación y por eso está más influida por los géneros abundantes.
+\source{scripts/train/metrics.py}
 
-% =========================================================
-\section{Semana 5: modelo para celular}
-% =========================================================
+\textbf{Las decisiones de S5 se toman únicamente con validación.} La comparación
+de A--D corresponde a esa partición. La evaluación de test del MobileNet
+seleccionado se realizará una sola vez, una vez cerrados los ajustes. Los
+resultados de test de ResNet-18 proceden de la fase anterior y se presentan
+como antecedente; no intervienen en la elección del modelo móvil. Esta
+exposición histórica limita el carácter completamente ciego del test durante
+el conjunto del proyecto.
+\source{reports/s5/comparison/run_inventory.csv}
 
-\subsection{Modelo elegido}
+\section{Semana 5: configuración y resultados del modelo móvil}
 
-Se comparó el modelo de referencia de la Semana 4 (ResNet-18) con
-\textbf{MobileNetV3-Large}, diseñado para celulares. Ambos parten de redes ya
-entrenadas con millones de imágenes generales y se reajustan con fotos de hongos.
+\subsection{Arquitectura y coste de ejecución}
+
+Los ensayos A--D conservan MobileNetV3-Large, inicializado con los pesos
+\texttt{IMAGENET1K\_V1} y una salida para los géneros del dataset. ResNet-18 es la
+arquitectura de referencia. Se reajustan todos los parámetros: no se congelan
+capas del extractor visual.
+\source{scripts/train/pipeline/models.py}
+\source{scripts/train/pipeline/training.py}
+
+\input{s5/comparison/profile_table.tex}
+
+Con los valores completos del perfil, la razón de latencias es
+$37{,}104/20{,}696\approx1{,}793$: MobileNet necesita menos tiempo por entrada en esa
+medición. Sus pesos serializados ocupan un 61,923\,\% menos espacio. Se reutiliza
+el perfil porque B, C y D no modifican la arquitectura ni su número de salidas.
+El archivo medido contiene los pesos del modelo, no el estado del optimizador.
+\source{reports/s5/comparison/profile_ratios.json}
+
+La medición histórica corresponde a CPU, FP32, un tensor sintético por lote y
+cuatro hilos; utiliza cinco iteraciones de calentamiento y treinta medidas.
+Excluye la preparación de fotografías y emplea pesos aleatorios para
+caracterizar la arquitectura. Por tanto, no mide la aplicación completa ni
+demuestra esa misma razón de velocidad en Android.
+\source{reports/s5/architecture_profile.json}
+
+\subsection{Configuración de los ensayos A, B, C y D}
+
+\input{s5/comparison/configuration_table.tex}
+
+B reduce la tasa de aprendizaje respecto de A. C conserva la tasa de A y añade
+pesos por clase; D combina la tasa menor y esos pesos. La ponderación es
+inversamente proporcional a la raíz del número de fotos de entrenamiento de
+cada género, normalizada para que la media de los pesos sea uno. Se calcula
+solo con \texttt{train}; ni la validación ni el test determinan los pesos.
+\source{scripts/train/pipeline/training.py}
+
+El aumento de datos es común: recorte aleatorio con escala entre 0,5 y 1,0,
+reflexión horizontal y variación de color con parámetros
+$(0{,}2;0{,}2;0{,}2;0{,}02)$. La normalización usa medias
+$(0{,}485;0{,}456;0{,}406)$ y desviaciones
+$(0{,}229;0{,}224;0{,}225)$. En validación se usa redimensionamiento y recorte
+central, sin aumento aleatorio. El muestreo de entrenamiento baraja las fotos;
+no incorpora un muestreador que equilibre géneros.
+\source{reports/s5/comparison/configuration.csv}
+\source{scripts/train/pipeline/transforms.py}
+
+Hay una diferencia de entorno además de los ajustes: A se ejecutó en CPU con
+precisión completa, mientras B/C/D usaron GPU con AMP, que combina precisiones
+numéricas para acelerar operaciones. El lote de validación de A se reconstruyó
+del código histórico; B/C/D lo fijan explícitamente. Por ello, A frente a C no
+constituye por sí solo un experimento que aísle el efecto de ponderar clases.
+B frente a D sí conserva tasa de aprendizaje, hardware y precisión, aunque
+sigue siendo una comparación con una sola semilla.
+\source{reports/s5/comparison/configuration.csv}
+\source{reports/s5/comparison/historical_code_audit.json}
+
+\subsection{Resultados en validación}
+
+\input{s5/comparison/results_metrics_table.tex}
+\input{s5/comparison/training_table.tex}
+
+La duración corresponde a la suma del entrenamiento de cada vuelta y su
+validación. Excluye la preparación inicial de archivos, los periodos de
+inactividad entre sesiones y la evaluación final. Las historias reanudadas
+se consolidan por entrenamiento, sin duplicar el tiempo de las vueltas
+anteriores. Los tiempos deben interpretarse junto con el dispositivo y la
+precisión numérica utilizados.
+\source{reports/s5/comparison/validation_results.csv}
+\source{reports/s5/comparison/run_inventory.csv}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=\textwidth]{s5_s6_size_speed.png}
-\caption{Tamaño y velocidad de los dos modelos (\code{reports/s5/architecture\_profile.json}).}
+\includegraphics[width=\linewidth]{s5/comparison/validation_curves.png}
+\caption{F1 macro por observación de cada vuelta en validación. Las estrellas
+marcan la mejor vuelta; su número y valor aparecen en la leyenda.}
+\source{reports/s5/comparison/validation_results.csv}
+\label{fig:curves}
 \end{figure}
 
-MobileNet es un 62\,\% más pequeño y casi el doble de rápido. El tiempo se midió
-en el procesador del PC, \textbf{no en un celular}; falta medirlo en Android.
+Las curvas muestran la evolución de la métrica utilizada para seleccionar el
+modelo. La parada temprana conserva el checkpoint de la mejor vuelta; el
+modelo finalmente evaluado puede, por tanto, corresponder a una vuelta
+anterior al cierre del entrenamiento.
+\source{reports/s5/comparison/checkpoint_audit.json}
 
-\subsection{Configuración del ensayo A}
+\subsection{Desequilibrio, efecto de los ajustes y cierre de S5}
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{Y l}
-\toprule
-\textbf{Ajuste} & \textbf{Valor}\\
-\midrule
-Velocidad de aprendizaje (qué tan grandes son los ajustes en cada paso) & 0,0003\\
-Fotos por paso & 64\\
-Tamaño de cada foto & 224 $\times$ 224 píxeles\\
-Máximo de vueltas sobre todas las fotos & 30\\
-Parar si no mejora en & 5 vueltas seguidas\\
-Peso extra a géneros con pocas fotos & No\\
-\bottomrule
-\end{tabularx}
-\end{table}
+\input{s5/comparison/distribution_table.tex}
+\input{s5/comparison/imbalance_ratios_table.tex}
 
-El desequilibrio entre géneros se tiene en cuenta al medir: con el F1 promedio,
-cada género pesa igual sin importar cuántas fotos tenga.
+La métrica macro evita que los géneros grandes dominen el promedio, pero no
+cambia cuántos ejemplos aprende el modelo. El tratamiento del desequilibrio se
+prueba explícitamente con la pérdida ponderada de C y D. En entrenamiento la
+razón entre el género mayor y el menor es 14,66 por observaciones; en validación
+es 82,18. Por eso un buen promedio global no basta para juzgar las clases
+pequeñas.
+\source{reports/s5/comparison/imbalance_ratios.csv}
 
-\subsection{Resultado del ensayo A (validación)}
+\input{s5/comparison/f1_genus_table.tex}
+\input{s5/comparison/precision_recall_table.tex}
 
-El ensayo A entrenó 24 vueltas completas sobre las fotos (unas 14 horas en
-procesador, sin tarjeta gráfica). Se detuvo solo porque en 5 vueltas seguidas no
-mejoró; se conservó la mejor, la vuelta 19.
+\textbf{El efecto no es uniforme.} C encuentra todas las observaciones de
+\textit{Morchella} en validación y no produce falsos positivos para ese género;
+A omite una. Para \textit{Geastrum}, C lleva el recall a 1,000, pero su precisión
+queda en 0,919 frente a 0,949 de A. En \textit{Hericium}, C tiene recall 0,909
+frente a 0,970 de A, y su F1 baja de 0,962 a 0,930. No hay evidencia de que los
+pesos ayuden a todos los géneros pequeños.
+\source{reports/s5/comparison/validation_per_genus.csv}
+
+Entre los géneros grandes, C conserva el recall de \textit{Amanita}, pero reduce
+su precisión de 0,992 a 0,989. En \textit{Trametes}, tanto precisión como recall
+son menores que en A. El mayor F1 macro de C convive así con menor exactitud
+global y menor F1 por foto que A: la elección depende de la métrica principal,
+no de una mejora en todas las medidas.
+\source{reports/s5/comparison/validation_per_genus.csv}
+\source{reports/s5/comparison/validation_results.csv}
+
+B y D permiten examinar la ponderación con la misma tasa menor y el mismo
+entorno. D eleva el recall de \textit{Auricularia} de 0,941 a 0,962 y el de
+\textit{Hericium} de 0,894 a 0,939, pero reduce sus precisiones de 0,989 a 0,958
+y de 1,000 a 0,873, respectivamente. \textit{Morchella} conserva el mismo
+resultado en ambos. La diferencia macro D menos B es $-0{,}0081$, con IC
+pareado $[-0{,}0155;-0{,}0012]$: en estas corridas la ponderación con tasa menor
+empeora esa medida. La conclusión se limita a los modelos entrenados; requiere
+otras semillas para establecer un efecto reproducible del ajuste.
+\source{reports/s5/comparison/validation_per_genus.csv}
+\source{reports/s5/comparison/bootstrap_paired.csv}
+
+Los ensayos B, C y D cubren el ajuste de tasa de aprendizaje y la evaluación
+de una técnica de ponderación para el desequilibrio. Su efecto depende del
+género y de la tasa utilizada, por lo que el ajuste debe valorarse mediante
+la métrica principal y el desglose por clase.
+\source{reports/s5/development_results.json}
+
+\subsection{Comparación de ensayos y elección del modelo}
+
+Se recalcularon intervalos al 95\,\% con 10\,000 remuestreos y semilla 42. Cada
+remuestreo toma, con reposición, el mismo número de observaciones que la
+partición original. No se remuestrean fotos individualmente. Para comparar
+modelos se usan \textbf{exactamente los mismos identificadores remuestreados}
+y se calcula la diferencia de F1 dentro de cada remuestreo. Los extremos son
+los percentiles 2,5 y 97,5; el conjunto de etiquetas se mantiene fijo, asignando
+cero si un F1 no está definido.
+\source{reports/s5/comparison/analysis_manifest.json}
+
+\input{s5/comparison/paired_table.tex}
 
 \begin{figure}[H]
 \centering
-\includegraphics[width=0.92\textwidth]{s5_s6_training_curves.png}
-\caption{Resultado en validación después de cada vuelta (\code{runs/*/history.csv}).}
+\includegraphics[width=0.96\linewidth]{s5/comparison/paired_differences.png}
+\caption{Intervalos pareados de las diferencias. Cuando una barra cruza el cero,
+esa comparación no distingue el cambio del ruido de muestreo.}
+\source{reports/s5/comparison/bootstrap_paired.csv}
 \end{figure}
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{Y R R}
-\toprule
-\textbf{Medida (validación)} & \textbf{ResNet-18} & \textbf{MobileNet A}\\
-\midrule
-F1 promedio por observación & 0,954 & \textbf{0,971}\\
-F1 promedio por foto        & 0,900 & \textbf{0,925}\\
-Aciertos por observación    & 95,9\,\% & \textbf{98,0\,\%}\\
-\bottomrule
-\end{tabularx}
-\end{table}
+\textbf{Se selecciona C para la evaluación final} por tener la mayor F1 macro
+de validación por observación, 0,971674. Frente a A, la diferencia de 0,001122
+tiene IC $[-0{,}009068;0{,}015696]$ y no se distingue del ruido. Frente a
+ResNet-18, la diferencia es 0,017131 con IC $[0{,}007721;0{,}026983]$.
+No se afirma que C supere de forma concluyente a A.
+\source{reports/s5/comparison/validation_results.csv}
+\source{reports/s5/comparison/bootstrap_paired.csv}
 
-\subsection{Qué falta de la Semana 5}
+Los criterios móviles no desempatan los MobileNet: conservan arquitectura,
+parámetros y perfil de ejecución. Se mantiene entonces el criterio operativo
+de mayor estimación de la métrica principal. C ofrece además un intervalo macro
+más estrecho en estas observaciones; ello no equivale a estabilidad entre
+entrenamientos. Sus últimas vueltas varían y la selección conserva el mejor
+checkpoint, no el último. Los tiempos de A y C no miden una aceleración
+controlada porque cambian el dispositivo y el ajuste.
+\source{reports/s5/comparison/profile_ratios.json}
+\source{reports/s5/comparison/validation_results.csv}
 
-\begin{itemize}[leftmargin=*]
-    \item Evaluar el ensayo A una sola vez en la prueba. Hasta entonces MobileNet
-    no tiene resultado de prueba.
-    \item Medir tamaño y tiempo en un celular Android real.
-\end{itemize}
+Los intervalos individuales de A y ResNet-18 se solapan. Ese solapamiento no
+sustituye el contraste pareado, que utiliza su correlación sobre los mismos
+registros. El intervalo de A sigue siendo más ancho aun con mayor F1: en
+\textit{Morchella}, sus once observaciones incluyen un error, mientras ResNet-18
+y C aciertan todas. El bootstrap de F1 de ese género en A abarca
+$[0{,}824;1{,}000]$, frente a $[1{,}000;1{,}000]$ en los otros dos. Un intervalo
+degenerado en una clase pequeña perfectamente clasificada no garantiza
+perfección fuera de la muestra: el remuestreo empírico no puede crear errores
+que no observó.
+\source{reports/s5/comparison/bootstrap_genus_uncertainty.csv}
+\source{reports/s5/comparison/validation_per_genus.csv}
 
-% =========================================================
+Estos intervalos describen incertidumbre de muestreo para modelos ya fijados.
+No incluyen variabilidad de entrenamiento, dependencia entre registros de un
+mismo sitio y día ni corrección por comparaciones múltiples. La selección de
+la mejor vuelta también usa esta validación. Por eso los resultados son
+exploratorios y no reemplazan la evaluación final ni varias semillas.
+\source{reports/s5/comparison/analysis_manifest.json}
+
+La selección de C y las huellas digitales de su checkpoint, configuración y
+métricas quedan registradas para conservar el modelo elegido hasta su
+evaluación final en test.
+\source{reports/s5/selected_model.json}
+
 \section{Semana 6: resultados por nivel taxonómico}
-% =========================================================
 
-\subsection{Taxonomía usada}
+\subsection{Taxonomía utilizada}
 
-La familia, el orden, la clase y el filo de cada género se tomaron de los datos
-originales de FungiTastic, sin cambios. Se comprobó que las 25\,290 observaciones
-los tienen completos y que ningún género aparece con dos familias distintas.
+La clasificación sigue los metadatos de FungiTastic: los géneros se agrupan en
+nueve familias, siete órdenes, tres clases y dos filos. La tabla conserva la
+asignación original de cada género.
+\source{data/taxonomy/v002/genus_taxonomy.csv}
+\input{s6/comparison/taxonomy_map_table.tex}
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{l Y Y Y l r}
-\toprule
-\textbf{Género} & \textbf{Familia} & \textbf{Orden} & \textbf{Clase} & \textbf{Filo} & \textbf{Especies}\\
-\midrule
-\textit{Amanita}     & Amanitaceae     & Agaricales     & Agaricomycetes  & Basidiomycota & 19\\
-\textit{Auricularia} & Auriculariaceae & Auriculariales & Agaricomycetes  & Basidiomycota & 2\\
-\textit{Ganoderma}   & Polyporaceae    & Polyporales    & Agaricomycetes  & Basidiomycota & 5\\
-\textit{Geastrum}    & Geastraceae     & Geastrales     & Agaricomycetes  & Basidiomycota & 9\\
-\textit{Hericium}    & Hericiaceae     & Russulales     & Agaricomycetes  & Basidiomycota & 3\\
-\textit{Lycoperdon}  & Lycoperdaceae   & Agaricales     & Agaricomycetes  & Basidiomycota & 10\\
-\textit{Morchella}   & Morchellaceae   & Pezizales      & Pezizomycetes   & Ascomycota    & 3\\
-\textit{Pleurotus}   & Pleurotaceae    & Agaricales     & Agaricomycetes  & Basidiomycota & 3\\
-\textit{Trametes}    & Polyporaceae    & Polyporales    & Agaricomycetes  & Basidiomycota & 7\\
-\textit{Xylaria}     & Xylariaceae     & Xylariales     & Sordariomycetes & Ascomycota    & 5\\
-\bottomrule
-\end{tabularx}
-\end{table}
+En particular, \textit{Ganoderma} está en Polyporaceae, igual que
+\textit{Trametes}. No se sustituyó esa asignación por Ganodermataceae.
+Con una clasificación que los separara, su confusión dejaría de contar como
+acierto familiar y cambiarían las métricas de familia. Los resultados de este
+informe dependen explícitamente de la decisión taxonómica de FungiTastic.
+\source{data/taxonomy/v002/genus_taxonomy.csv}
 
-En total son 10 géneros, 9 familias, 7 órdenes, 3 clases y 2 filos.
+\subsection{Regla de evaluación jerárquica}
 
-\subsection{Cómo se mide}
+Primero se agregan las fotos por observación como se explicó en la sección 1.
+Luego se toma el género ganador y se consulta su familia, orden, clase o filo.
+No se entrena otro clasificador ni se suman las probabilidades de todos los
+géneros de una familia para cambiar la decisión. Por ejemplo,
+\textit{Ganoderma} confundido con \textit{Trametes} cuenta como error de género
+y como acierto de familia con la taxonomía adoptada.
+\source{scripts/train/pipeline/taxonomy.py}
 
-El modelo solo nombra géneros. Para otro nivel se toma el género que eligió y se
-mira su familia, orden, etc. Ejemplo: si la foto es \textit{Ganoderma} y el
-modelo dice \textit{Trametes}, falla el género pero acierta la familia, porque
-ambos son Polyporaceae. No se entrenó nada nuevo: se usaron las respuestas ya
-guardadas de cada modelo.
+Con esta regla, un género acertado implica el acierto de todos sus niveles
+superiores, por lo que la exactitud no puede bajar al agrupar. El F1 macro no
+tiene esa propiedad: cambia el número de grupos promediados, su peso relativo
+y los falsos positivos y negativos de cada grupo.
+\source{scripts/train/pipeline/taxonomy.py}
 
-\subsection{Resultados}
+\subsection{Resultados, intervalos y confusiones}
 
-F1 promedio por observación. Entre corchetes, el rango donde probablemente está
-el valor real (95\,\%).
+\input{s6/comparison/taxonomy_validation_table.tex}
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{l l R R R R R}
-\toprule
-\textbf{Modelo} & \textbf{Partición} & \textbf{Género} & \textbf{Familia} & \textbf{Orden} & \textbf{Clase} & \textbf{Filo}\\
-\midrule
-ResNet-18   & validación & 0,954 & 0,959 & 0,962 & 0,987 & 0,981\\
-ResNet-18   & prueba     & 0,946 & 0,950 & 0,952 & 0,961 & 0,968\\
-MobileNet A & validación & 0,971 & 0,972 & 0,971 & 0,979 & 0,992\\
-\bottomrule
-\end{tabularx}
-\end{table}
+Los intervalos de ambas medidas se calcularon con el mismo procedimiento y
+semilla usados para la comparación de ensayos. Los resultados de C corresponden
+a validación. La tabla siguiente presenta el test histórico del modelo de
+referencia; la generalización de C se contrastará en su evaluación final.
+\source{reports/s5/comparison/analysis_manifest.json}
 
-Rangos a nivel de género: ResNet-18 validación [0,945–0,962], prueba
-[0,933–0,957]; MobileNet A validación [0,956–0,981].
+\input{s6/comparison/taxonomy_historical_test_table.tex}
 
-\begin{itemize}[leftmargin=*]
-    \item \textbf{Subir a familia u orden mejora poco.}
-    De los 140 errores de ResNet-18 en validación, solo 24 quedan dentro de la
-    misma familia y 51 dentro del mismo orden. La mayoría de los errores son entre
-    hongos poco emparentados.
-    \item \textbf{Las confusiones más comunes} son \textit{Amanita} con
-    \textit{Lycoperdon} y \textit{Ganoderma} con \textit{Trametes}.
-    \item \textbf{Ascomycota y Basidiomycota casi nunca se confunden}: más del
-    99\,\% de aciertos a nivel de filo.
-    \item En clase y filo el F1 no siempre sube, porque \textit{Morchella} es sola
-    su clase y tiene muy pocas observaciones; un error pesa mucho.
-\end{itemize}
+En filo, el acierto por observación es de 99,276\,\% para ResNet-18 en
+validación, 99,084\,\% en su test
+histórico y 99,652\,\% para C en validación. Son estimaciones observadas; sus
+intervalos también están en las tablas y no prueban el resultado de C en test.
+\source{reports/s6/comparison/taxonomic_summary.csv}
+
+\input{s6/comparison/error_hierarchy_table.tex}
+\input{s6/comparison/confusion_pairs_table.tex}
+
+En validación, C comete 80 errores de género, de los cuales 14 quedan en la
+misma familia y 24 en el mismo orden. ResNet-18 comete 140, con 24 y 51,
+respectivamente. La mayoría de los errores sigue cruzando familias; la
+agrupación taxonómica no elimina toda la dificultad visual.
+\source{reports/s6/comparison/error_hierarchy.csv}
+
+\input{s6/comparison/taxonomy_diagnostics_table.tex}
+
+El caso de A muestra por qué el F1 no siempre aumenta: familia da 0,972118 y
+orden 0,970486. Al pasar a orden, las familias de \textit{Amanita},
+\textit{Lycoperdon} y \textit{Pleurotus} se agrupan como Agaricales; los
+grupos que permanecen separados cambian su peso en el promedio. Por ejemplo,
+el F1 0,952 de Morchellaceae/Pezizales pasa de pesar una novena parte a una
+séptima. Los F1 de cada taxón se muestran arriba; la exactitud de A sí sube
+de 98,349\,\% a 98,639\,\%.
+\source{reports/s6/comparison/taxonomic_per_class.csv}
+\source{reports/s6/comparison/taxonomic_summary.csv}
+
+En ResNet-18, la clase Pezizomycetes contiene solo \textit{Morchella} y tiene
+F1 1,000; Sordariomycetes contiene solo \textit{Xylaria} y tiene F1 0,965.
+Ambas pertenecen a Ascomycota: \textit{Morchella} no está sola en su filo.
+Al agruparlas, Ascomycota tiene F1 0,966 y Basidiomycota 0,996. Promediar esos
+dos valores produce F1 0,981, menor que el 0,987 obtenido al promediar las tres
+clases. No es necesario atribuir la caída a un error adicional: la exactitud
+de clase y filo es idéntica en esta evaluación.
+\source{reports/s6/comparison/taxonomic_per_class.csv}
+\source{reports/s6/comparison/taxonomic_summary.csv}
 
 \subsection{Especies más difíciles}
 
-Porcentaje de observaciones en las que el modelo acierta el género, para
-especies con al menos 5 observaciones que quedan por debajo del 90\,\%:
+La selección incluye todas las especies con al menos cinco observaciones y
+menos de 90\,\% de acierto de género en al menos un modelo y partición
+disponibles. Se consideran los modelos de validación y el test histórico de
+ResNet-18. Por eso puede aparecer una especie con menos observaciones en
+validación, o sin ellas, si cumple el criterio en el test ya guardado.
+No se usan estas diferencias de test para elegir al ganador.
+\source{reports/s6/comparison/species_difficult.csv}
 
-\begin{table}[H]
-\centering
-\small
-\begin{tabularx}{\textwidth}{Y r r r r}
-\toprule
-\textbf{Especie} & \textbf{Obs. val.} & \textbf{ResNet-18 val.} & \textbf{MobileNet A val.} & \textbf{ResNet-18 prueba}\\
-\midrule
-\textit{Auricularia mesenterica} & 7  & 43\,\% & 57\,\% & 62\,\%\\
-\textit{Hericium cirrhatum}      & 17 & 76\,\% & 88\,\% & 73\,\%\\
-\textit{Trametes cinnabarina}    & 26 & 77\,\% & 96\,\% & 68\,\%\\
-\bottomrule
-\end{tabularx}
-\end{table}
+\input{s6/comparison/difficult_species_table.tex}
 
-Son especies con pocas fotos y con un aspecto distinto al del resto de su género.
-MobileNet mejora en las tres, pero \textit{Auricularia mesenterica} sigue siendo
-la más difícil.
+El desempeño varía de forma importante entre especies de un mismo género.
+\textit{Auricularia mesenterica} es un caso problemático: A y C
+aciertan 57,1\,\%, mientras B acierta 14,3\,\%, con siete observaciones de
+validación. Para \textit{Hericium cirrhatum}, D alcanza 94,1\,\%, A 88,2\,\%
+y C 82,4\,\%, con diecisiete observaciones. El mejor promedio macro no hace
+que C sea el mejor en cada especie.
+\source{reports/s6/comparison/species_difficult.csv}
 
-% =========================================================
-\section{Semana 6: orden del código}
-% =========================================================
+En entrenamiento hay 149 fotos de \textit{A. mesenterica}, 229 de
+\textit{H. cirrhatum} y 218 de \textit{T. cinnabarina}. Los conteos permiten
+estudiar la disponibilidad de ejemplos, pero no prueban que un aspecto distinto
+al resto del género cause los errores. Esa explicación es una \textbf{hipótesis}
+que requiere una caracterización visual o morfológica para contrastarla.
+\source{reports/s6/comparison/species_difficult.csv}
 
-El programa de entrenamiento era un solo archivo grande. Se separó en partes,
-cada una con una tarea: cargar y verificar los datos, preparar las fotos, crear el
-modelo, entrenar, evaluar y guardar los resultados
-(\code{scripts/train/pipeline/}). Así, en la Fase 5 se podrán añadir los datos de
-ubicación y clima cambiando solo la carga de datos y el modelo.
 
-Se comprobó que el código nuevo da \textbf{exactamente los mismos resultados}
-que el anterior, incluso al pausar y continuar un entrenamiento, y que los modelos
-ya guardados se pueden abrir y continuar. Hay 17 pruebas automáticas y todas
-pasan.
+\section{Semana 6: organización y control del pipeline}
 
-% =========================================================
-\section{Pendientes}
-% =========================================================
+El pipeline separa la carga de datos, las transformaciones de imágenes, la
+construcción del modelo, el entrenamiento, la evaluación y el almacenamiento
+de resultados. Esta organización permite reutilizar los componentes visuales
+cuando se incorporen variables ambientales y facilita reproducir las
+comparaciones con una configuración explícita.
+\source{scripts/train/pipeline/}
 
-Los resultados son de una sola corrida por modelo; las diferencias pequeñas entre
-modelos deben tomarse con cautela. Falta:
+La admisión de una corrida al análisis exige que haya completado el
+entrenamiento, cubra la partición correspondiente y contenga probabilidades
+finitas y válidas. Las ejecuciones iniciales de B/C/D que no cumplieron esta
+condición se excluyeron de la comparación. Los resultados presentados
+corresponden a las ejecuciones posteriores válidas, cuya validación utiliza
+lotes de 64 imágenes.
+\source{reports/s5/comparison/run_inventory.csv}
+\source{scripts/train/pipeline/predictions.py}
 
-\begin{enumerate}[leftmargin=*, topsep=0pt]
-    \item Evaluar MobileNet (ensayo A) una vez en la prueba y añadirlo a la
-    tabla por nivel taxonómico.
-    \item Medir el modelo en un celular Android.
-    \item Corregir un detalle de configuración de Git en Windows que hace que los
-    archivos del dataset parezcan modificados y bloquea el entrenamiento en esa
-    computadora.
+Las métricas por observación se reconstruyeron a partir de las probabilidades
+guardadas y reprodujeron las matrices de confusión originales. Se comprobó
+también la correspondencia entre clases, particiones y checkpoints.
+Estas comprobaciones respaldan la consistencia del análisis.
+\source{reports/s5/comparison/analysis_manifest.json}
+
+\begin{samepage}
+La selección conserva el checkpoint elegido y las huellas digitales de la
+configuración y de sus resultados de validación. El procedimiento de evaluación
+final utiliza esa selección registrada y controla que la campaña consulte
+test una sola vez.
+\source{reports/s5/selected_model.json}
+\source{scripts/train/evaluate_s5_final.py}
+\end{samepage}
+
+\Needspace{10\baselineskip}
+\section{Conclusiones y trabajo futuro}
+
+MobileNetV3-Large requiere menos espacio y menor latencia de referencia en CPU
+que ResNet-18. Se selecciona C para la evaluación final por su mayor
+estimación de F1 macro por observación. La comparación pareada no permite
+concluir una ventaja sobre A; la elección sigue la métrica principal.
+\source{reports/s5/comparison/profile_ratios.json}
+\source{reports/s5/comparison/validation_results.csv}
+\source{reports/s5/comparison/bootstrap_paired.csv}
+
+La ponderación de clases implica intercambios entre precisión y recuperación
+que varían según el género y la tasa de aprendizaje. La mayoría de los errores
+de género cruza familias; por ello, el F1 macro debe complementarse con
+resultados desglosados por género y especie.
+\source{reports/s5/comparison/validation_per_genus.csv}
+\source{reports/s6/comparison/error_hierarchy.csv}
+\source{reports/s6/comparison/species_difficult.csv}
+
+El alcance de estas conclusiones corresponde a una semilla por configuración
+y al conjunto de observaciones evaluado. Los intervalos cuantifican
+incertidumbre de muestreo; la variación entre entrenamientos requiere
+réplicas independientes. Asimismo, el cambio de CPU a GPU entre A y los
+otros ensayos limita la atribución causal de sus diferencias a un único
+hiperparámetro.
+\source{reports/s5/comparison/configuration.csv}
+\source{reports/s5/comparison/analysis_manifest.json}
+
+Las siguientes actividades consolidarán la evaluación y su aplicación móvil:
+\begin{enumerate}
+\item \textbf{Evaluación final de C.} Ejecutar una única consulta de test con el
+checkpoint seleccionado y analizar F1, exactitud, intervalos, confusiones y
+comportamiento por especie.
+\source{reports/s5/selected_model.json}
+\item \textbf{Validación en Android.} Medir el modelo desplegado en un dispositivo
+real, registrando el motor de ejecución, la latencia, el consumo de memoria y
+el tamaño del artefacto. Esta medición permitirá contrastar el perfil de CPU
+con las condiciones de uso de la aplicación.
+\source{reports/s5/architecture_profile.json}
+\item \textbf{Estabilidad de los ajustes.} Repetir las configuraciones con otras
+semillas y un entorno común para estimar la variación del entrenamiento y
+aislar el efecto de la tasa de aprendizaje y de la ponderación.
+\source{reports/s5/comparison/configuration.csv}
+\item \textbf{Análisis de errores e integración ambiental.} Examinar las especies
+con menor recuperación mediante revisión visual o morfológica y utilizar el
+pipeline modular como base para incorporar información ambiental en la
+siguiente fase del proyecto.
+\source{reports/s6/comparison/species_difficult.csv}
+\source{scripts/train/pipeline/}
 \end{enumerate}
 
+\appendix
+\section{Trazabilidad de los resultados}
+
+\input{s5/comparison/provenance_table.tex}
+
+Las corridas utilizadas comparten la huella del dataset publicado, las
+particiones, los identificadores de validación y el orden de géneros.
+Las predicciones por observación se obtienen mediante el promedio de
+probabilidades de sus fotografías. Los archivos derivados permiten
+reproducir las métricas y las comparaciones presentadas.
+\source{reports/s5/comparison/analysis_manifest.json}
+
+\input{s5/comparison/excluded_table.tex}
+
+Las carpetas de origen de una reanudación forman parte del mismo entrenamiento.
+En D, la continuación conserva las vueltas anteriores y el checkpoint
+seleccionado, por lo que sus tiempos se contabilizan una sola vez.
+\source{reports/s5/comparison/run_inventory.csv}
+\source{reports/s5/comparison/checkpoint_audit.json}
+
+El material reproducible comprende las tablas de configuración y resultados,
+las predicciones derivadas por observación, las figuras y los scripts de
+análisis. El registro técnico conserva las exclusiones, las comprobaciones y
+los comandos necesarios para regenerar estos productos.
+\source{reports/s5/comparison/AUDITORIA_Y_REPRODUCCION.md}
+\source{scripts/reports/analyze_s5_s6.py}
+\source{scripts/reports/build_s5_s6_tables.py}
+
 \end{document}
+

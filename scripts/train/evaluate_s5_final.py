@@ -38,7 +38,7 @@ def main():
     model.load_state_dict(checkpoint["model"])
     _,tf=build_transforms(cfg)
     frame=tables.frames["test"]
-    loader=DataLoader(ImageTable(frame,tf),batch_size=cfg["training"]["batch_size"]*2,
+    loader=DataLoader(ImageTable(frame,tf),batch_size=cfg["evaluation"].get("batch_size",cfg["training"]["batch_size"]),
                       shuffle=False,num_workers=cfg["training"]["num_workers"],pin_memory=device.type=="cuda")
     destination=run/"final_test"
     destination.mkdir(exist_ok=False)

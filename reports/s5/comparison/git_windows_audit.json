@@ -1,0 +1,7 @@
+{
+  "core_autocrlf": "true",
+  "dataset_git_status": "",
+  "published_hashes_match_bytes": true,
+  "gitattributes": "runs/**/*.pt filter=lfs diff=lfs merge=lfs -text\n",
+  "fresh_checkout_verified": false
+}

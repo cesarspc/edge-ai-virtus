@@ -1,0 +1,6 @@
+{
+  "source_sha256": "381b7b623be8b79c00e950fd02312fc26783c145e37e15218fe568944d779be7",
+  "plot_script_sha256": "398627e53721e3cdb669e0773df8c6074e72c949946f8428061e0651843d84dd",
+  "units": "percent relative L2 distance from shared C initialization; not performance",
+  "zero_based_axes": true
+}

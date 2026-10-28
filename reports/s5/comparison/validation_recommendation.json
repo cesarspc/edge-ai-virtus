@@ -1,0 +1,6 @@
+{
+  "winner_point_estimate": "C",
+  "run": "runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c",
+  "test_used_for_selection": false,
+  "policy": "highest observation macro-F1; no significance claimed until paired bootstrap"
+}

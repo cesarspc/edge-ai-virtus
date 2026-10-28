@@ -1,0 +1,7 @@
+{
+  "initial_state_sha256": "aec431fe71c4db770cb57b9350ce659a31c4c2129171d4193e9a5431a2624303",
+  "final_state_sha256": "aec431fe71c4db770cb57b9350ce659a31c4c2129171d4193e9a5431a2624303",
+  "identical": true,
+  "includes_parameters_and_BatchNorm_buffers": true,
+  "optimizer_steps": 0
+}

@@ -1,0 +1,8 @@
+{
+  "state_sha256": "aec431fe71c4db770cb57b9350ce659a31c4c2129171d4193e9a5431a2624303",
+  "checkpoint": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c\\best.pt",
+  "sha256": "e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8",
+  "optimizer_reset": true,
+  "scheduler_reset": true,
+  "epoch_reset": true
+}

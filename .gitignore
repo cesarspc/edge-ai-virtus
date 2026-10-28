@@ -17,6 +17,14 @@ data/processed/
 *.webp
 # ...salvo las figuras pequeñas generadas para los informes
 !reports/figures/*.png
+!reports/s5/**/*.png
+!reports/s6/**/*.png
+!reports/crops_v002/**/figures/*.png
+reports/crops_v002/**/chunks/
+reports/crops_v002/**/probabilities_val.npz
+reports/crops_v002/**/campaign.lock
+# Bootstrap progress checkpoints can be rebuilt from the report inputs.
+reports/**/bootstrap_state.npz
 
 # Archivos comprimidos / pesados
 *.zip

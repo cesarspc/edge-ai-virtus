@@ -37,9 +37,10 @@ with stage("Cargando PyTorch y bibliotecas", active=__name__ == "__main__"):
     import yaml
     from torch.utils.data import DataLoader
     sys.path.insert(0, str(Path(__file__).resolve().parent))
-    from data import REPO_ROOT, load_tables, resolve, summary  # noqa: E402
+    from data import REPO_ROOT, load_tables, resolve, sha256_file, summary  # noqa: E402
     from pipeline.artifacts import ProgressFile, code_hashes, environment, git_commit, results_markdown, write_json
     from pipeline.datasets import ImageTable
+    from pipeline.drift import initialize_drift, measure_drift, optimizer_step_count
     from pipeline.evaluation import evaluate, predict, save_predictions
     from pipeline.models import build_model
     from pipeline.training import (atomic_checkpoint, best_state, build_criterion, build_optimizer, build_scheduler,
@@ -59,17 +60,22 @@ def main() -> int:
     ap.add_argument("--eval-only", default=None, help="checkpoint to evaluate on val only (no training or test access)")
     ap.add_argument("--device", default=None, help="cuda | cpu | mps (default: best available)")
     ap.add_argument("--resume", help="last.pt from an interrupted run; continues at the next epoch")
+    ap.add_argument("--init-checkpoint", help="start a NEW run from model weights; reset optimizer, scheduler and epochs")
     ap.add_argument("--pause-after-epoch", action="store_true", help="save last.pt after the next epoch and exit without test")
     args = ap.parse_args()
     if args.smoke and args.eval_only:
         ap.error("--smoke and --eval-only cannot be combined")
     if args.resume and (args.smoke or args.eval_only):
         ap.error("--resume cannot be combined with --smoke or --eval-only")
+    if args.init_checkpoint and (args.resume or args.eval_only):
+        ap.error("--init-checkpoint cannot be combined with --resume or --eval-only")
     if args.pause_after_epoch and (args.smoke or args.eval_only):
         ap.error("--pause-after-epoch requires full training")
 
     cfg_path = resolve(args.config)
     cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
+    if cfg.get("experiment", {}).get("phase") == "CROPS" and cfg["evaluation"]["evaluate_test_at_end"]:
+        raise SystemExit("Crop development uses val only; test requires a separate final selection.")
     if cfg.get("experiment", {}).get("phase") == "S5":
         if cfg["evaluation"]["evaluate_test_at_end"]:
             raise SystemExit("S5 development is val-only; use evaluate_s5_final.py after explicit selection.")
@@ -116,6 +122,24 @@ def main() -> int:
         resumed = torch.load(resume_path, map_location="cpu", weights_only=True)
         check_resumable(resumed, t.classes, t.fingerprint, cfg, device.type)
 
+    initialization = None
+    init_info = None
+    init_path = args.init_checkpoint or cfg.get("initialization", {}).get("checkpoint")
+    if init_path and not (args.resume or args.eval_only):
+        init_path = resolve(init_path)
+        with stage("Cargando inicializacion para una corrida nueva"):
+            initialization = torch.load(init_path, map_location="cpu", weights_only=True)
+            if (initialization.get("classes") != t.classes or initialization.get("dataset_fingerprint") != t.fingerprint
+                    or initialization.get("config", {}).get("model", {}).get("architecture") != cfg["model"]["architecture"]):
+                raise SystemExit("Initial checkpoint must match architecture, dataset fingerprint and ordered classes.")
+            init_info = {"checkpoint": str(init_path), "sha256": sha256_file(init_path),
+                         "optimizer_reset": True, "scheduler_reset": True, "epoch_reset": True}
+    track_drift = bool(tr.get("track_parameter_drift", False)) and not args.eval_only
+    if track_drift and initialization is None and resumed is None:
+        raise SystemExit("Parameter drift requires an explicit initial checkpoint or its saved resume state.")
+    if track_drift and resumed is not None and "parameter_drift" not in resumed:
+        raise SystemExit("This checkpoint has no parameter-drift reference to resume.")
+
     # ------------------------------------------------------------------ run directory + provenance
     run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "_" + cfg["run_name"] + ("_smoke" if args.smoke else "")
     run_dir = resolve(cfg["output"]["runs_dir"]) / run_id
@@ -132,6 +156,10 @@ def main() -> int:
     if resumed is not None:
         run_info["resumed_from"] = str(resume_path)
         run_info["resumed_after_epoch"] = resumed["epoch"]
+    if init_info is not None:
+        run_info["initialization"] = init_info
+    elif resumed is not None and track_drift:
+        run_info["initialization"] = resumed["parameter_drift"]["provenance"]
     write_json(run_dir / "run.json", run_info)
     print(f"run directory: {run_dir}")
     progress = ProgressFile(run_dir, run_id)
@@ -146,11 +174,23 @@ def main() -> int:
     if not args.eval_only:
         loaders["train"] = DataLoader(ImageTable(frames["train"], tf_train), batch_size=tr["batch_size"], shuffle=True,
                                       drop_last=len(frames["train"]) > tr["batch_size"], generator=g, **kw)
+    eval_batch_size = int(cfg["evaluation"].get("batch_size", tr["batch_size"]))
+    if eval_batch_size < 1:
+        raise SystemExit("evaluation.batch_size must be a positive integer")
     for s in (["val", "test"] if evaluate_test else ["val"]):
-        loaders[s] = DataLoader(ImageTable(frames[s], tf_eval), batch_size=tr["batch_size"] * 2, shuffle=False, **kw)
+        loaders[s] = DataLoader(ImageTable(frames[s], tf_eval), batch_size=eval_batch_size, shuffle=False, **kw)
 
     with stage(f"Cargando modelo {cfg['model']['architecture']} y sus pesos"):
-        model = build_model(cfg, pretrained=not (args.eval_only or args.resume)).to(device)
+        model = build_model(cfg, pretrained=not (args.eval_only or args.resume or initialization is not None)).to(device)
+        if initialization is not None:
+            model.load_state_dict(initialization["model"], strict=True)
+    drift = None
+    if track_drift:
+        drift = resumed["parameter_drift"] if resumed is not None else initialize_drift(model, init_info)
+        atomic_checkpoint({"model": drift["initial_state"], "classes": t.classes, "dataset_fingerprint": t.fingerprint,
+                           "initial_state_sha256": drift["initial_state_sha256"], "provenance": drift["provenance"]}, run_dir / "initial.pt")
+        write_json(run_dir / "initialization.json", {"state_sha256": drift["initial_state_sha256"], **drift["provenance"]})
+    del initialization
     top_k = cfg["evaluation"]["top_k"]
     best_path = run_dir / "best.pt"
 
@@ -163,13 +203,14 @@ def main() -> int:
     else:
         w = class_weights(frames["train"], len(t.classes), tr["class_weighting"])
         write_json(run_dir / "class_balance.json", class_balance_record(frames["train"], t.classes, tr["class_weighting"], w))
-        criterion = build_criterion(tr, w, device)
-        opt = build_optimizer(model, tr)
         steps_per_epoch = max(1, len(loaders["train"]))
         if args.smoke:
             steps_per_epoch = min(steps_per_epoch, 3)
-        sched = build_scheduler(opt, tr, steps_per_epoch)
-        scaler = torch.amp.GradScaler("cuda", enabled=amp)
+        with stage("Preparando optimizador, scheduler y precision"):
+            criterion = build_criterion(tr, w, device)
+            opt = build_optimizer(model, tr)
+            sched = build_scheduler(opt, tr, steps_per_epoch)
+            scaler = torch.amp.GradScaler("cuda", enabled=amp)
         metric = tr["selection_metric"]
         best, bad_epochs, history = -1.0, 0, []
         first_epoch = 1
@@ -184,6 +225,9 @@ def main() -> int:
             atomic_checkpoint(resumed["best_checkpoint"], best_path)
             atomic_checkpoint(resumed, run_dir / "last.pt")
             pd.DataFrame(history).to_csv(run_dir / "history.csv", index=False, lineterminator="\n")
+            if drift is not None:
+                pd.DataFrame(drift["rows"]).to_csv(run_dir / "parameter_drift.csv", index=False)
+                pd.DataFrame(drift["summaries"]).to_csv(run_dir / "parameter_drift_summary.csv", index=False)
             restore_random_state(resumed["rng"], g)
             print(f"Resuming after epoch {resumed['epoch']}; next epoch {first_epoch}", flush=True)
         for epoch in range(first_epoch, tr["epochs"] + 1) if not training_finished else ():
@@ -195,6 +239,7 @@ def main() -> int:
                 if not progress_enabled():
                     print(f"epoch {epoch}: batch {done}/{steps_per_epoch}, loss {mean_loss:.4f}", flush=True)
 
+            progress("preparing_training_batches", epoch=epoch)
             train_loss = train_one_epoch(model, loaders["train"], steps_per_epoch, criterion, opt, sched, scaler,
                                          device, amp, f"Epoca {epoch}/{tr['epochs']} - train", on_progress)
             progress("validation", epoch=epoch)
@@ -214,11 +259,19 @@ def main() -> int:
             else:
                 bad_epochs += 1
             training_finished = bad_epochs >= tr["early_stopping_patience"] or epoch >= tr["epochs"]
-            atomic_checkpoint(resume_state(epoch=epoch, model=model, opt=opt, sched=sched, scaler=scaler, generator=g,
+            if drift is not None:
+                measure_drift(model, drift, epoch, len(history)*steps_per_epoch, optimizer_step_count(opt))
+                pd.DataFrame(drift["rows"]).to_csv(run_dir / "parameter_drift.csv", index=False)
+                pd.DataFrame(drift["summaries"]).to_csv(run_dir / "parameter_drift_summary.csv", index=False)
+            checkpoint_state = resume_state(epoch=epoch, model=model, opt=opt, sched=sched, scaler=scaler, generator=g,
                                            history=history, best_score=best, bad_epochs=bad_epochs,
                                            training_finished=training_finished, best_path=best_path,
                                            classes=t.classes, fingerprint=t.fingerprint, cfg=cfg,
-                                           device_type=device.type), run_dir / "last.pt")
+                                           device_type=device.type)
+            if drift is not None:
+                checkpoint_state["parameter_drift"] = drift
+            atomic_checkpoint(checkpoint_state, run_dir / "last.pt")
+            del checkpoint_state
             print(f"Checkpoint saved: {run_dir / 'last.pt'}", flush=True)
             if args.pause_after_epoch or (run_dir / "pause.request").exists():
                 progress("paused", epoch=epoch, checkpoint="last.pt")

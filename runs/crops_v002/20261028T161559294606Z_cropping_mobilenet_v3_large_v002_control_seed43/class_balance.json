@@ -1,0 +1,41 @@
+{
+  "unit": "image",
+  "computed_from": "train only",
+  "mode": "inverse_sqrt",
+  "classes": [
+    "Amanita",
+    "Auricularia",
+    "Ganoderma",
+    "Geastrum",
+    "Hericium",
+    "Lycoperdon",
+    "Morchella",
+    "Pleurotus",
+    "Trametes",
+    "Xylaria"
+  ],
+  "train_counts": [
+    6508,
+    2106,
+    3567,
+    1350,
+    826,
+    3336,
+    405,
+    2690,
+    6626,
+    2758
+  ],
+  "loss_weights": [
+    0.5376585721969604,
+    0.9451509714126587,
+    0.7262377142906189,
+    1.1804931163787842,
+    1.509177565574646,
+    0.7509609460830688,
+    2.155275821685791,
+    0.8362848162651062,
+    0.5328496098518372,
+    0.8259109258651733
+  ]
+}

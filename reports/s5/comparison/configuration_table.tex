@@ -1,0 +1,30 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Configuración de los ensayos. Negrita: ajustes que cambian respecto de A. Se indica el lote de validación utilizado en cada entorno.}
+\label{tab:configuration}
+\begin{tabularx}{\linewidth}{Y l l l l}
+\toprule
+\textbf{Ajuste} & \textbf{A} & \textbf{B} & \textbf{C} & \textbf{D}\\
+\midrule
+Aprendizaje inicial & 0,0003 & \textbf{0,0001} & 0,0003 & \textbf{0,0001}\\
+Pesos por clase & Ninguno & Ninguno & \textbf{$1/\sqrt{n_c}$} & \textbf{$1/\sqrt{n_c}$}\\
+Fotos por paso & 64 & 64 & 64 & 64\\
+Lote de validación & 128 & \textbf{64} & \textbf{64} & \textbf{64}\\
+Entrada (píxeles) & 224 $\times$ 224 & 224 $\times$ 224 & 224 $\times$ 224 & 224 $\times$ 224\\
+Máximo de vueltas & 30 & 30 & 30 & 30\\
+Paciencia & 5 & 5 & 5 & 5\\
+Optimizador & AdamW & AdamW & AdamW & AdamW\\
+Decaimiento de pesos & 0,05 & 0,05 & 0,05 & 0,05\\
+Suavizado de etiquetas & 0,1 & 0,1 & 0,1 & 0,1\\
+Programa de aprendizaje & Coseno & Coseno & Coseno & Coseno\\
+Calentamiento (vueltas) & 1 & 1 & 1 & 1\\
+Procesos de carga & 4 & 4 & 4 & 4\\
+Semilla & 42 & 42 & 42 & 42\\
+Determinismo exigido & No & No & No & No\\
+Precisión efectiva & FP32 & \textbf{AMP} & \textbf{AMP} & \textbf{AMP}\\
+Capas congeladas & Ninguna & Ninguna & Ninguna & Ninguna\\
+\bottomrule
+\end{tabularx}
+\source{reports/s5/comparison/configuration.csv}
+\end{table}

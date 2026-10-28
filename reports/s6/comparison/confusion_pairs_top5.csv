@@ -1,0 +1,16 @@
+model,split,true_genus,predicted_genus,count
+R,val,Amanita,Lycoperdon,22
+R,val,Ganoderma,Trametes,14
+R,val,Trametes,Ganoderma,10
+R,val,Trametes,Lycoperdon,9
+R,val,Ganoderma,Xylaria,6
+C,val,Trametes,Ganoderma,10
+C,val,Auricularia,Ganoderma,7
+C,val,Lycoperdon,Amanita,7
+C,val,Auricularia,Trametes,6
+C,val,Auricularia,Pleurotus,5
+R,test,Amanita,Lycoperdon,26
+R,test,Ganoderma,Trametes,13
+R,test,Trametes,Ganoderma,11
+R,test,Auricularia,Xylaria,10
+R,test,Trametes,Lycoperdon,7

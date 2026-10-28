@@ -1,0 +1,112 @@
+[
+  {
+    "model": "R",
+    "best_epoch": 11,
+    "last_epoch": 16,
+    "bad_epochs": 5,
+    "training_finished": true,
+    "nonfinite_tensors": [],
+    "classes": [
+      "Amanita",
+      "Auricularia",
+      "Ganoderma",
+      "Geastrum",
+      "Hericium",
+      "Lycoperdon",
+      "Morchella",
+      "Pleurotus",
+      "Trametes",
+      "Xylaria"
+    ],
+    "best_source": "runs/20261004T133123181686Z_ma_resnet18_v002/best.pt",
+    "last_source": "runs/20261004T133123181686Z_ma_resnet18_v002/last.pt"
+  },
+  {
+    "model": "A",
+    "best_epoch": 19,
+    "last_epoch": 24,
+    "bad_epochs": 5,
+    "training_finished": true,
+    "nonfinite_tensors": [],
+    "classes": [
+      "Amanita",
+      "Auricularia",
+      "Ganoderma",
+      "Geastrum",
+      "Hericium",
+      "Lycoperdon",
+      "Morchella",
+      "Pleurotus",
+      "Trametes",
+      "Xylaria"
+    ],
+    "best_source": "runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/best.pt",
+    "last_source": "runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/last.pt"
+  },
+  {
+    "model": "B",
+    "best_epoch": 6,
+    "last_epoch": 11,
+    "bad_epochs": 5,
+    "training_finished": true,
+    "nonfinite_tensors": [],
+    "classes": [
+      "Amanita",
+      "Auricularia",
+      "Ganoderma",
+      "Geastrum",
+      "Hericium",
+      "Lycoperdon",
+      "Morchella",
+      "Pleurotus",
+      "Trametes",
+      "Xylaria"
+    ],
+    "best_source": "runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/best.pt",
+    "last_source": "runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/last.pt"
+  },
+  {
+    "model": "C",
+    "best_epoch": 16,
+    "last_epoch": 21,
+    "bad_epochs": 5,
+    "training_finished": true,
+    "nonfinite_tensors": [],
+    "classes": [
+      "Amanita",
+      "Auricularia",
+      "Ganoderma",
+      "Geastrum",
+      "Hericium",
+      "Lycoperdon",
+      "Morchella",
+      "Pleurotus",
+      "Trametes",
+      "Xylaria"
+    ],
+    "best_source": "runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/best.pt",
+    "last_source": "runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/last.pt"
+  },
+  {
+    "model": "D",
+    "best_epoch": 7,
+    "last_epoch": 12,
+    "bad_epochs": 5,
+    "training_finished": true,
+    "nonfinite_tensors": [],
+    "classes": [
+      "Amanita",
+      "Auricularia",
+      "Ganoderma",
+      "Geastrum",
+      "Hericium",
+      "Lycoperdon",
+      "Morchella",
+      "Pleurotus",
+      "Trametes",
+      "Xylaria"
+    ],
+    "best_source": "runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/best.pt",
+    "last_source": "runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/last.pt"
+  }
+]

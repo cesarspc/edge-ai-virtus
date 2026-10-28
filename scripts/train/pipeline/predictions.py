@@ -17,4 +17,10 @@ def load_predictions(path: Path, classes: list[str]) -> tuple[pd.DataFrame, np.n
         raise ValueError(f"{path}: probability columns do not match the class list {classes}")
     if df["image_uid"].duplicated().any():
         raise ValueError(f"{path}: duplicated image_uid")
-    return df[ID_COLUMNS].copy(), df[expected].to_numpy(dtype=float)
+    probs = df[expected].to_numpy(dtype=float)
+    finite = np.isfinite(probs).all(axis=1)
+    if not finite.all():
+        raise ValueError(f"{path}: {int((~finite).sum())}/{len(df)} rows contain non-finite probabilities")
+    if (probs < 0).any() or (probs > 1).any() or not np.allclose(probs.sum(axis=1), 1, atol=1e-5, rtol=0):
+        raise ValueError(f"{path}: invalid probability range or row sums")
+    return df[ID_COLUMNS].copy(), probs

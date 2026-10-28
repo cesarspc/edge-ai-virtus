@@ -48,6 +48,7 @@ training:
   selection_metric: val_obs_macro_f1
   deterministic: false
 evaluation:
+  batch_size: 64
   top_k:
   - 1
   - 3

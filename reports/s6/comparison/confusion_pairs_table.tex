@@ -1,0 +1,28 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Las cinco confusiones dirigidas más frecuentes de cada evaluación; los empates se ordenan por identificador de clase.}
+\label{tab:confusions}
+\begin{tabularx}{\linewidth}{l Y Y r}
+\toprule
+\textbf{Modelo / partición} & \textbf{Género real} & \textbf{Género predicho} & \textbf{Conteo}\\
+\midrule
+R / val & \textit{Amanita} & \textit{Lycoperdon} & 22\\
+R / val & \textit{Ganoderma} & \textit{Trametes} & 14\\
+R / val & \textit{Trametes} & \textit{Ganoderma} & 10\\
+R / val & \textit{Trametes} & \textit{Lycoperdon} & 9\\
+R / val & \textit{Ganoderma} & \textit{Xylaria} & 6\\
+C / val & \textit{Trametes} & \textit{Ganoderma} & 10\\
+C / val & \textit{Auricularia} & \textit{Ganoderma} & 7\\
+C / val & \textit{Lycoperdon} & \textit{Amanita} & 7\\
+C / val & \textit{Auricularia} & \textit{Trametes} & 6\\
+C / val & \textit{Auricularia} & \textit{Pleurotus} & 5\\
+R / test & \textit{Amanita} & \textit{Lycoperdon} & 26\\
+R / test & \textit{Ganoderma} & \textit{Trametes} & 13\\
+R / test & \textit{Trametes} & \textit{Ganoderma} & 11\\
+R / test & \textit{Auricularia} & \textit{Xylaria} & 10\\
+R / test & \textit{Trametes} & \textit{Lycoperdon} & 7\\
+\bottomrule
+\end{tabularx}
+\source{reports/s6/comparison/confusion_pairs_top5.csv}
+\end{table}

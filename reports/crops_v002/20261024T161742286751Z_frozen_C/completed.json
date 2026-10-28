@@ -1,0 +1,10 @@
+{
+  "images": 6290,
+  "observations": 3452,
+  "test_evaluations": 0,
+  "weights_unchanged": true,
+  "inference_signature": "d617cccdf53313e6e91d185c12f6207cbc2c4bd2a5cd957e48b43adcfbfaa6f1",
+  "analysis_script_sha256": "05b4171559c3b33386960bfbda78201b21d6c0d521fe2100397b8dd93f5bbbbb",
+  "new_images_this_session": 6226,
+  "session_seconds": 116.09400000001187
+}

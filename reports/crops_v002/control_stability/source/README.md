@@ -1,0 +1,1 @@
+Fuentes de ejecucion archivadas para auditoria. Los hashes y la receta estan en ../protocol.json y ../results/analysis_manifest.json. Para ejecutar o reanudar use los scripts del repositorio y docs/control_stability_v002.md; esta copia no es un proyecto independiente.

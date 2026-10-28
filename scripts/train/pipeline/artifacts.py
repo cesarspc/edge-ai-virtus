@@ -13,7 +13,8 @@ TRAIN_DIR = Path(__file__).resolve().parents[1]
 # Every source file that can change what a run computes; hashed into run.json["code_sha256"].
 CODE_FILES = ("train_ma.py", "data.py", "metrics.py", "progress_ui.py",
               "pipeline/__init__.py", "pipeline/datasets.py", "pipeline/transforms.py", "pipeline/models.py",
-              "pipeline/training.py", "pipeline/evaluation.py", "pipeline/artifacts.py")
+              "pipeline/training.py", "pipeline/evaluation.py", "pipeline/artifacts.py",
+              "pipeline/crops.py", "pipeline/crop_state.py", "pipeline/drift.py")
 
 
 def git_commit(repo_root: Path) -> dict[str, Any]:

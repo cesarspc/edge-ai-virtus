@@ -45,3 +45,13 @@ def stage(description, active=True):
     finally:
         finished.set()
         worker.join(timeout=1)
+
+
+def ready_batches(loader, description):
+    """Show a heartbeat while Windows starts workers and prepares the first batch."""
+    with stage(description):
+        iterator = iter(loader)
+        first = next(iterator, None)
+    if first is not None:
+        yield first
+    yield from iterator

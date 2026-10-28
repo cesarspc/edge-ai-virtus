@@ -19,7 +19,7 @@ import torch
 from torch import nn
 from torch.utils.data import DataLoader
 
-from progress_ui import bar
+from progress_ui import bar, ready_batches
 
 RESUME_FORMAT = 1
 
@@ -97,7 +97,8 @@ def train_one_epoch(model: nn.Module, loader: DataLoader, steps: int, criterion:
     """Run ``steps`` optimization steps; ``on_progress(batches_done, mean_loss)`` every 10 batches and at the end."""
     model.train()
     losses = []
-    batches = bar(islice(loader, steps), total=steps, desc=description, unit="lote")
+    batches = bar(islice(ready_batches(loader, f"Preparando primer lote: {description}"), steps),
+                  total=steps, desc=description, unit="lote")
     for step, (x, y) in enumerate(batches):
         x, y = x.to(device, non_blocking=True), y.to(device, non_blocking=True)
         with torch.autocast(device_type=device.type, enabled=amp):

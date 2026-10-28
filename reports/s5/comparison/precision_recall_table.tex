@@ -1,0 +1,23 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Precisión (P) y recuperación o recall (R), por observación. P baja cuando se asigna el género a hongos de otro género; R baja cuando se omiten hongos del género verdadero.}
+\label{tab:precision-recall}
+\begin{tabularx}{\linewidth}{Y r r r r}
+\toprule
+\textbf{Género} & \textbf{A: P / R} & \textbf{B: P / R} & \textbf{C: P / R} & \textbf{D: P / R}\\
+\midrule
+\textit{Amanita} & 0,992 / 0,991 & 0,991 / 0,991 & 0,989 / 0,991 & 0,994 / 0,989\\
+\textit{Auricularia} & 0,993 / 0,934 & 0,989 / 0,941 & 0,996 / 0,931 & 0,958 / 0,962\\
+\textit{Ganoderma} & 0,953 / 0,970 & 0,944 / 0,949 & 0,929 / 0,979 & 0,931 / 0,964\\
+\textit{Geastrum} & 0,949 / 0,949 & 0,963 / 0,987 & 0,919 / 1,000 & 0,917 / 0,975\\
+\textit{Hericium} & 0,955 / 0,970 & 1,000 / 0,894 & 0,952 / 0,909 & 0,873 / 0,939\\
+\textit{Lycoperdon} & 0,976 / 0,980 & 0,983 / 0,975 & 0,988 / 0,968 & 0,985 / 0,968\\
+\textit{Morchella} & 1,000 / 0,909 & 0,917 / 1,000 & 1,000 / 1,000 & 0,917 / 1,000\\
+\textit{Pleurotus} & 0,969 / 0,988 & 0,980 / 0,984 & 0,980 / 0,992 & 0,969 / 0,988\\
+\textit{Trametes} & 0,980 / 0,987 & 0,970 / 0,984 & 0,975 / 0,978 & 0,982 / 0,962\\
+\textit{Xylaria} & 0,986 / 0,986 & 0,972 / 0,992 & 0,986 / 0,980 & 0,986 / 0,983\\
+\bottomrule
+\end{tabularx}
+\source{reports/s5/comparison/validation_per_genus.csv}
+\end{table}

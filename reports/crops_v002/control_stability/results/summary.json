@@ -1,0 +1,273 @@
+{
+  "macro_f1_observation": {
+    "n_seeds": 3,
+    "mean": 0.9732140973328791,
+    "sample_sd": 0.0037253875818028135,
+    "min": 0.9700153970786219,
+    "max": 0.9773043810494901,
+    "range": 0.00728898397086819
+  },
+  "macro_f1_image": {
+    "n_seeds": 3,
+    "mean": 0.9277056879671073,
+    "sample_sd": 0.005665417268797524,
+    "min": 0.9218640938945484,
+    "max": 0.9331767373140754,
+    "range": 0.01131264341952698
+  },
+  "accuracy_observation": {
+    "n_seeds": 3,
+    "mean": 0.9806875241405949,
+    "sample_sd": 0.0004425044124136225,
+    "min": 0.9803012746234068,
+    "max": 0.9811703360370799,
+    "range": 0.0008690614136731556
+  },
+  "baseline_C": {
+    "n": 3452,
+    "macro_f1": 0.9716736109227341,
+    "accuracy": 0.9768250289687138,
+    "balanced_accuracy": 0.9727809728361996,
+    "top1_accuracy": 0.9768250289687138,
+    "top3_accuracy": 0.996523754345307,
+    "per_class": [
+      {
+        "label_id": 0,
+        "genus": "Amanita",
+        "precision": 0.9889624724061811,
+        "recall": 0.9911504424778761,
+        "f1": 0.9900552486187846,
+        "support": 904
+      },
+      {
+        "label_id": 1,
+        "genus": "Auricularia",
+        "precision": 0.9962825278810409,
+        "recall": 0.9305555555555556,
+        "f1": 0.9622980251346499,
+        "support": 288
+      },
+      {
+        "label_id": 2,
+        "genus": "Ganoderma",
+        "precision": 0.9291784702549575,
+        "recall": 0.9791044776119403,
+        "f1": 0.9534883720930233,
+        "support": 335
+      },
+      {
+        "label_id": 3,
+        "genus": "Geastrum",
+        "precision": 0.9186046511627907,
+        "recall": 1.0,
+        "f1": 0.9575757575757575,
+        "support": 79
+      },
+      {
+        "label_id": 4,
+        "genus": "Hericium",
+        "precision": 0.9523809523809523,
+        "recall": 0.9090909090909091,
+        "f1": 0.9302325581395349,
+        "support": 66
+      },
+      {
+        "label_id": 5,
+        "genus": "Lycoperdon",
+        "precision": 0.9875,
+        "recall": 0.9681372549019608,
+        "f1": 0.9777227722772277,
+        "support": 408
+      },
+      {
+        "label_id": 6,
+        "genus": "Morchella",
+        "precision": 1.0,
+        "recall": 1.0,
+        "f1": 1.0,
+        "support": 11
+      },
+      {
+        "label_id": 7,
+        "genus": "Pleurotus",
+        "precision": 0.9803149606299213,
+        "recall": 0.9920318725099602,
+        "f1": 0.9861386138613861,
+        "support": 251
+      },
+      {
+        "label_id": 8,
+        "genus": "Trametes",
+        "precision": 0.974934036939314,
+        "recall": 0.9775132275132276,
+        "f1": 0.9762219286657859,
+        "support": 756
+      },
+      {
+        "label_id": 9,
+        "genus": "Xylaria",
+        "precision": 0.9857954545454546,
+        "recall": 0.980225988700565,
+        "f1": 0.9830028328611898,
+        "support": 354
+      }
+    ],
+    "confusion_matrix": [
+      [
+        896,
+        0,
+        2,
+        1,
+        1,
+        3,
+        0,
+        0,
+        1,
+        0
+      ],
+      [
+        0,
+        268,
+        7,
+        0,
+        1,
+        0,
+        0,
+        5,
+        6,
+        1
+      ],
+      [
+        0,
+        1,
+        328,
+        0,
+        0,
+        0,
+        0,
+        0,
+        4,
+        2
+      ],
+      [
+        0,
+        0,
+        0,
+        79,
+        0,
+        0,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        60,
+        0,
+        0,
+        0,
+        5,
+        0
+      ],
+      [
+        7,
+        0,
+        2,
+        4,
+        0,
+        395,
+        0,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        0,
+        0,
+        0,
+        0,
+        11,
+        0,
+        0,
+        0
+      ],
+      [
+        0,
+        0,
+        1,
+        0,
+        0,
+        0,
+        0,
+        249,
+        1,
+        0
+      ],
+      [
+        3,
+        0,
+        10,
+        0,
+        1,
+        1,
+        0,
+        0,
+        739,
+        2
+      ],
+      [
+        0,
+        0,
+        2,
+        2,
+        0,
+        1,
+        0,
+        0,
+        2,
+        347
+      ]
+    ]
+  },
+  "candidate_seed": 42,
+  "selection_policy": "Keep seed 42 as the preselected candidate; use 43 and 44 to describe fine-tuning stability, not to choose the highest-scoring seed. No ensembling or test evaluation.",
+  "bootstrap": {
+    "bootstrap_samples": 10000,
+    "bootstrap_seed": 42,
+    "comparison_unit": "observation"
+  },
+  "all_seed_point_estimates_above_C": false,
+  "warning": "Between-seed SD is not a confidence interval; three repeats share the same selected initial C checkpoint.",
+  "most_variable_genera": [
+    {
+      "genus": "Morchella",
+      "mean_f1": 0.9710144927536232,
+      "sample_sd_f1": 0.025102185616940224,
+      "min_f1": 0.9565217391304348,
+      "max_f1": 1.0,
+      "support": 11
+    },
+    {
+      "genus": "Hericium",
+      "mean_f1": 0.9373270248270248,
+      "sample_sd_f1": 0.016606292276139835,
+      "min_f1": 0.9206349206349206,
+      "max_f1": 0.9538461538461539,
+      "support": 66
+    },
+    {
+      "genus": "Geastrum",
+      "mean_f1": 0.965427863541071,
+      "sample_sd_f1": 0.013600246478337692,
+      "min_f1": 0.9575757575757575,
+      "max_f1": 0.9811320754716981,
+      "support": 79
+    }
+  ]
+}

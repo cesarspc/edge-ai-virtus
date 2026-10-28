@@ -1,0 +1,122 @@
+{
+  "run_id": "20261024T132723373718Z_s5_mobilenet_v3_large_v002_d",
+  "mode": "train",
+  "config_path": "configs\\train\\s5_mobilenet_v3_large_v002_d.yaml",
+  "config_sha256": "e561e8dd67f959100047efabe6a8ebcc699422be4d3f2b116bc82479d89049dc",
+  "config": {
+    "run_name": "s5_mobilenet_v3_large_v002_d",
+    "data": {
+      "version": "v002",
+      "source": "fungitastic",
+      "split_column": "split",
+      "image_root": "data/raw/images/fungitastic_v002",
+      "download_manifest": "data/raw/images/fungitastic_v002/download_manifest.csv",
+      "require_all_images": true
+    },
+    "model": {
+      "architecture": "mobilenet_v3_large",
+      "pretrained_weights": "IMAGENET1K_V1",
+      "num_classes": 10
+    },
+    "input": {
+      "size": 224,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "train_augment": {
+        "random_resized_crop_scale": [
+          0.5,
+          1.0
+        ],
+        "horizontal_flip": true,
+        "color_jitter": [
+          0.2,
+          0.2,
+          0.2,
+          0.02
+        ]
+      },
+      "eval_resize": 224
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 30,
+      "batch_size": 64,
+      "num_workers": 4,
+      "optimizer": "adamw",
+      "lr": 0.0001,
+      "weight_decay": 0.05,
+      "scheduler": "cosine",
+      "warmup_epochs": 1,
+      "label_smoothing": 0.1,
+      "class_weighting": "inverse_sqrt",
+      "amp": true,
+      "early_stopping_patience": 5,
+      "selection_metric": "val_obs_macro_f1",
+      "deterministic": false
+    },
+    "evaluation": {
+      "batch_size": 64,
+      "top_k": [
+        1,
+        3
+      ],
+      "observation_aggregation": "mean_prob",
+      "evaluate_test_at_end": false
+    },
+    "output": {
+      "runs_dir": "runs"
+    },
+    "experiment": {
+      "phase": "S5",
+      "campaign": "mobilenet_v3_large_v002",
+      "trial": "d"
+    }
+  },
+  "dataset": {
+    "version": "v002",
+    "content_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+    "split_column": "split",
+    "images": {
+      "train": 30172,
+      "val": 6290
+    },
+    "images_missing": 0
+  },
+  "git": {
+    "commit": "ee808ad8f71941f63d280abbc7830573a5ea07a0",
+    "dirty": true
+  },
+  "device": "cuda",
+  "amp": true,
+  "code_sha256": {
+    "train_ma.py": "ff966a4d3f868584bf32cd1663b9fcf6b55a39de0e096ca43b8b7d95fa328f0c",
+    "data.py": "12d29774c4d45b1780adec9158ec92f26867ce7c6dcc6d4485e87ffff0b64e56",
+    "metrics.py": "cf6bd88ed1bd258827a43dbc5be11ac3d3feb0af1f80599090f4c4a01c996402",
+    "progress_ui.py": "3477105d5da315dd6613889899b500ef4d8b0e58d1283291344c19763167fc18",
+    "pipeline/__init__.py": "7c875d2f38ce19801fba6a37ee0b23707715cf34d5d0864ab1a21b04c46a85c3",
+    "pipeline/datasets.py": "5c5e9faa28f2fe9ad992d316864dbbba3dbdce8e5f5dbe4bf54bc5f7b818b7bb",
+    "pipeline/transforms.py": "07cd947107167d2c8a88c45197074310c3f558ccd34d046a51ae4d22acc769b9",
+    "pipeline/models.py": "4c905ff98acd0e8dc1869d9ddf72514ec97077c8a2423fc10f30c8915f00872c",
+    "pipeline/training.py": "2a6d01c29b35f618527347992ae3684834180c09751b8b24441401824a81d8d5",
+    "pipeline/evaluation.py": "040d265cb31e5682c4febd78bb89f0ebd63b7b372dbb377a746d6a3b5b16292b",
+    "pipeline/artifacts.py": "4befa53c583dff8dad07ce2dc7d50398a8ae49de319ef39b5b9a2f4a92cc4b29"
+  },
+  "versions": {
+    "python": "3.12.10",
+    "torch": "2.14.1+cu132",
+    "torchvision": "0.29.1+cu132",
+    "cuda": "13.2",
+    "cudnn": 92400
+  },
+  "gpu": "NVIDIA GeForce GTX 1650 SUPER",
+  "resumed_from": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261024T044816610945Z_s5_mobilenet_v3_large_v002_d\\last.pt",
+  "resumed_after_epoch": 10
+}

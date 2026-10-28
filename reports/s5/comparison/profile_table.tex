@@ -1,0 +1,15 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Perfil histórico en CPU del PC, FP32, lote unitario y entrada sintética. No incluye preparación de la foto ni ejecución en Android.}
+\label{tab:profile}
+\begin{tabularx}{\linewidth}{Y r r r}
+\toprule
+\textbf{Arquitectura} & \textbf{Parámetros} & \textbf{Pesos (MB)} & \textbf{Mediana (ms/foto)}\\
+\midrule
+ResNet-18 & 11\,181\,642 & 44,804 & 37,104\\
+MobileNetV3-Large & 4\,214\,842 & 17,060 & 20,696\\
+\bottomrule
+\end{tabularx}
+\source{reports/s5/architecture_profile.json}
+\end{table}

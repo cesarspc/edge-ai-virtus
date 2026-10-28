@@ -1,0 +1,4 @@
+model,split,errors,same_family_errors,same_order_errors,n
+R,val,140,24,51,3452
+C,val,80,14,24,3452
+R,test,170,24,63,4039

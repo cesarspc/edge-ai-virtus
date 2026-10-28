@@ -1,0 +1,23 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Validación por observación: F1 macro y exactitud porcentual con IC 95\,\% en la propia tabla.}
+\label{tab:tax-val}
+\begin{tabularx}{\linewidth}{l l Y Y}
+\toprule
+\textbf{Modelo} & \textbf{Nivel} & \textbf{F1 [IC 95\,\%]} & \textbf{Exactitud, \% [IC 95\,\%]}\\
+\midrule
+ResNet-18 & Género & 0,955 [0,945; 0,963] & 95,9 [95,3; 96,6]\\
+ResNet-18 & Familia & 0,959 [0,949; 0,968] & 96,6 [96,0; 97,2]\\
+ResNet-18 & Orden & 0,962 [0,951; 0,972] & 97,4 [96,9; 97,9]\\
+ResNet-18 & Clase & 0,987 [0,982; 0,992] & 99,3 [99,0; 99,5]\\
+ResNet-18 & Filo & 0,981 [0,973; 0,988] & 99,3 [99,0; 99,5]\\
+MobileNet C & Género & 0,972 [0,964; 0,979] & 97,7 [97,2; 98,2]\\
+MobileNet C & Familia & 0,974 [0,966; 0,981] & 98,1 [97,6; 98,5]\\
+MobileNet C & Orden & 0,973 [0,963; 0,981] & 98,4 [97,9; 98,8]\\
+MobileNet C & Clase & 0,994 [0,990; 0,997] & 99,7 [99,4; 99,8]\\
+MobileNet C & Filo & 0,991 [0,985; 0,996] & 99,7 [99,4; 99,8]\\
+\bottomrule
+\end{tabularx}
+\source{reports/s6/comparison/taxonomic_summary.csv}
+\end{table}

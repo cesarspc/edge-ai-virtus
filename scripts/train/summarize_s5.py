@@ -3,6 +3,9 @@ import argparse
 import json
 
 from data import REPO_ROOT, resolve, sha256_file
+from pipeline.predictions import load_predictions
+
+import pandas as pd
 
 CAMPAIGN="mobilenet_v3_large_v002"
 
@@ -14,6 +17,8 @@ def main():
     out=REPO_ROOT/"reports/s5"
     out.mkdir(parents=True,exist_ok=True)
     rows=[]
+    rejected=[]
+    classes=pd.read_csv(REPO_ROOT/"data/versions/v002/classes.csv").sort_values("label_id")["genus"].tolist()
     for folder in (REPO_ROOT/"runs").iterdir():
         if not folder.is_dir() or not (folder/"completed.json").is_file():
             continue
@@ -26,6 +31,14 @@ def main():
         done=json.loads((folder/"completed.json").read_text(encoding="utf-8"))
         if done["evaluated_splits"]!=["val"] or done["test_evaluations"]!=0:
             raise SystemExit(f"Development trial used test: {folder.name}")
+        try:
+            pred, _ = load_predictions(folder/"predictions_val.csv", classes)
+            if len(pred) != info["dataset"]["images"]["val"]:
+                raise ValueError("validation prediction coverage differs from run.json")
+        except (ValueError, FileNotFoundError) as exc:
+            rejected.append({"run":str(folder.relative_to(REPO_ROOT)),"trial":experiment["trial"],
+                             "reason":str(exc)})
+            continue
         m=json.loads((folder/"metrics_val.json").read_text(encoding="utf-8"))
         rows.append({"run":str(folder.relative_to(REPO_ROOT)),"trial":experiment["trial"],
                      "macro_f1_observation":m["observation_level"]["macro_f1"],
@@ -43,6 +56,7 @@ def main():
         raise SystemExit("Multiple completed runs for the same trial: review duplicates before selecting.")
     payload={"campaign":CAMPAIGN,"selection_metric":"val observation macro-F1",
              "test_used_for_selection":False,"completed_trials":rows,
+             "rejected_trials":rejected,
              "pending_trials":sorted(set("abcd")-{r["trial"] for r in rows})}
     (out/"development_results.json").write_text(json.dumps(payload,indent=2)+"\n",encoding="utf-8")
     lines=["# S5: corridas completas de desarrollo","", "Selección: macro-F1 por observación de VAL.","",
@@ -50,6 +64,9 @@ def main():
            "|---|---:|---|---:|---:|---|"]
     for r in rows:
         lines.append(f"| {r['trial']} | {r['lr']} | {r['class_weighting']} | {r['macro_f1_observation']:.4f} | {r['macro_f1_image']:.4f} | {r['run']} |")
+    if rejected:
+        lines += ["", "## Corridas excluidas de la comparación", ""]
+        lines += [f"- {r['run']}: {r['reason']}" for r in rejected]
     if not rows:
         lines+= ["", "Todavía no hay ensayos S5 completos. No se ha seleccionado ni entrenado el modelo móvil."]
     (out/"development_results.md").write_text("\n".join(lines)+"\n",encoding="utf-8")

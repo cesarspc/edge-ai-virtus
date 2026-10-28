@@ -1,0 +1,196 @@
+model,setting,value,source
+R,run_name,"""ma_resnet18_v002""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,data.version,"""v002""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,data.source,"""fungitastic""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,data.split_column,"""split""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,data.image_root,"""data/raw/images/fungitastic_v002""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,data.download_manifest,"""data/raw/images/fungitastic_v002/download_manifest.csv""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,data.require_all_images,true,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,model.architecture,"""resnet18""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,model.pretrained_weights,"""IMAGENET1K_V1""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,model.num_classes,10,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.size,224,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.mean,"[0.485, 0.456, 0.406]",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.std,"[0.229, 0.224, 0.225]",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.train_augment.random_resized_crop_scale,"[0.5, 1.0]",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.train_augment.horizontal_flip,true,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.train_augment.color_jitter,"[0.2, 0.2, 0.2, 0.02]",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,input.eval_resize,224,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.seed,42,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.epochs,30,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.batch_size,64,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.num_workers,4,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.optimizer,"""adamw""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.lr,0.0003,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.weight_decay,0.05,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.scheduler,"""cosine""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.warmup_epochs,1,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.label_smoothing,0.1,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.class_weighting,"""none""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.amp,true,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.early_stopping_patience,5,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.selection_metric,"""val_obs_macro_f1""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,training.deterministic,false,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,evaluation.top_k,"[1, 3]",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,evaluation.observation_aggregation,"""mean_prob""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,evaluation.evaluate_test_at_end,true,runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+R,output.runs_dir,"""runs""",runs/20261004T133123181686Z_ma_resnet18_v002/run.json
+A,run_name,"""s5_mobilenet_v3_large_v002_a""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,data.version,"""v002""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,data.source,"""fungitastic""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,data.split_column,"""split""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,data.image_root,"""data/raw/images/fungitastic_v002""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,data.download_manifest,"""data/raw/images/fungitastic_v002/download_manifest.csv""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,data.require_all_images,true,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,model.architecture,"""mobilenet_v3_large""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,model.pretrained_weights,"""IMAGENET1K_V1""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,model.num_classes,10,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.size,224,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.mean,"[0.485, 0.456, 0.406]",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.std,"[0.229, 0.224, 0.225]",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.train_augment.random_resized_crop_scale,"[0.5, 1.0]",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.train_augment.horizontal_flip,true,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.train_augment.color_jitter,"[0.2, 0.2, 0.2, 0.02]",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,input.eval_resize,224,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.seed,42,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.epochs,30,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.batch_size,64,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.num_workers,4,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.optimizer,"""adamw""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.lr,0.0003,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.weight_decay,0.05,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.scheduler,"""cosine""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.warmup_epochs,1,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.label_smoothing,0.1,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.class_weighting,"""none""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.amp,true,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.early_stopping_patience,5,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.selection_metric,"""val_obs_macro_f1""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,training.deterministic,false,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,evaluation.top_k,"[1, 3]",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,evaluation.observation_aggregation,"""mean_prob""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,evaluation.evaluate_test_at_end,false,runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,output.runs_dir,"""runs""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,experiment.phase,"""S5""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,experiment.campaign,"""mobilenet_v3_large_v002""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+A,experiment.trial,"""a""",runs/20261012T161041257797Z_s5_mobilenet_v3_large_v002_a/run.json
+B,run_name,"""s5_mobilenet_v3_large_v002_b""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,data.version,"""v002""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,data.source,"""fungitastic""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,data.split_column,"""split""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,data.image_root,"""data/raw/images/fungitastic_v002""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,data.download_manifest,"""data/raw/images/fungitastic_v002/download_manifest.csv""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,data.require_all_images,true,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,model.architecture,"""mobilenet_v3_large""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,model.pretrained_weights,"""IMAGENET1K_V1""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,model.num_classes,10,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.size,224,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.mean,"[0.485, 0.456, 0.406]",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.std,"[0.229, 0.224, 0.225]",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.train_augment.random_resized_crop_scale,"[0.5, 1.0]",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.train_augment.horizontal_flip,true,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.train_augment.color_jitter,"[0.2, 0.2, 0.2, 0.02]",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,input.eval_resize,224,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.seed,42,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.epochs,30,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.batch_size,64,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.num_workers,4,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.optimizer,"""adamw""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.lr,0.0001,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.weight_decay,0.05,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.scheduler,"""cosine""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.warmup_epochs,1,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.label_smoothing,0.1,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.class_weighting,"""none""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.amp,true,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.early_stopping_patience,5,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.selection_metric,"""val_obs_macro_f1""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,training.deterministic,false,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,evaluation.batch_size,64,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,evaluation.top_k,"[1, 3]",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,evaluation.observation_aggregation,"""mean_prob""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,evaluation.evaluate_test_at_end,false,runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,output.runs_dir,"""runs""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,experiment.phase,"""S5""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,experiment.campaign,"""mobilenet_v3_large_v002""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+B,experiment.trial,"""b""",runs/20261024T022849507889Z_s5_mobilenet_v3_large_v002_b/run.json
+C,run_name,"""s5_mobilenet_v3_large_v002_c""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,data.version,"""v002""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,data.source,"""fungitastic""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,data.split_column,"""split""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,data.image_root,"""data/raw/images/fungitastic_v002""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,data.download_manifest,"""data/raw/images/fungitastic_v002/download_manifest.csv""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,data.require_all_images,true,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,model.architecture,"""mobilenet_v3_large""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,model.pretrained_weights,"""IMAGENET1K_V1""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,model.num_classes,10,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.size,224,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.mean,"[0.485, 0.456, 0.406]",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.std,"[0.229, 0.224, 0.225]",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.train_augment.random_resized_crop_scale,"[0.5, 1.0]",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.train_augment.horizontal_flip,true,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.train_augment.color_jitter,"[0.2, 0.2, 0.2, 0.02]",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,input.eval_resize,224,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.seed,42,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.epochs,30,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.batch_size,64,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.num_workers,4,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.optimizer,"""adamw""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.lr,0.0003,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.weight_decay,0.05,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.scheduler,"""cosine""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.warmup_epochs,1,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.label_smoothing,0.1,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.class_weighting,"""inverse_sqrt""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.amp,true,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.early_stopping_patience,5,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.selection_metric,"""val_obs_macro_f1""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,training.deterministic,false,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,evaluation.batch_size,64,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,evaluation.top_k,"[1, 3]",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,evaluation.observation_aggregation,"""mean_prob""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,evaluation.evaluate_test_at_end,false,runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,output.runs_dir,"""runs""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,experiment.phase,"""S5""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,experiment.campaign,"""mobilenet_v3_large_v002""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+C,experiment.trial,"""c""",runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/run.json
+D,run_name,"""s5_mobilenet_v3_large_v002_d""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,data.version,"""v002""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,data.source,"""fungitastic""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,data.split_column,"""split""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,data.image_root,"""data/raw/images/fungitastic_v002""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,data.download_manifest,"""data/raw/images/fungitastic_v002/download_manifest.csv""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,data.require_all_images,true,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,model.architecture,"""mobilenet_v3_large""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,model.pretrained_weights,"""IMAGENET1K_V1""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,model.num_classes,10,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.size,224,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.mean,"[0.485, 0.456, 0.406]",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.std,"[0.229, 0.224, 0.225]",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.train_augment.random_resized_crop_scale,"[0.5, 1.0]",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.train_augment.horizontal_flip,true,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.train_augment.color_jitter,"[0.2, 0.2, 0.2, 0.02]",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,input.eval_resize,224,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.seed,42,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.epochs,30,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.batch_size,64,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.num_workers,4,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.optimizer,"""adamw""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.lr,0.0001,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.weight_decay,0.05,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.scheduler,"""cosine""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.warmup_epochs,1,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.label_smoothing,0.1,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.class_weighting,"""inverse_sqrt""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.amp,true,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.early_stopping_patience,5,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.selection_metric,"""val_obs_macro_f1""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,training.deterministic,false,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,evaluation.batch_size,64,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,evaluation.top_k,"[1, 3]",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,evaluation.observation_aggregation,"""mean_prob""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,evaluation.evaluate_test_at_end,false,runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,output.runs_dir,"""runs""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,experiment.phase,"""S5""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,experiment.campaign,"""mobilenet_v3_large_v002""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json
+D,experiment.trial,"""d""",runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/run.json

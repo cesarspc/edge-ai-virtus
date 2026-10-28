@@ -1,0 +1,33 @@
+{
+  "outputs": [
+    {
+      "path": "reports/week_05_06_results.tex",
+      "sha256": "a92866edff6ec31929d67ed84e7e1c7f476cedd151f05036182e135ba0f73db4",
+      "bytes": 26067
+    },
+    {
+      "path": "reports/week_05_06_results.pdf",
+      "sha256": "22a66fb05977991a08be0ee1063b09a56bd8994e95291f84f532ca2f6ba793f0",
+      "bytes": 410340
+    },
+    {
+      "path": "reports/week_05_06_latex.zip",
+      "sha256": "c1d768412c61ac5b3002a21d102cf786ecf4185115f4ca556c6db0c32f4326da",
+      "bytes": 298980
+    },
+    {
+      "path": "reports/s5/comparison/AUDITORIA_Y_REPRODUCCION.md",
+      "sha256": "c2278d0a3756424f35c292adc973cd25d2bde7f8fed128793963d99f4bfac7fa",
+      "bytes": 11621
+    }
+  ],
+  "checks": {
+    "compilation": "Tectonic: exit 0",
+    "layout": "rendered and inspected; no overfull boxes",
+    "presentation_ready": true,
+    "cover_date": null,
+    "missing_placeholders": false,
+    "numerical_results": "unchanged; reference checks recorded in validation_checks.txt",
+    "test_inference_executed": false
+  }
+}

@@ -1,0 +1,4 @@
+split,observations,photos,observation_max_min,photo_max_min,observation_largest,observation_smallest
+train,17799,30172,14.65625,16.360493827160493,Amanita,Morchella
+val,3452,6290,82.18181818181819,81.38095238095238,Amanita,Morchella
+test,4039,7159,65.75,70.38235294117646,Amanita,Morchella

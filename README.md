@@ -12,6 +12,10 @@ S5 (MobileNetV3-Large, ensayos A–D): [docs/s5_mobilenet_v002.md](docs/s5_mobil
 S6 (métricas por nivel taxonómico y pipeline modular en `scripts/train/pipeline/`):
 [docs/s6_taxonomia_pipeline.md](docs/s6_taxonomia_pipeline.md). Estado de ambas: [docs/seguimiento_s5_s6.md](docs/seguimiento_s5_s6.md).
 
+Recortes de imágenes, comparación con C congelado y ajuste con medición de pesos: [docs/recortes_v002.md](docs/recortes_v002.md).
+Repeticiones del control con semillas 42, 43 y 44: [docs/control_stability_v002.md](docs/control_stability_v002.md).
+Checkpoints Git LFS, alcance de los archivos publicados y reproducción: [docs/reproducibilidad_git.md](docs/reproducibilidad_git.md).
+
 Investigación universitaria sobre la **identificación multimodal de macromicetos mediante inteligencia artificial**:
 imágenes, geolocalización, variables climáticas, sustrato y otros metadatos. En fases posteriores se evaluarán modelos
 visuales y multimodales y su ejecución en dispositivos móviles.

@@ -1,0 +1,126 @@
+{
+  "dataset": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "images": {
+    "image_uid": [
+      "fungitastic:0-2831359314.JPG",
+      "fungitastic:0-2575120955.JPG",
+      "fungitastic:0-2237860310.JPG",
+      "fungitastic:0-4847334622.JPG",
+      "fungitastic:0-2238507980.JPG",
+      "fungitastic:0-2238470065.JPG",
+      "fungitastic:0-3355979435.JPG",
+      "fungitastic:0-2449442112.JPG",
+      "fungitastic:0-2237855939.JPG",
+      "fungitastic:0-3419916349.JPG"
+    ],
+    "observation_uid": [
+      "fungitastic:2831359314",
+      "fungitastic:2575120955",
+      "fungitastic:2237860310",
+      "fungitastic:4847334622",
+      "fungitastic:2238507980",
+      "fungitastic:2238470065",
+      "fungitastic:3355979435",
+      "fungitastic:2449442112",
+      "fungitastic:2237855939",
+      "fungitastic:3419916349"
+    ],
+    "genus": [
+      "Amanita",
+      "Auricularia",
+      "Ganoderma",
+      "Geastrum",
+      "Hericium",
+      "Lycoperdon",
+      "Morchella",
+      "Pleurotus",
+      "Trametes",
+      "Xylaria"
+    ],
+    "source_sha256": [
+      "014fa8d0550730898bfd4ed73dfa65078bc01e7e93453feb54ee01e3c7e81262",
+      "4187fa847673cc8a07ab1b3accd510271d956e82ab67809412b59aff5a68cb13",
+      "618840739751c77f2c7e5277c6956715116e452e0086d9103d58bd0da4ccbe54",
+      "9ea4935a4f50819414627401592849378f0af02a11a8c69f7ee9d8e68d4f88bb",
+      "1bc109120147d90fd9855b5cecabc92fa23e62630012da6b38e9a6a5c1fbbbf8",
+      "8d8b37b56098dd624c4c1214c2e9af00b0a0d7c6e5a570950688286ad25bdfc8",
+      "552bb817bf81efc1e4a6859601caa03846f57a9d686c333aa5387e43288fd0f8",
+      "46ecd913c99a72615e7de2c350cb596ea4fb81cf5d265fd2e6278a1fc4462f42",
+      "2b406cc3622cce7daca724d184edbfaf10589673127e8e1a15260e887a4a2ade",
+      "1f609a08091557c2e11e37c5f30dee7d499b62d1087116bb0c5d022f290cedc7"
+    ]
+  },
+  "views": [
+    [
+      "control",
+      1.0,
+      "center"
+    ],
+    [
+      "center75",
+      0.75,
+      "center"
+    ],
+    [
+      "center50",
+      0.5,
+      "center"
+    ],
+    [
+      "top_left50",
+      0.5,
+      "top_left"
+    ],
+    [
+      "top_right50",
+      0.5,
+      "top_right"
+    ],
+    [
+      "bottom_left50",
+      0.5,
+      "bottom_left"
+    ],
+    [
+      "bottom_right50",
+      0.5,
+      "bottom_right"
+    ]
+  ],
+  "input": {
+    "size": 224,
+    "mean": [
+      0.485,
+      0.456,
+      0.406
+    ],
+    "std": [
+      0.229,
+      0.224,
+      0.225
+    ],
+    "train_augment": {
+      "random_resized_crop_scale": [
+        0.5,
+        1.0
+      ],
+      "horizontal_flip": true,
+      "color_jitter": [
+        0.2,
+        0.2,
+        0.2,
+        0.02
+      ]
+    },
+    "eval_resize": 224
+  },
+  "seed": 42,
+  "code": {
+    "preview_crop_policy.py": "585ff8862447d5494e0aa4ac1e4fc16059a6ba9ddae4fbfee46e7cfc203f7569",
+    "pipeline/crops.py": "417b603dfbde586227331e9ab28ce0fb3ba326fbe025a2fb393e66b510341deb",
+    "pipeline/transforms.py": "905bc5bbdf9e0f155170e70207dce9dc469ae7160a65b2302658b97cd927a7ad"
+  },
+  "signature": "85f0ca13ea811e6e89bb99c2dc6f997a61d0746e5fbe7796fbc25b977bdd2c42",
+  "split": "train",
+  "test_images_opened": false
+}

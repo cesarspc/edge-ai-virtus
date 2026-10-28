@@ -4,6 +4,18 @@
   "test_used_for_selection": false,
   "completed_trials": [
     {
+      "run": "runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c",
+      "trial": "c",
+      "macro_f1_observation": 0.9716736109227341,
+      "macro_f1_image": 0.918779078064204,
+      "class_weighting": "inverse_sqrt",
+      "lr": 0.0003,
+      "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+      "checkpoint_sha256": "e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8",
+      "run_json_sha256": "380d946607c54c3198341f0915589bfb1409e36c852a73c82fab04182c76255d",
+      "metrics_val_sha256": "81e128145bbe3e0ad4ebd15e4db3b11ba50beb649917c25f61ffaedb35fffcd9"
+    },
+    {
       "run": "runs\\20261012T161041257797Z_s5_mobilenet_v3_large_v002_a",
       "trial": "a",
       "macro_f1_observation": 0.9705519051264352,
@@ -14,11 +26,48 @@
       "checkpoint_sha256": "c6a54270440d76f98cabd33b52c386372e9b4d837b29596d952391966b59a061",
       "run_json_sha256": "f95d2e0126568c434df720420a5ef6a7696c5aca7bc54ae1122bdba03affe639",
       "metrics_val_sha256": "3ddb9c898e0ef58f97363da643fa8c7d15d51d2c7521fa743e55ffc2aa65dfb8"
+    },
+    {
+      "run": "runs\\20261024T022849507889Z_s5_mobilenet_v3_large_v002_b",
+      "trial": "b",
+      "macro_f1_observation": 0.9697547934371411,
+      "macro_f1_image": 0.9152445851784629,
+      "class_weighting": "none",
+      "lr": 0.0001,
+      "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+      "checkpoint_sha256": "091f7b276e46943d606b54f22e70ef05eba0351e8bda0988269f97b508f323c1",
+      "run_json_sha256": "039ff60a62b202902770b6acdcd83b594a88f996f3a3ddb87ac985b493e6c859",
+      "metrics_val_sha256": "6ccaf26f33f350c7a260c0f808284c18b95908a07f7c782b5825481175d02a3a"
+    },
+    {
+      "run": "runs\\20261024T132723373718Z_s5_mobilenet_v3_large_v002_d",
+      "trial": "d",
+      "macro_f1_observation": 0.9616634158705336,
+      "macro_f1_image": 0.9134483211863685,
+      "class_weighting": "inverse_sqrt",
+      "lr": 0.0001,
+      "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+      "checkpoint_sha256": "32b507503c3941d5aa1fafc7db1799bae4baec1f23311818c5be35a025eab541",
+      "run_json_sha256": "00b70ac6265fbe2abce3ed5a69ab4cacf75121e8e2bfdc37cf699f8abf4e49c7",
+      "metrics_val_sha256": "3844f54379b497691bcb170d3d2ed6b6b5de9cc7408b94583a96105af15ceb81"
     }
   ],
-  "pending_trials": [
-    "b",
-    "c",
-    "d"
-  ]
+  "rejected_trials": [
+    {
+      "run": "runs\\20261023T005149730394Z_s5_mobilenet_v3_large_v002_b",
+      "trial": "b",
+      "reason": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261023T005149730394Z_s5_mobilenet_v3_large_v002_b\\predictions_val.csv: 6272/6290 rows contain non-finite probabilities"
+    },
+    {
+      "run": "runs\\20261023T020544245443Z_s5_mobilenet_v3_large_v002_c",
+      "trial": "c",
+      "reason": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261023T020544245443Z_s5_mobilenet_v3_large_v002_c\\predictions_val.csv: 6272/6290 rows contain non-finite probabilities"
+    },
+    {
+      "run": "runs\\20261024T015337199324Z_s5_mobilenet_v3_large_v002_d",
+      "trial": "d",
+      "reason": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261024T015337199324Z_s5_mobilenet_v3_large_v002_d\\predictions_val.csv: 6272/6290 rows contain non-finite probabilities"
+    }
+  ],
+  "pending_trials": []
 }

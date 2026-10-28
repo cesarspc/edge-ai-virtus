@@ -1,0 +1,23 @@
+\begin{table}[H]
+\centering
+\small
+\caption{Diferencias por observación. R denota ResNet-18. Intervalos exploratorios sin ajuste por comparaciones múltiples.}
+\label{tab:paired}
+\begin{tabularx}{\linewidth}{Y r r l}
+\toprule
+\textbf{Comparación} & \textbf{Diferencia F1} & \textbf{IC 95\,\% pareado} & \textbf{Incluye cero}\\
+\midrule
+A menos R & 0,0160 & [0,0005; 0,0281] & No\\
+B menos A & -0,0008 & [-0,0173; 0,0158] & Sí\\
+B menos R & 0,0152 & [0,0011; 0,0265] & No\\
+C menos A & 0,0011 & [-0,0091; 0,0157] & Sí\\
+C menos R & 0,0171 & [0,0077; 0,0270] & No\\
+D menos A & -0,0089 & [-0,0254; 0,0078] & Sí\\
+D menos R & 0,0071 & [-0,0081; 0,0192] & Sí\\
+C menos B & 0,0019 & [-0,0084; 0,0161] & Sí\\
+C menos D & 0,0100 & [-0,0011; 0,0248] & Sí\\
+D menos B & -0,0081 & [-0,0155; -0,0012] & No\\
+\bottomrule
+\end{tabularx}
+\source{reports/s5/comparison/bootstrap_paired.csv}
+\end{table}

@@ -1,0 +1,8 @@
+{
+  "run_id": "20261028T145527817405Z_cropping_mobilenet_v3_large_v002_center75_seed42",
+  "stage": "completed",
+  "updated_utc": "2026-10-28T15:08:23.710604+00:00",
+  "evaluated_splits": [
+    "val"
+  ]
+}

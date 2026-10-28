@@ -1,0 +1,17 @@
+reference_config: configs/train/cropping_mobilenet_v3_large_v002_control.yaml
+reference_run: runs/crops_v002/20261028T141000472345Z_cropping_mobilenet_v3_large_v002_control_seed42
+initial_checkpoint_sha256: e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8
+additional_configs:
+- configs/train/cropping_mobilenet_v3_large_v002_control_seed43.yaml
+- configs/train/cropping_mobilenet_v3_large_v002_control_seed44.yaml
+output_dir: reports/crops_v002/control_stability
+device: cuda
+analysis:
+  bootstrap_samples: 10000
+  bootstrap_seed: 42
+  comparison_unit: observation
+selection_policy: Keep seed 42 as the preselected candidate; use 43 and 44 to describe
+  fine-tuning stability, not to choose the highest-scoring seed. No ensembling or
+  test evaluation.
+scope: Variation of fine tuning from the same selected C checkpoint; not full retraining
+  variance.

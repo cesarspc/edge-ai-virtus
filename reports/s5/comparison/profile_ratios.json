@@ -1,0 +1,7 @@
+{
+  "latency_ratio_resnet_over_mobile": 1.7928058711250403,
+  "serialized_size_reduction_pct": 61.92282478807306,
+  "profile_reused": true,
+  "reason": "all four trials retain mobilenet_v3_large and a ten-class head",
+  "source": "reports/s5/architecture_profile.json"
+}

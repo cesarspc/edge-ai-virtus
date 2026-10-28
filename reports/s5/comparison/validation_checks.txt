@@ -1,0 +1,31 @@
+test_paired_scores_match_sklearn_and_resume_exactly (test_report_bootstrap.ReportEvidenceTests.test_paired_scores_match_sklearn_and_resume_exactly) ... 
+Bootstrap tmpej4jqogm: 40 obs.:   0%|          | 0/300 [00:00<?, ?remuestreo/s]
+Bootstrap tmpej4jqogm: 40 obs.: 100%|##########| 300/300 [00:00<?, ?remuestreo/s]
+
+Bootstrap tmpej4jqogm: 40 obs.:  83%|########3 | 250/300 [00:00<?, ?remuestreo/s]
+Bootstrap tmpej4jqogm: 40 obs.: 100%|##########| 300/300 [00:00<00:00, 12056.76remuestreo/s]
+ok
+test_reject_nonfinite_export (test_report_bootstrap.ReportEvidenceTests.test_reject_nonfinite_export) ... ok
+test_bootstrap_is_deterministic_and_brackets_the_estimate (test_s6_taxonomy_pipeline.TaxonomicMetricTests.test_bootstrap_is_deterministic_and_brackets_the_estimate) ... ok
+test_fast_macro_f1_matches_sklearn_including_absent_labels (test_s6_taxonomy_pipeline.TaxonomicMetricTests.test_fast_macro_f1_matches_sklearn_including_absent_labels) ... ok
+test_genus_level_is_identical_to_the_training_metrics (test_s6_taxonomy_pipeline.TaxonomicMetricTests.test_genus_level_is_identical_to_the_training_metrics) ... ok
+test_marginal_rule_sums_probabilities_and_reports_disagreements (test_s6_taxonomy_pipeline.TaxonomicMetricTests.test_marginal_rule_sums_probabilities_and_reports_disagreements) ... D:\Dev\Virtus\edge-ai-virtus\.venv\Lib\site-packages\sklearn\metrics\_classification.py:2939: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+D:\Dev\Virtus\edge-ai-virtus\.venv\Lib\site-packages\sklearn\metrics\_classification.py:614: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+ok
+test_observation_report_and_species_breakdown (test_s6_taxonomy_pipeline.TaxonomicMetricTests.test_observation_report_and_species_breakdown) ... D:\Dev\Virtus\edge-ai-virtus\.venv\Lib\site-packages\sklearn\metrics\_classification.py:2939: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+D:\Dev\Virtus\edge-ai-virtus\.venv\Lib\site-packages\sklearn\metrics\_classification.py:2939: UserWarning: y_pred contains classes not in y_true
+  warnings.warn("y_pred contains classes not in y_true")
+ok
+test_top1_rule_never_loses_accuracy_when_moving_up (test_s6_taxonomy_pipeline.TaxonomicMetricTests.test_top1_rule_never_loses_accuracy_when_moving_up) ... D:\Dev\Virtus\edge-ai-virtus\.venv\Lib\site-packages\sklearn\metrics\_classification.py:614: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+D:\Dev\Virtus\edge-ai-virtus\.venv\Lib\site-packages\sklearn\metrics\_classification.py:614: UserWarning: A single label was found in 'y_true' and 'y_pred'. For the confusion matrix to have the correct shape, use the 'labels' parameter to pass all known labels.
+  warnings.warn(
+ok
+
+----------------------------------------------------------------------
+Ran 8 tests in 2.019s
+
+OK

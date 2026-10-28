@@ -1,0 +1,18 @@
+\begin{table}[H]
+\centering
+\footnotesize
+\caption{Test histórico de ResNet-18: resultados ya guardados, sin nueva inferencia. No intervienen en la selección de S5.}
+\label{tab:tax-test}
+\begin{tabularx}{\linewidth}{l l Y Y}
+\toprule
+\textbf{Modelo} & \textbf{Nivel} & \textbf{F1 [IC 95\,\%]} & \textbf{Exactitud, \% [IC 95\,\%]}\\
+\midrule
+ResNet-18 & Género & 0,946 [0,933; 0,957] & 95,8 [95,1; 96,4]\\
+ResNet-18 & Familia & 0,950 [0,936; 0,961] & 96,4 [95,8; 96,9]\\
+ResNet-18 & Orden & 0,952 [0,935; 0,966] & 97,4 [96,8; 97,8]\\
+ResNet-18 & Clase & 0,961 [0,930; 0,982] & 99,1 [98,8; 99,4]\\
+ResNet-18 & Filo & 0,968 [0,957; 0,978] & 99,1 [98,8; 99,4]\\
+\bottomrule
+\end{tabularx}
+\source{reports/s6/comparison/taxonomic_summary.csv}
+\end{table}

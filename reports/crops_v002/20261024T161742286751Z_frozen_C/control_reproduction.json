@@ -1,0 +1,7 @@
+{
+  "identical_image_decisions": true,
+  "changed_image_decisions": 0,
+  "confusion_matrices_match_saved_C": true,
+  "max_probability_difference_vs_rounded_C_csv": 5.311241150218748e-07,
+  "macro_f1_observation": 0.9716736109227341
+}

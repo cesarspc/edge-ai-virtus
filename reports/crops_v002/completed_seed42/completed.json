@@ -1,0 +1,7 @@
+{
+  "signature": "36ccf18e740052e842bf2ce0dd3e244b42322246fd4a0fb770f51ac4349ed917",
+  "training_runs_completed": true,
+  "best_checkpoint_states_identical_to_pilot": true,
+  "inference_reexecuted": false,
+  "test_evaluations": 0
+}
