@@ -5,6 +5,7 @@ runs/**/*.pt filter=lfs diff=lfs merge=lfs -text
 /scripts/reports/** -text
 /configs/train/cropping*.yaml -text
 /configs/train/s5_mobilenet_v3_large_v002_[bcd].yaml -text
+/configs/train/s8_multimodal_v002.yaml -text
 /configs/experiments/** -text
 /data/versions/v002/** -text
 /data/taxonomy/v002/** -text
@@ -17,3 +18,4 @@ runs/**/*.pt filter=lfs diff=lfs merge=lfs -text
 /runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/** -text
 /runs/20261024T132723373718Z_s5_mobilenet_v3_large_v002_d/** -text
 /runs/crops_v002/** -text
+/runs/s8_multimodal_v002/** -text

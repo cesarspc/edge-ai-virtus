@@ -1,0 +1,153 @@
+{
+  "run_id": "20261030T193246267806Z_s8_multimodal",
+  "config": {
+    "run_name": "s8_multimodal_v002",
+    "data": {
+      "version": "v002",
+      "source": "fungitastic",
+      "split_column": "split",
+      "image_root": "data/raw/images/fungitastic_v002",
+      "download_manifest": "data/raw/images/fungitastic_v002/download_manifest.csv",
+      "require_all_images": true,
+      "integrity_workers": 8
+    },
+    "model": {
+      "architecture": "mobilenet_v3_large",
+      "pretrained_weights": "IMAGENET1K_V1",
+      "num_classes": 10
+    },
+    "input": {
+      "size": 224,
+      "mean": [
+        0.485,
+        0.456,
+        0.406
+      ],
+      "std": [
+        0.229,
+        0.224,
+        0.225
+      ],
+      "train_augment": {
+        "random_resized_crop_scale": [
+          0.5,
+          1.0
+        ],
+        "horizontal_flip": true,
+        "color_jitter": [
+          0.2,
+          0.2,
+          0.2,
+          0.02
+        ]
+      },
+      "eval_resize": 224
+    },
+    "training": {
+      "seed": 42,
+      "epochs": 10,
+      "batch_size": 64,
+      "num_workers": 4,
+      "optimizer": "adamw",
+      "lr": 0.0001,
+      "weight_decay": 0.05,
+      "scheduler": "cosine",
+      "warmup_epochs": 1,
+      "label_smoothing": 0.1,
+      "class_weighting": "inverse_sqrt",
+      "amp": true,
+      "early_stopping_patience": 3,
+      "selection_metric": "val_obs_macro_f1",
+      "deterministic": false
+    },
+    "evaluation": {
+      "batch_size": 64,
+      "top_k": [
+        1,
+        3
+      ],
+      "observation_aggregation": "mean_prob",
+      "evaluate_test_at_end": false
+    },
+    "output": {
+      "runs_dir": "runs/s8_multimodal_v002"
+    },
+    "initialization": {
+      "checkpoint": "runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/best.pt"
+    },
+    "mode": "multimodal"
+  },
+  "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "classes": [
+    "Amanita",
+    "Auricularia",
+    "Ganoderma",
+    "Geastrum",
+    "Hericium",
+    "Lycoperdon",
+    "Morchella",
+    "Pleurotus",
+    "Trametes",
+    "Xylaria"
+  ],
+  "encoder": {
+    "categories": {
+      "habitat_class": [
+        "anthropic",
+        "forest_coniferous",
+        "forest_deciduous",
+        "forest_mixed",
+        "forest_other",
+        "open",
+        "other",
+        "scrub"
+      ],
+      "substrate_class": [
+        "fungi",
+        "litter",
+        "moss",
+        "other",
+        "plant_living",
+        "soil",
+        "wood_dead",
+        "wood_living",
+        "wood_unspecified"
+      ]
+    },
+    "elevation_mean": 38.80172335394689,
+    "elevation_std": 63.47727598276067
+  },
+  "initial_checkpoint": "D:\\Dev\\Virtus\\edge-ai-virtus\\runs\\20261024T031650621510Z_s5_mobilenet_v3_large_v002_c\\best.pt",
+  "init_sha256": "e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8",
+  "code_sha256": {
+    "train_ma.py": "53dc75c316fcd3ee6b85807c340070148a57708ffa0ea72b7533cb9cab1db57a",
+    "data.py": "5466f15cc708c348ef78cffd342d05bdeb1c6781ce58b92ad85242fbced3bf48",
+    "metrics.py": "cf6bd88ed1bd258827a43dbc5be11ac3d3feb0af1f80599090f4c4a01c996402",
+    "progress_ui.py": "e102389e89da90b69720f25f9c67489af7abeea9a2c343f575841a9bf236596e",
+    "pipeline/__init__.py": "7c875d2f38ce19801fba6a37ee0b23707715cf34d5d0864ab1a21b04c46a85c3",
+    "pipeline/datasets.py": "5c5e9faa28f2fe9ad992d316864dbbba3dbdce8e5f5dbe4bf54bc5f7b818b7bb",
+    "pipeline/transforms.py": "905bc5bbdf9e0f155170e70207dce9dc469ae7160a65b2302658b97cd927a7ad",
+    "pipeline/models.py": "4c905ff98acd0e8dc1869d9ddf72514ec97077c8a2423fc10f30c8915f00872c",
+    "pipeline/training.py": "8e4b97d9260a4c7f2b93d18e2e0a04dccab2f06cdd0a5a870c752a5930aa7195",
+    "pipeline/evaluation.py": "0b495730a4dfdf676f3343e8470db8d30236b3ff789c5538d06bd19843021ad2",
+    "pipeline/artifacts.py": "86db872394b925b6ea6ea1be221582ccceccef2b2e72a134a4d93e6928b055d0",
+    "pipeline/crops.py": "417b603dfbde586227331e9ab28ce0fb3ba326fbe025a2fb393e66b510341deb",
+    "pipeline/crop_state.py": "94db64b73e4cb3ffa8d5384de5a857bf907d3f69a251b947e9c1aa2a3e40e4bb",
+    "pipeline/drift.py": "f1b806888b904bb533de937a7079ce69e33c3d38d36463372eae74515b7dc2c4",
+    "train_s8.py": "3f2dadd4d8250716cdf6b4280f10ab4848e1a11e2bc393ad96f90fee4bb9ec09",
+    "pipeline/multimodal.py": "46b30988dd21f853a7953854b66f2cf7ab0a5044ed94d176db95ba1b4d00f59e"
+  },
+  "git": {
+    "commit": "745236b98d5343558a2b81e430c7f5681148be34",
+    "dirty": true
+  },
+  "device": "cuda",
+  "versions": {
+    "python": "3.12.10",
+    "torch": "2.14.1+cu132",
+    "torchvision": "0.29.1+cu132",
+    "cuda": "13.2",
+    "cudnn": 92400
+  },
+  "gpu": "NVIDIA GeForce GTX 1650 SUPER"
+}
