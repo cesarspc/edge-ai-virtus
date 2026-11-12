@@ -23,6 +23,9 @@ data/processed/
 reports/crops_v002/**/chunks/
 reports/crops_v002/**/probabilities_val.npz
 reports/crops_v002/**/campaign.lock
+# Visual reports of the external evaluation contain third-party photographs (rebuild with
+# scripts/reports/make_external_gallery.py).
+reports/external/**/galeria/
 # Bootstrap progress checkpoints can be rebuilt from the report inputs.
 reports/**/bootstrap_state.npz
 

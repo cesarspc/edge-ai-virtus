@@ -9,6 +9,9 @@
 | `inaturalist_open_data/` | `taxa.csv.gz` completo y fragmentos iniciales (solo esquema) de `observations`/`photos` | bucket S3 público `inaturalist-open-data` |
 | `inaturalist_api/` | Instantáneas JSON de consultas pequeñas (fungi en Colombia) | `api.inaturalist.org/v1` |
 | `gbif/` | Instantáneas JSON de consultas a la API de ocurrencias y del registro | `api.gbif.org/v1` |
+| `gbif_orinoquia/` | Darwin Core Archive de la descarga `GBIF0007586-260221153910048` (macromicetos de la Orinoquía), filtrada y original; candidata a prueba externa. Ver su [`README.md`](gbif_orinoquia/README.md) | descarga oficial de GBIF entregada por el equipo del proyecto |
+| `images/external_v001/` | 9.649 imágenes del `test_external` completo de `v001` (iNaturalist CO, Mushroom Observer CO, MIND.Funga v2) + `download_manifest.csv`, compartidas por `ext_co_001` y `ext_full_001`. Se obtienen con `python scripts/data/download_external_images.py --set ext_full_001`; los hashes están en `data/versions/<conjunto>/image_integrity.csv` | Open Data de iNaturalist (S3), `mushroomobserver.org/images/640/` y miembros del ZIP oficial de MIND.Funga en Mendeley (HTTP Range) |
+| `orinoquia_capas_bd/` | Capas 1–4 de la base de datos del proyecto Orinoquía (esquema maestro, bibliografía, morfología y vocabularios). No interviene en la validación externa | equipo del proyecto |
 | `sib_*/` (3 carpetas) | Archivos Darwin Core (DwC-A) de los tres recursos IPT del SiB Colombia | `ipt.biodiversidad.co` |
 | `mushroom_observer/` | Volcados CSV nocturnos oficiales | `mushroomobserver.org/*.csv` |
 | `sources_documentation/` | Estado HTTP de las URL de documentación suministradas | GET de comprobación |

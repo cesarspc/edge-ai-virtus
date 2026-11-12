@@ -1,0 +1,176 @@
+{
+  "set_id": "ext_co_001",
+  "kind": "external_evaluation_set",
+  "created_utc": "2026-10-29T04:06:07Z",
+  "content_fingerprint": "05c6a18e3217914b09fbb0fcca9be206a43a5e113e7691a83ed6612bfc636410",
+  "derived_from": {
+    "version": "v001",
+    "content_fingerprint": "6704c19c0fb8b7f92932c7a586b10d8e34449f0f13c211d1e1a08eb154c3dec7",
+    "split": "test_external",
+    "sources": [
+      "inaturalist_co",
+      "mushroom_observer_co"
+    ]
+  },
+  "excluded_sources": {
+    "mind_funga_v2": "sin coordenadas, fecha ni país: imágenes neotropicales de origen mixto con etiqueta de carpeta; no es una prueba colombiana ni se puede ubicar por región"
+  },
+  "region_definition": {
+    "orinoquia": [
+      "Arauca",
+      "Casanare",
+      "Meta",
+      "Vichada"
+    ],
+    "same_predicate_as": "GBIF download 0007586-260221153910048 (StateProvince)",
+    "inaturalist": "place of admin_level 10 inside Colombia (place 7196) among place_ids",
+    "mushroom_observer": "department named in the MO location"
+  },
+  "classes": [
+    "Amanita",
+    "Auricularia",
+    "Ganoderma",
+    "Geastrum",
+    "Hericium",
+    "Lycoperdon",
+    "Morchella",
+    "Pleurotus",
+    "Trametes",
+    "Xylaria"
+  ],
+  "code": {
+    "scripts/data/build_external_set.py": "1e3f3ab7fda6309f013bf593e76b2d92d7cf2ce04b3e40e590f7946dc713cfbb"
+  },
+  "inputs": [
+    {
+      "path": "data/processed/v001/observations.csv",
+      "sha256": "b11f521093ad26a562109a767c80582a3a479b7cec73ee5427a9f598b6dbe407"
+    },
+    {
+      "path": "data/processed/v001/images.csv",
+      "sha256": "f352d1d8f74dd5994d3ba6390da2261a2c6531e2422d5932ac5a29df89384c85"
+    },
+    {
+      "path": "data/versions/v001/classes.csv",
+      "sha256": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd"
+    },
+    {
+      "path": "data/versions/v001/manifest.json",
+      "sha256": "ee8aeb69bc021d71ef9ce951f1b194aeb5b9d294edb834b28bb46ddd532c0cba"
+    },
+    {
+      "path": "data/raw/mushroom_observer/observations.csv",
+      "sha256": "7a37dc352b5115afbc67ef51adb72a5884917aad99b0227f3556989088e37fe2"
+    },
+    {
+      "path": "data/raw/mushroom_observer/locations.csv",
+      "sha256": "aa5881a5e20f0c8b7146f7f3465195260f3c2e808f96360be1c500b81a2116f0"
+    },
+    {
+      "path": "data/raw/gbif_orinoquia/dwca/occurrence.txt",
+      "sha256": "fe75697f7abbdaee6ca5f3f72e6c13972cd0bb7792a0327fbb324216b74b109e"
+    },
+    {
+      "path": "data/raw/gbif_orinoquia/dwca/multimedia.txt",
+      "sha256": "ac7c8cf6ace147207de40a2314b900bdb8a3420f08d863caa46204eef69ce941"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p1.json",
+      "sha256": "b5db8b4df3bb4b7141b39d93b5b1115548dab8e1668ec647240e52a7bb088118"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p2.json",
+      "sha256": "80aedf072f6f55357b851dd2ab7f9b90363c0cb0f167003b017433cdfe4d5dfe"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p3.json",
+      "sha256": "d8b78fec1eaecba7368c22a00125bd243326803a213652e14df49c83348f93b6"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p4.json",
+      "sha256": "d1112f2dd85a3f9ef1808d9138a50efe8867298bfc7cfd23c6002131b835f4bd"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p5.json",
+      "sha256": "046e3c9064020c32a8838c7b03119757ae6951c1850e241446ed1cbba43d22ff"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p6.json",
+      "sha256": "fd8a5731e5f6a0ef4c8ddb10fb512691f2f8daa7b91351e1fce96066b0f35df4"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p7.json",
+      "sha256": "d1cde25578e84479da54e981fbca45238240a646624ab65d12abf89ab32670ac"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_places_p8.json",
+      "sha256": "e2d88db51d07d156d6187e061df37eb808b3dcb97fc8b7be817a88a7774cb7a7"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/ext_co_001_gbif_orinoquia_inat_status.json",
+      "sha256": "625b87a2674f38258aebc7ca5d3f4f085500c5cfeff341486a62b395cb3db7bf"
+    },
+    {
+      "path": "data/raw/inaturalist_api/api/v001_co_*.json",
+      "files": 25,
+      "sha256_of_hashes": "973c4604f9e3217062fbb16d7f7463cec292f1005c74a11ba1f7a708c8965593"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "observations.csv",
+      "sha256": "c940f9c2917710523ae15a450b16aca5fda3dccce62e125585ffd8de1085e805",
+      "rows": 3348
+    },
+    {
+      "name": "images.csv",
+      "sha256": "233400d1fa14944d51b944cee54c839673bc48f87a8be4839ac0f228942dc7f3",
+      "rows": 8102
+    },
+    {
+      "name": "classes.csv",
+      "sha256": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd",
+      "rows": 10
+    },
+    {
+      "name": "orinoquia_observations.csv",
+      "sha256": "15e0615f038d26e3d2a66ce8174bb25d2733ba567d321ae3d4eb9b7d8fa71827",
+      "rows": 309
+    },
+    {
+      "name": "gbif_orinoquia_exclusions.csv",
+      "sha256": "b7702674337856eac5c4dc440ed44fb6af42b982847143173b72834e9014ce90",
+      "rows": 15
+    }
+  ],
+  "counts": {
+    "observations": 3348,
+    "images": 8102,
+    "observations_by_source": {
+      "inaturalist_co": 2364,
+      "mushroom_observer_co": 984
+    },
+    "observations_by_region": {
+      "orinoquia": 309,
+      "other": 3029,
+      "unknown": 10
+    },
+    "images_by_region": {
+      "orinoquia": 857,
+      "other": 7215,
+      "unknown": 30
+    },
+    "orinoquia_by_department": {
+      "Arauca": 2,
+      "Casanare": 205,
+      "Meta": 96,
+      "Vichada": 6
+    },
+    "orinoquia_by_source": {
+      "inaturalist_co": 176,
+      "mushroom_observer_co": 133
+    },
+    "orinoquia_in_gbif_download": 63,
+    "gbif_orinoquia_records_not_usable": 15
+  }
+}

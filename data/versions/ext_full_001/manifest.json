@@ -1,0 +1,111 @@
+{
+  "set_id": "ext_full_001",
+  "kind": "external_evaluation_set",
+  "created_utc": "2026-10-29T19:55:49Z",
+  "content_fingerprint": "61ce96b14844c4b50bcc5aad7306ac6445f2b971596361a8990794e9935b2715",
+  "derived_from": {
+    "version": "v001",
+    "content_fingerprint": "6704c19c0fb8b7f92932c7a586b10d8e34449f0f13c211d1e1a08eb154c3dec7",
+    "split": "test_external",
+    "sources": [
+      "inaturalist_co",
+      "mind_funga_v2",
+      "mushroom_observer_co"
+    ]
+  },
+  "colombian_part": {
+    "set_id": "ext_co_001",
+    "content_fingerprint": "05c6a18e3217914b09fbb0fcca9be206a43a5e113e7691a83ed6612bfc636410",
+    "note": "rows copied unchanged from ext_co_001"
+  },
+  "region_definition": {
+    "orinoquia": [
+      "Arauca",
+      "Casanare",
+      "Meta",
+      "Vichada"
+    ],
+    "same_predicate_as": "GBIF download 0007586-260221153910048 (StateProvince)",
+    "inaturalist": "place of admin_level 10 inside Colombia (place 7196) among place_ids",
+    "mushroom_observer": "department named in the MO location",
+    "no_location": "mind_funga_v2: no coordinates, date or country"
+  },
+  "classes": [
+    "Amanita",
+    "Auricularia",
+    "Ganoderma",
+    "Geastrum",
+    "Hericium",
+    "Lycoperdon",
+    "Morchella",
+    "Pleurotus",
+    "Trametes",
+    "Xylaria"
+  ],
+  "code": {
+    "scripts/data/build_external_full.py": "25871e4d714d6868d62aa338384f2b6ac98422dc778f2cdb0955e23c3eac31da"
+  },
+  "inputs": [
+    {
+      "path": "data/processed/v001/observations.csv",
+      "sha256": "b11f521093ad26a562109a767c80582a3a479b7cec73ee5427a9f598b6dbe407"
+    },
+    {
+      "path": "data/processed/v001/images.csv",
+      "sha256": "f352d1d8f74dd5994d3ba6390da2261a2c6531e2422d5932ac5a29df89384c85"
+    },
+    {
+      "path": "data/processed/ext_co_001/observations.csv",
+      "sha256": "c940f9c2917710523ae15a450b16aca5fda3dccce62e125585ffd8de1085e805"
+    },
+    {
+      "path": "data/processed/ext_co_001/images.csv",
+      "sha256": "233400d1fa14944d51b944cee54c839673bc48f87a8be4839ac0f228942dc7f3"
+    },
+    {
+      "path": "data/versions/v001/manifest.json",
+      "sha256": "ee8aeb69bc021d71ef9ce951f1b194aeb5b9d294edb834b28bb46ddd532c0cba"
+    },
+    {
+      "path": "data/versions/ext_co_001/manifest.json",
+      "sha256": "10f7913c2fd3ee8abfd523c0d37d9e3867ef94c295bc5584a8190626e25b39a5"
+    }
+  ],
+  "outputs": [
+    {
+      "name": "observations.csv",
+      "sha256": "5de31e923f4faf281cf39e26f7cd6a2c57a64bb93d4848f10a65797c6b883fc0",
+      "rows": 4895
+    },
+    {
+      "name": "images.csv",
+      "sha256": "59073d2305b18744439f4a4bd68c3af57c704efb168d4b2ac09764354f0a91d8",
+      "rows": 9649
+    },
+    {
+      "name": "classes.csv",
+      "sha256": "a8a538d22e95e34a5da6fbeacd9ecc75050e40913331499784c73a33248c82bd",
+      "rows": 10
+    }
+  ],
+  "counts": {
+    "observations": 4895,
+    "images": 9649,
+    "observations_by_source": {
+      "inaturalist_co": 2364,
+      "mind_funga_v2": 1547,
+      "mushroom_observer_co": 984
+    },
+    "images_by_source": {
+      "inaturalist_co": 5021,
+      "mind_funga_v2": 1547,
+      "mushroom_observer_co": 3081
+    },
+    "observations_by_region": {
+      "no_location": 1547,
+      "orinoquia": 309,
+      "other": 3029,
+      "unknown": 10
+    }
+  }
+}

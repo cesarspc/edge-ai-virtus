@@ -1,0 +1,11 @@
+label_id,genus,occurrences,observations_with_image,images
+0,Amanita,1,1,1
+1,Auricularia,46,39,95
+2,Ganoderma,6,4,12
+3,Geastrum,5,4,13
+4,Hericium,0,0,0
+5,Lycoperdon,61,1,2
+6,Morchella,0,0,0
+7,Pleurotus,2,1,5
+8,Trametes,20,17,79
+9,Xylaria,17,11,40

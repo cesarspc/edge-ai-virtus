@@ -9,6 +9,11 @@ Opciones y protocolo: [docs/baseline_v002.md](docs/baseline_v002.md). La documen
 como historial de las fases anteriores.
 
 S5 (MobileNetV3-Large, ensayos A–D): [docs/s5_mobilenet_v002.md](docs/s5_mobilenet_v002.md).
+Validación externa con MobileNet S5-C: `test_external` completo de `v001` (`ext_full_001`: iNaturalist CO,
+Mushroom Observer CO y MIND.Funga) y Colombia por separado (`ext_co_001`, con la Orinoquía identificada por
+departamento): [docs/prueba_externa.md](docs/prueba_externa.md); resultados en
+[reports/external/ext_full_001/](reports/external/ext_full_001/README.md) y
+[reports/external/ext_co_001/](reports/external/ext_co_001/README.md).
 S6 (métricas por nivel taxonómico y pipeline modular en `scripts/train/pipeline/`):
 [docs/s6_taxonomia_pipeline.md](docs/s6_taxonomia_pipeline.md). Estado de ambas: [docs/seguimiento_s5_s6.md](docs/seguimiento_s5_s6.md).
 
@@ -27,7 +32,7 @@ La investigación se organiza por semanas. Estado actual:
 | 2 | Auditoría y curaduría (inventario de datasets, faltantes, duplicados, desbalance) | Hecha (sin transformar datos) | [`reports/week_02_dataset_audit.md`](reports/week_02_dataset_audit.md) |
 | 3 | Limpieza, normalización, particiones, esquema de metadatos ambientales y versionado (`v001`) | Hecha (sin imágenes descargadas) | [`reports/week_03_dataset_curation.md`](reports/week_03_dataset_curation.md), [`data/versions/v001/`](data/versions/v001/) |
 | 4 | Entorno de entrenamiento y primer entrenamiento de referencia ($M_A$, ResNet-18, solo FungiTastic) | **Preparado, sin ejecutar** | [`docs/handoff_fase4_entrenamiento.md`](docs/handoff_fase4_entrenamiento.md) |
-| 5 en adelante | Candidatas móviles, multimodalidad, prueba externa colombiana, móvil | Pendiente | — |
+| 5 en adelante | Candidatas móviles, multimodalidad, prueba externa colombiana, móvil | Validación externa completa hecha con S5-C (Colombia y Orinoquía por separado); resto pendiente | [`docs/prueba_externa.md`](docs/prueba_externa.md) |
 
 ## Estructura del repositorio
 
