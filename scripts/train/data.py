@@ -62,7 +62,7 @@ class DatasetTables:
 
 
 def load_tables(cfg: dict[str, Any], show_progress: bool = False,
-                splits: tuple[str, ...] = SPLITS) -> DatasetTables:
+                splits: tuple[str, ...] = SPLITS, verify_images: bool = True) -> DatasetTables:
     if not splits or not set(splits).issubset(SPLITS) or len(set(splits)) != len(splits):
         raise ValueError("splits must be unique train/val/test values")
     d = cfg["data"]
@@ -116,12 +116,16 @@ def load_tables(cfg: dict[str, Any], show_progress: bool = False,
             return bar(rows, desc=description, unit="imagen")
         return rows
 
-    if show_progress:
+    if show_progress and verify_images:
         print(f"Verificando disponibilidad de {len(img):,} imagenes locales...", flush=True)
-    exists = pd.Series([Path(p).is_file() for p in visible_rows(img["path"], "Archivos locales")], index=img.index)
-    available = img["status"].isin(["ok", "too_small"]) & exists
+    if verify_images:
+        exists = pd.Series([Path(p).is_file() for p in visible_rows(img["path"], "Archivos locales")], index=img.index)
+        available = img["status"].isin(["ok", "too_small"]) & exists
+    else:
+        # Metadata-only baselines still use the v002 observation/image roster, but do not need local pixels.
+        available = pd.Series(True, index=img.index)
     integrity_path = ver / "image_integrity.csv"
-    if any(o["name"] == "image_integrity.csv" for o in manifest["outputs"]):
+    if verify_images and any(o["name"] == "image_integrity.csv" for o in manifest["outputs"]):
         integrity = pd.read_csv(integrity_path, dtype=str).set_index("image_uid")["sha256"]
         expected = img["image_uid"].map(integrity)
         if show_progress:

@@ -1,4 +1,4 @@
-"""S8 val-only visual, environmental, and fused experiments, resumable at epoch boundaries."""
+"""S8 val-only experiments and the S9 B geolocation baseline, resumable at epoch boundaries."""
 from __future__ import annotations
 
 import argparse
@@ -20,7 +20,8 @@ with stage("Cargando PyTorch y bibliotecas", active=__name__ == "__main__"):
     from pipeline.artifacts import ProgressFile, code_hashes, environment, git_commit, results_markdown, write_json
     from pipeline.evaluation import evaluate, save_predictions
     from pipeline.models import build_model
-    from pipeline.multimodal import (EnvironmentalEncoder, EnvironmentalOnlyModel, MultimodalTable,
+    from pipeline.multimodal import (EnvironmentalEncoder, EnvironmentalOnlyModel, GeoClimateEncoder,
+                                     GeolocationEncoder, MultimodalTable,
                                      VisualEnvironmentalModel, VisualOnlyModel)
     from pipeline.training import (atomic_checkpoint, build_criterion, build_optimizer, build_scheduler,
                                    class_weights, random_state, restore_random_state, set_seed)
@@ -28,8 +29,12 @@ with stage("Cargando PyTorch y bibliotecas", active=__name__ == "__main__"):
 
 
 FIELDS = ["observation_uid", "split", "label_id", "habitat_class", "substrate_class", "elevation_m",
-          "elevation__quality", "event_date", "event_date__quality"]
-ENV_FIELDS = FIELDS[3:]
+          "elevation__quality", "event_date", "event_date__quality", "latitude", "longitude", "geo__quality"]
+ENV_FIELDS = ["habitat_class", "substrate_class", "elevation_m", "elevation__quality",
+              "event_date", "event_date__quality"]
+GEO_FIELDS = ["latitude", "longitude", "geo__quality"]
+CLIMATE_FEATURES = [f"Bio{i}" for i in range(1, 20)]
+CLIMATE_FIELDS = ["climate_available", *CLIMATE_FEATURES]
 
 
 def join_observations(frames, observations):
@@ -47,24 +52,55 @@ def join_observations(frames, observations):
     return result
 
 
-def condition_frame(frame, condition, seed):
+def condition_frame(frame, condition, seed, mode):
     """Perturb metadata at observation level, keeping repeated images together."""
     result = frame.copy()
     if condition == "missing":
-        for column in ("habitat_class", "substrate_class", "event_date"):
-            result[column] = pd.Series(pd.NA, index=result.index, dtype="string")
-        result["elevation_m"] = np.nan
-        result["elevation__quality"] = "MISSING"
-        result["event_date__quality"] = "MISSING"
+        fields = (GEO_FIELDS if mode == "geolocation" else
+                  GEO_FIELDS + CLIMATE_FIELDS if mode == "geo_climate" else ENV_FIELDS)
+        for column in fields:
+            if column == "climate_available":
+                result[column] = False
+            elif column.endswith("__quality"):
+                result[column] = "MISSING"
+            else:
+                result[column] = np.nan if column in ("elevation_m", "latitude", "longitude") or column.startswith("Bio") else pd.NA
     elif condition == "shuffled":
+        fields = (GEO_FIELDS if mode == "geolocation" else
+                  GEO_FIELDS + CLIMATE_FIELDS if mode == "geo_climate" else ENV_FIELDS)
         obs = result.drop_duplicates("observation_uid").sort_values("observation_uid")
-        shuffled = obs[ENV_FIELDS].iloc[np.random.default_rng(seed).permutation(len(obs))].reset_index(drop=True)
+        shuffled = obs[fields].iloc[np.random.default_rng(seed).permutation(len(obs))].reset_index(drop=True)
         shuffled["observation_uid"] = obs.observation_uid.to_numpy()
-        result = result.drop(columns=ENV_FIELDS).merge(shuffled, on="observation_uid", how="left",
+        result = result.drop(columns=fields).merge(shuffled, on="observation_uid", how="left",
                                                        validate="many_to_one", sort=False)
     elif condition != "normal":
         raise ValueError(condition)
     return result
+
+
+def join_climate(frames, cfg, tables):
+    climate_path = resolve(cfg["data"]["climate_table"])
+    manifest_path = resolve(cfg["data"]["climate_manifest"])
+    if not climate_path.is_file() or not manifest_path.is_file():
+        raise SystemExit("Falta la tabla climática; ejecuta scripts/data/prepare_climate_v002.py")
+    manifest = json.loads(manifest_path.read_text(encoding="utf-8"))
+    if (manifest.get("dataset_version") != tables.version or
+            manifest.get("dataset_fingerprint") != tables.fingerprint or
+            manifest.get("output_sha256") != sha256_file(climate_path)):
+        raise SystemExit("La tabla climática no corresponde al dataset/manifiesto de esta corrida")
+    columns = ["observation_uid", "split", *CLIMATE_FIELDS]
+    climate = pd.read_csv(climate_path, usecols=columns, low_memory=False)
+    climate = climate[climate["split"].isin(frames)].rename(columns={"split": "climate_split"})
+    if climate.observation_uid.duplicated().any():
+        raise SystemExit("La tabla climática tiene observation_uid repetidos")
+    joined = {}
+    for split, images in frames.items():
+        frame = images.merge(climate, on="observation_uid", how="left", validate="many_to_one", sort=False)
+        if (len(frame) != len(images) or frame.climate_available.isna().any() or
+                not frame.climate_split.eq(split).all()):
+            raise SystemExit(f"Hay observaciones sin clima alineado o con split discordante en {split}")
+        joined[split] = frame.drop(columns="climate_split")
+    return joined
 
 
 def predict(model, loader, device, amp, description):
@@ -84,8 +120,9 @@ def predict(model, loader, device, amp, description):
 def main():
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("--config", required=True)
-    parser.add_argument("--mode", required=True, choices=["visual", "metadata", "multimodal"])
-    parser.add_argument("--resume", help="last.pt of an unfinished S8 run")
+    parser.add_argument("--mode", required=True,
+                        choices=["visual", "metadata", "multimodal", "geolocation", "geo_climate"])
+    parser.add_argument("--resume", help="last.pt of an unfinished run")
     parser.add_argument("--device", choices=["cuda", "cpu"], default="cuda")
     parser.add_argument("--pause-after-epoch", action="store_true")
     args = parser.parse_args()
@@ -93,7 +130,9 @@ def main():
     cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     cfg["mode"] = args.mode
     if cfg["evaluation"].get("evaluate_test_at_end") or cfg["data"].get("split_column", "split") != "split":
-        raise SystemExit("S8 uses official train/val only; test is forbidden in this script")
+        raise SystemExit("This script uses official train/val only; test is forbidden")
+    if args.mode == "geo_climate" and cfg["data"].get("version") != "v002":
+        raise SystemExit("S9 C requires the official v002 partitions")
     device = torch.device(args.device)
     if device.type == "cuda" and not torch.cuda.is_available():
         raise SystemExit("CUDA no está disponible. Verifica PyTorch o usa --device cpu explícitamente.")
@@ -101,9 +140,14 @@ def main():
     set_seed(tr["seed"], tr["deterministic"])
     amp = tr["amp"] and device.type == "cuda"
     print("Preparando train y val; verificando dataset e imágenes...", flush=True)
-    tables = load_tables(cfg, show_progress=True, splits=("train", "val"))
-    print(summary(tables).to_string(index=False), flush=True)
-    if len(tables.missing) or any(f.empty for f in tables.frames.values()):
+    tables = load_tables(cfg, show_progress=True, splits=("train", "val"),
+                         verify_images=args.mode != "geolocation")
+    if args.mode == "geolocation":
+        print("Observaciones: " + ", ".join(
+            f"{split}={frame.observation_uid.nunique():,}" for split, frame in tables.frames.items()), flush=True)
+    else:
+        print(summary(tables).to_string(index=False), flush=True)
+    if (args.mode != "geolocation" and len(tables.missing)) or any(f.empty for f in tables.frames.values()):
         raise SystemExit("Faltan imágenes de train o val; completa la descarga antes de entrenar.")
     if len(tables.classes) != cfg["model"]["num_classes"]:
         raise SystemExit("El número de clases no coincide con el dataset")
@@ -111,17 +155,26 @@ def main():
                                usecols=FIELDS, low_memory=False)
     observations = observations[observations.split.isin(["train", "val"])]
     frames = join_observations(tables.frames, observations)
+    if args.mode == "geo_climate":
+        frames = join_climate(frames, cfg, tables)
+    if args.mode == "geolocation":
+        # One coordinate vector per observation; repeated photos must not reweight B.
+        frames = {split: frame.drop_duplicates("observation_uid").reset_index(drop=True)
+                  for split, frame in frames.items()}
     train_obs = frames["train"].drop_duplicates("observation_uid")
-    encoder = EnvironmentalEncoder.fit(train_obs)
+    encoder = (GeolocationEncoder.fit(train_obs) if args.mode == "geolocation" else
+               GeoClimateEncoder.fit(train_obs) if args.mode == "geo_climate" else
+               EnvironmentalEncoder.fit(train_obs))
     encoded = {s: encoder.transform(frame) for s, frame in frames.items()}
     feature_count = encoded["train"].shape[1]
-    init_path = resolve(cfg["initialization"]["checkpoint"])
-    if not init_path.is_file():
+    init_path = (resolve(cfg["initialization"]["checkpoint"])
+                 if args.mode in ("visual", "multimodal", "geo_climate") else None)
+    if init_path is not None and not init_path.is_file():
         raise SystemExit(f"Checkpoint visual no encontrado: {init_path}")
     hashes = code_hashes()
     for name in ("train_s8.py", "pipeline/multimodal.py"):
         hashes[name] = sha256_file(Path(__file__).parent / name)
-    init_hash = sha256_file(init_path)
+    init_hash = sha256_file(init_path) if init_path is not None else None
     resumed = torch.load(resolve(args.resume), map_location="cpu", weights_only=True) if args.resume else None
     if resumed is not None:
         expected = (cfg, tables.fingerprint, tables.classes, device.type, hashes, init_hash, encoder.state_dict())
@@ -134,11 +187,14 @@ def main():
         if (run_dir / "completed.json").exists():
             raise SystemExit("Esta corrida ya finalizó.")
     else:
-        run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "_s8_" + args.mode
+        run_prefix = ("s9_b_geolocation" if args.mode == "geolocation" else
+                      "s9_c_image_geo_climate" if args.mode == "geo_climate" else "s8_" + args.mode)
+        run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "_" + run_prefix
         run_dir = resolve(cfg["output"]["runs_dir"]) / run_id
         run_dir.mkdir(parents=True, exist_ok=False)
         write_json(run_dir / "run.json", {"run_id": run_id, "config": cfg, "dataset_fingerprint": tables.fingerprint,
-                   "classes": tables.classes, "encoder": encoder.state_dict(), "initial_checkpoint": str(init_path),
+                   "classes": tables.classes, "encoder": encoder.state_dict(),
+                   "initial_checkpoint": str(init_path) if init_path is not None else None,
                    "init_sha256": init_hash, "code_sha256": hashes, "git": git_commit(REPO_ROOT),
                    "device": str(device), **environment(device)})
     print(f"Carpeta de la corrida: {run_dir}", flush=True)
@@ -147,15 +203,15 @@ def main():
     tf_train, tf_eval = build_transforms(cfg)
     generator = torch.Generator().manual_seed(tr["seed"])
     kw = dict(num_workers=tr["num_workers"], pin_memory=device.type == "cuda", persistent_workers=False)
-    load_images = args.mode != "metadata"
+    load_images = args.mode not in ("metadata", "geolocation")
     train_loader = DataLoader(MultimodalTable(frames["train"], encoded["train"], tf_train, load_images),
                               batch_size=tr["batch_size"], shuffle=True, generator=generator, **kw)
     def val_loader(condition):
-        frame = condition_frame(frames["val"], condition, tr["seed"])
+        frame = condition_frame(frames["val"], condition, tr["seed"], args.mode)
         return DataLoader(MultimodalTable(frame, encoder.transform(frame), tf_eval, load_images),
                           batch_size=cfg["evaluation"]["batch_size"], shuffle=False, **kw)
     val = val_loader("normal")
-    if args.mode == "metadata":
+    if args.mode in ("metadata", "geolocation"):
         model = EnvironmentalOnlyModel(feature_count, len(tables.classes))
     else:
         checkpoint = torch.load(init_path, map_location="cpu", weights_only=True)
