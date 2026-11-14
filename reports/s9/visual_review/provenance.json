@@ -1,0 +1,8 @@
+{
+  "source_url": "https://cmp.felk.cvut.cz/datagrid/FungiTastic/shared/download/FungiTastic-val-300p.zip",
+  "selection": "2 most confident errors + 2 largest JS disagreements + 1 Hericium error + 1 Morchella case; deduplicated",
+  "selection_predictions_sha256": "5227009f2ec87e747ef291c754a8854e100a6ff67d78de8219eddf1e0fc62b44",
+  "test_images_downloaded": 0,
+  "images": 11,
+  "observations": 6
+}

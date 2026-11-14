@@ -1,5 +1,10 @@
 # Experimentos B y C: geolocalización y clima
 
+> Documento del commit `be1036b`: su B es un diagnóstico de GPS sin imagen.
+> El ensayo incremental vigente de S9/S10 usa A/B/C/D con una misma parte visual;
+> resultados y límites en [`reports/s9_s10/REPORTE_FAMILIAR.md`](../reports/s9_s10/REPORTE_FAMILIAR.md).
+> Se conserva el código de este diagnóstico para reproducibilidad; no sustituye B = foto + GPS.
+
 ## Diseño acordado
 
 - **B — solo geolocalización:** clasificador tabular que recibe latitud y longitud. No recibe imágenes, elevación, hábitat, sustrato ni fecha. Se usa una fila por observación para que las observaciones con varias fotografías no pesen más.

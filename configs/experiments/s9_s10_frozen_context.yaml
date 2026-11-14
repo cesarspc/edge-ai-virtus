@@ -1,0 +1,24 @@
+study_id: s9_s10_frozen_context_v002
+protocol: frozen_visual_probability_mixture
+context_directory: data/processed/s8_s9_context_v002
+visual_run: runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c
+visual_checkpoint_sha256: e7b2dee4c742adce5b9c601c36a1b9844e9e183b4a8389e08d1274ee38959cd8
+models:
+  B: geo
+  C: geo_climate
+  D: geo_climate_substrate
+context_weight: 0.1
+logistic_regression:
+  C: 1.0
+  max_iter: 1000
+  tol: 0.00001
+  solver: lbfgs
+  class_weight: balanced
+seed: 42
+bootstrap_resamples: 2000
+geographic_guard_quantiles: [0.005, 0.995]
+external_set: ext_full_001
+external_policy: report_raw_transfer_and_predefined_geographic_guard
+selection: no_weight_or_hyperparameter_selection_on_val_or_external
+substrate_policy: coarse_wood_for_detailed_and_low_precision_records
+output: reports/s9_s10/frozen_context

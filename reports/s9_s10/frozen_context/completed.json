@@ -1,0 +1,10 @@
+{
+  "models": [
+    "B",
+    "C",
+    "D"
+  ],
+  "trained_visual_backbone": false,
+  "external_evaluated": true,
+  "internal_test_evaluations": 0
+}

@@ -1,0 +1,5 @@
+field,value,observations,represented_classes,errors,accuracy,macro_f1_fixed_10_classes
+seen_train_cell,False,72,9,0,1.0,0.9
+seen_train_cell,True,3380,10,69,0.979585798816568,0.9767192602560911
+climate_complete,False,10,4,0,1.0,0.4
+climate_complete,True,3442,10,69,0.9799535153980244,0.9770726148161769

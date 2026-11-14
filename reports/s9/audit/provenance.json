@@ -1,0 +1,55 @@
+{
+  "created_utc": "2026-11-14T00:58:26Z",
+  "dataset_fingerprint": "144323e165ecfbe86d29a3484e56fd91b8e8cb1dce1eef5f1d1355fea7bedb90",
+  "splits": [
+    "train",
+    "val"
+  ],
+  "climate_product": "CHELSA normals 1981-2010, not ERA5-Land",
+  "climate_units": "original stored scale; standardized on train; no physical-unit conversion asserted",
+  "temporal_limitation": "Retrospective normals; may include future climate relative to observations before 2011.",
+  "inputs": [
+    {
+      "path": "data/raw/fungitastic/metadata.zip",
+      "sha256": "b1dc1d24714d9522c545d8cdd8f7e6dd9999afe2620d271aeb761f1def0719ac"
+    },
+    {
+      "path": "data/raw/fungitastic/FungiTastic-Climatic-Average.csv",
+      "sha256": "d5f9217d65d71bbadc362d41f8bd5f0e18c2e8b5d06840af7e49b9412ad53cd7"
+    },
+    {
+      "path": "data/versions/v002/splits.csv",
+      "sha256": "7254055b2a45a7a6a801994cb5b2cb585ab5dfaeca0c2fbddc1b4abdf2e17883"
+    },
+    {
+      "path": "data/versions/v002/manifest.json",
+      "sha256": "5dd41b1a824dcd825eef81e8439c69db53c727ced42b3aa8014a85a3db2567b1"
+    },
+    {
+      "path": "scripts/data/prepare_s8_s9_context.py",
+      "sha256": "14dc66224c238c6b150eb8da74a9db6701affab8d0db6db5471be2f6bda123e4"
+    },
+    {
+      "path": "scripts/data/cleaning.py",
+      "sha256": "3964e45b2ef0c84bd9bb32c6d424491d4cf6c267bd7116ec9751bdc1466d8c4e"
+    },
+    {
+      "path": "scripts/data/curation_sources.py",
+      "sha256": "17d90b153e4054a177796c10d067bbfcf49d9ce2da4d1381a5e7898189ffddf4"
+    }
+  ],
+  "outputs": [
+    {
+      "path": "data/processed/s8_s9_context_v002/observations.csv",
+      "sha256": "0889e97737a4c8b80aa425eec6194d5cc1691a979a7c8b67708bd4f269c06d7b"
+    },
+    {
+      "path": "data/processed/s8_s9_context_v002/metadata_audit.csv",
+      "sha256": "7a07ee08121e11b6284d682da6fd66f28d70ff2be918f75dc49fa4f70d8b4984"
+    },
+    {
+      "path": "data/processed/s8_s9_context_v002/raw_images.csv",
+      "sha256": "d031fa326f5d0985e7cb63daf52f8a8c2cf11c384ec10573cf03db9149f61025"
+    }
+  ]
+}

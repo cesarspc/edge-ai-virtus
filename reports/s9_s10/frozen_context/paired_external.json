@@ -1,0 +1,194 @@
+[
+  {
+    "group": "full",
+    "comparison": "B_raw-A",
+    "delta_macro_f1": -0.00426579838766028,
+    "ci95_delta_macro_f1": [
+      -0.007360664315027701,
+      -0.001189644484485159
+    ],
+    "delta_accuracy": -0.005311542390194046,
+    "ci95_delta_accuracy": [
+      -0.008171603677221695,
+      -0.0026557711950970786
+    ],
+    "fixed_errors": 10,
+    "introduced_errors": 36
+  },
+  {
+    "group": "full",
+    "comparison": "C_raw-B_raw",
+    "delta_macro_f1": 0.0,
+    "ci95_delta_macro_f1": [
+      0.0,
+      0.0
+    ],
+    "delta_accuracy": 0.0,
+    "ci95_delta_accuracy": [
+      0.0,
+      0.0
+    ],
+    "fixed_errors": 0,
+    "introduced_errors": 0
+  },
+  {
+    "group": "full",
+    "comparison": "D_raw-C_raw",
+    "delta_macro_f1": 0.003195152941992352,
+    "ci95_delta_macro_f1": [
+      -0.0002314351041395851,
+      0.00657746844241038
+    ],
+    "delta_accuracy": 0.004698672114402447,
+    "ci95_delta_accuracy": [
+      0.001838610827374909,
+      0.007763023493360555
+    ],
+    "fixed_errors": 37,
+    "introduced_errors": 14
+  },
+  {
+    "group": "full",
+    "comparison": "D_guarded-A",
+    "delta_macro_f1": 0.0,
+    "ci95_delta_macro_f1": [
+      0.0,
+      0.0
+    ],
+    "delta_accuracy": 0.0,
+    "ci95_delta_accuracy": [
+      0.0,
+      0.0
+    ],
+    "fixed_errors": 0,
+    "introduced_errors": 0
+  },
+  {
+    "group": "colombia",
+    "comparison": "B_raw-A",
+    "delta_macro_f1": -0.008562162247946925,
+    "ci95_delta_macro_f1": [
+      -0.014100402986862581,
+      -0.0030753744617782715
+    ],
+    "delta_accuracy": -0.0077658303464755996,
+    "ci95_delta_accuracy": [
+      -0.01194743130227005,
+      -0.003882915173237797
+    ],
+    "fixed_errors": 10,
+    "introduced_errors": 36
+  },
+  {
+    "group": "colombia",
+    "comparison": "C_raw-B_raw",
+    "delta_macro_f1": 0.0,
+    "ci95_delta_macro_f1": [
+      0.0,
+      0.0
+    ],
+    "delta_accuracy": 0.0,
+    "ci95_delta_accuracy": [
+      0.0,
+      0.0
+    ],
+    "fixed_errors": 0,
+    "introduced_errors": 0
+  },
+  {
+    "group": "colombia",
+    "comparison": "D_raw-C_raw",
+    "delta_macro_f1": 0.00589199847006161,
+    "ci95_delta_macro_f1": [
+      -0.0008569139305742796,
+      0.012463869164178755
+    ],
+    "delta_accuracy": 0.0068697729988053124,
+    "ci95_delta_accuracy": [
+      0.0026881720430107503,
+      0.011350059737156526
+    ],
+    "fixed_errors": 37,
+    "introduced_errors": 14
+  },
+  {
+    "group": "colombia",
+    "comparison": "D_guarded-A",
+    "delta_macro_f1": 0.0,
+    "ci95_delta_macro_f1": [
+      0.0,
+      0.0
+    ],
+    "delta_accuracy": 0.0,
+    "ci95_delta_accuracy": [
+      0.0,
+      0.0
+    ],
+    "fixed_errors": 0,
+    "introduced_errors": 0
+  },
+  {
+    "group": "orinoquia",
+    "comparison": "B_raw-A",
+    "delta_macro_f1": 0.0024858531545308704,
+    "ci95_delta_macro_f1": [
+      -0.01143872779213342,
+      0.01883646539128099
+    ],
+    "delta_accuracy": -0.009708737864077666,
+    "ci95_delta_accuracy": [
+      -0.02588996763754048,
+      0.006472491909385147
+    ],
+    "fixed_errors": 2,
+    "introduced_errors": 5
+  },
+  {
+    "group": "orinoquia",
+    "comparison": "C_raw-B_raw",
+    "delta_macro_f1": 0.0,
+    "ci95_delta_macro_f1": [
+      0.0,
+      0.0
+    ],
+    "delta_accuracy": 0.0,
+    "ci95_delta_accuracy": [
+      0.0,
+      0.0
+    ],
+    "fixed_errors": 0,
+    "introduced_errors": 0
+  },
+  {
+    "group": "orinoquia",
+    "comparison": "D_raw-C_raw",
+    "delta_macro_f1": -0.0024858531545308704,
+    "ci95_delta_macro_f1": [
+      -0.018836465391280994,
+      0.011438727792133414
+    ],
+    "delta_accuracy": 0.009708737864077666,
+    "ci95_delta_accuracy": [
+      -0.006472491909385147,
+      0.02588996763754048
+    ],
+    "fixed_errors": 5,
+    "introduced_errors": 2
+  },
+  {
+    "group": "orinoquia",
+    "comparison": "D_guarded-A",
+    "delta_macro_f1": 0.0,
+    "ci95_delta_macro_f1": [
+      0.0,
+      0.0
+    ],
+    "delta_accuracy": 0.0,
+    "ci95_delta_accuracy": [
+      0.0,
+      0.0
+    ],
+    "fixed_errors": 0,
+    "introduced_errors": 0
+  }
+]

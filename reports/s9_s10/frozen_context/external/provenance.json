@@ -1,0 +1,23 @@
+{
+  "set_fingerprint": "61ce96b14844c4b50bcc5aad7306ac6445f2b971596361a8990794e9935b2715",
+  "images_freshly_hash_verified": 9649,
+  "predictions_sha256": "777084003825e5d44a32fa428685beca34e5ba08d7aa41eed5c3d72cca7c3c45",
+  "original_evaluation_sha256": "b787c30408c8e22a565d64e9534bd617c6c01a5c1f2d9a40de05a0f8b97cdf86",
+  "climate_available": 0,
+  "substrate_available": 0,
+  "geo_ok": 2964,
+  "in_training_domain": 0,
+  "guard_bounds": {
+    "latitude": {
+      "0.005": 53.66100419,
+      "0.995": 57.51296041999999
+    },
+    "longitude": {
+      "0.005": 8.16245783,
+      "0.995": 15.11783127
+    }
+  },
+  "overlapping_groups": true,
+  "previously_evaluated_set": true,
+  "used_for_selection": false
+}

@@ -6,6 +6,13 @@ runs/**/*.pt filter=lfs diff=lfs merge=lfs -text
 /configs/train/cropping*.yaml -text
 /configs/train/s5_mobilenet_v3_large_v002_[bcd].yaml -text
 /configs/train/s8_multimodal_v002.yaml -text
+/configs/train/s9_climate_v002.yaml -text
+/configs/train/s10_substrate_v002.yaml -text
+/configs/train/archive/s8_environmental_exploratory_v002.yaml -text
+/scripts/data/prepare_s8_s9_context.py -text
+/scripts/data/fetch_s9_review_images.py -text
+/reports/s9/** -text
+/reports/s9_s10/** -text
 /configs/experiments/** -text
 /data/versions/v002/** -text
 /data/taxonomy/v002/** -text

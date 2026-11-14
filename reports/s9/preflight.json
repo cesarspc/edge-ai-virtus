@@ -1,0 +1,13 @@
+{
+  "device": "cuda",
+  "ready": false,
+  "issues": [
+    "CUDA unavailable in this Python environment",
+    "Missing photographs: data/raw/images/fungitastic_v002/300p",
+    "Missing: data/processed/v002/images.csv",
+    "Missing: data/processed/v002/observations.csv",
+    "Missing: data/raw/images/fungitastic_v002/download_manifest.csv"
+  ],
+  "test_evaluations": 0,
+  "image_integrity": "checked freshly by train_s8.py before each run"
+}

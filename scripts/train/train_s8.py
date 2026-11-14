@@ -1,4 +1,4 @@
-"""S8 val-only experiments and the S9 B geolocation baseline, resumable at epoch boundaries."""
+"""S8-S10 incremental train/val experiments and legacy GPS-only diagnostics."""
 from __future__ import annotations
 
 import argparse
@@ -23,6 +23,7 @@ with stage("Cargando PyTorch y bibliotecas", active=__name__ == "__main__"):
     from pipeline.multimodal import (EnvironmentalEncoder, EnvironmentalOnlyModel, GeoClimateEncoder,
                                      GeolocationEncoder, MultimodalTable,
                                      VisualEnvironmentalModel, VisualOnlyModel)
+    from pipeline.context import ContextEncoder, ContextFusion, dropout_context, load_context, perturb_context
     from pipeline.training import (atomic_checkpoint, build_criterion, build_optimizer, build_scheduler,
                                    class_weights, random_state, restore_random_state, set_seed)
     from pipeline.transforms import build_transforms
@@ -52,7 +53,7 @@ def join_observations(frames, observations):
     return result
 
 
-def condition_frame(frame, condition, seed, mode):
+def condition_frame(frame, condition, seed, mode="metadata"):
     """Perturb metadata at observation level, keeping repeated images together."""
     result = frame.copy()
     if condition == "missing":
@@ -129,6 +130,14 @@ def main():
     cfg_path = resolve(args.config)
     cfg = yaml.safe_load(cfg_path.read_text(encoding="utf-8"))
     cfg["mode"] = args.mode
+    context_cfg = cfg.get("context")
+    stage_name = cfg.get("stage", "s8")
+    if context_cfg:
+        expected_features = {"s8": "geo", "s9": "geo_climate", "s10": "geo_climate_substrate"}
+        if stage_name not in expected_features or context_cfg.get("feature_set") != expected_features[stage_name]:
+            raise SystemExit("S8: geo; S9: geo_climate; S10: geo_climate_substrate")
+        if not 0 <= tr_dropout_probability(cfg) < 1:
+            raise SystemExit("metadata_dropout must be in [0,1)")
     if cfg["evaluation"].get("evaluate_test_at_end") or cfg["data"].get("split_column", "split") != "split":
         raise SystemExit("This script uses official train/val only; test is forbidden")
     if args.mode == "geo_climate" and cfg["data"].get("version") != "v002":
@@ -151,8 +160,12 @@ def main():
         raise SystemExit("Faltan imágenes de train o val; completa la descarga antes de entrenar.")
     if len(tables.classes) != cfg["model"]["num_classes"]:
         raise SystemExit("El número de clases no coincide con el dataset")
-    observations = pd.read_csv(REPO_ROOT / "data" / "processed" / tables.version / "observations.csv",
-                               usecols=FIELDS, low_memory=False)
+    if context_cfg:
+        observations, context_hash = load_context(cfg, REPO_ROOT, tables.fingerprint, sha256_file)
+        cfg["context_manifest_sha256"] = context_hash
+    else:
+        observations = pd.read_csv(REPO_ROOT / "data" / "processed" / tables.version / "observations.csv",
+                                   usecols=FIELDS, low_memory=False)
     observations = observations[observations.split.isin(["train", "val"])]
     frames = join_observations(tables.frames, observations)
     if args.mode == "geo_climate":
@@ -162,9 +175,10 @@ def main():
         frames = {split: frame.drop_duplicates("observation_uid").reset_index(drop=True)
                   for split, frame in frames.items()}
     train_obs = frames["train"].drop_duplicates("observation_uid")
-    encoder = (GeolocationEncoder.fit(train_obs) if args.mode == "geolocation" else
-               GeoClimateEncoder.fit(train_obs) if args.mode == "geo_climate" else
-               EnvironmentalEncoder.fit(train_obs))
+    encoder = (ContextEncoder.fit(train_obs, context_cfg["feature_set"]) if context_cfg
+               else GeolocationEncoder.fit(train_obs) if args.mode == "geolocation"
+               else GeoClimateEncoder.fit(train_obs) if args.mode == "geo_climate"
+               else EnvironmentalEncoder.fit(train_obs))
     encoded = {s: encoder.transform(frame) for s, frame in frames.items()}
     feature_count = encoded["train"].shape[1]
     init_path = (resolve(cfg["initialization"]["checkpoint"])
@@ -172,7 +186,7 @@ def main():
     if init_path is not None and not init_path.is_file():
         raise SystemExit(f"Checkpoint visual no encontrado: {init_path}")
     hashes = code_hashes()
-    for name in ("train_s8.py", "pipeline/multimodal.py"):
+    for name in ("train_s8.py", "pipeline/multimodal.py", "pipeline/context.py"):
         hashes[name] = sha256_file(Path(__file__).parent / name)
     init_hash = sha256_file(init_path) if init_path is not None else None
     resumed = torch.load(resolve(args.resume), map_location="cpu", weights_only=True) if args.resume else None
@@ -187,7 +201,8 @@ def main():
         if (run_dir / "completed.json").exists():
             raise SystemExit("Esta corrida ya finalizó.")
     else:
-        run_prefix = ("s9_b_geolocation" if args.mode == "geolocation" else
+        run_prefix = (stage_name + "_" + args.mode if context_cfg else
+                      "s9_b_geolocation" if args.mode == "geolocation" else
                       "s9_c_image_geo_climate" if args.mode == "geo_climate" else "s8_" + args.mode)
         run_id = datetime.now(timezone.utc).strftime("%Y%m%dT%H%M%S%fZ") + "_" + run_prefix
         run_dir = resolve(cfg["output"]["runs_dir"]) / run_id
@@ -207,7 +222,8 @@ def main():
     train_loader = DataLoader(MultimodalTable(frames["train"], encoded["train"], tf_train, load_images),
                               batch_size=tr["batch_size"], shuffle=True, generator=generator, **kw)
     def val_loader(condition):
-        frame = condition_frame(frames["val"], condition, tr["seed"], args.mode)
+        frame = (perturb_context(frames["val"], condition, tr["seed"], context_cfg["feature_set"])
+                 if context_cfg else condition_frame(frames["val"], condition, tr["seed"], args.mode))
         return DataLoader(MultimodalTable(frame, encoder.transform(frame), tf_eval, load_images),
                           batch_size=cfg["evaluation"]["batch_size"], shuffle=False, **kw)
     val = val_loader("normal")
@@ -220,8 +236,9 @@ def main():
             raise SystemExit("El checkpoint visual no coincide con clases, dataset o arquitectura")
         visual = build_model(cfg, pretrained=False)
         visual.load_state_dict(checkpoint["model"], strict=True)
+        fusion = ContextFusion if context_cfg else VisualEnvironmentalModel
         model = (VisualOnlyModel(visual) if args.mode == "visual" else
-                 VisualEnvironmentalModel(visual, feature_count, len(tables.classes)))
+                 fusion(visual, feature_count, len(tables.classes)))
     model.to(device)
     weights = class_weights(frames["train"], len(tables.classes), tr["class_weighting"])
     criterion = build_criterion(tr, weights, device)
@@ -248,6 +265,8 @@ def main():
                       desc=f"Epoca {epoch}/{tr['epochs']} - train", unit="lote")
         for step, (images, metadata, labels) in enumerate(batches, 1):
             images, metadata, labels = images.to(device), metadata.to(device), labels.to(device)
+            if context_cfg and args.mode != "visual":
+                metadata = dropout_context(metadata, tr_dropout_probability(cfg))
             with torch.autocast(device_type=device.type, enabled=amp):
                 loss = criterion(model(images, metadata), labels)
             if not torch.isfinite(loss):
@@ -300,7 +319,14 @@ def main():
             break
     model.load_state_dict(best_checkpoint["model"])
     results = {}
-    for condition in (["normal"] if args.mode == "visual" else ["normal", "missing", "shuffled"]):
+    conditions = ["normal"] if args.mode == "visual" else ["normal", "missing", "shuffled"]
+    if context_cfg and args.mode != "visual":
+        conditions = ["normal", "missing_all", "missing_geo", "shuffled_geo", "imprecise_geo"]
+        if context_cfg["feature_set"] != "geo":
+            conditions += ["missing_climate", "shuffled_climate"]
+        if context_cfg["feature_set"] == "geo_climate_substrate":
+            conditions += ["missing_substrate", "shuffled_substrate"]
+    for condition in conditions:
         progress("evaluation", split="val", condition=condition)
         probabilities = predict(model, val if condition == "normal" else val_loader(condition), device, amp,
                                 f"Evaluacion val - {condition}")
@@ -316,6 +342,10 @@ def main():
                                               "best_epoch": best_checkpoint["epoch"]})
     progress("completed", evaluated_splits=["val"])
     return 0
+
+
+def tr_dropout_probability(cfg):
+    return float(cfg["training"].get("metadata_dropout", 0.2))
 
 
 if __name__ == "__main__":

@@ -1,0 +1,8 @@
+field,quality,observations,errors,accuracy
+substrate,LOW_PRECISION,1,0,1.0
+substrate,OK,3451,69,0.9800057954216169
+habitat,OK,3452,69,0.9800115874855156
+elevation,MISSING,10,0,1.0
+elevation,OK,2197,46,0.9790623577605826
+elevation,SUSPECT,1245,23,0.9815261044176706
+event_date,OK,3452,69,0.9800115874855156

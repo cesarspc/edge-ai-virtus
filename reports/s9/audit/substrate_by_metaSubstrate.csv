@@ -1,0 +1,18 @@
+split,metaSubstrate,substrate__quality,observations
+train,fire spot,OK,2
+train,fungi and mycetozoans,OK,8
+train,jord,OK,6267
+train,mosses,OK,87
+train,other substrate,OK,48
+train,plant material,OK,844
+train,stone,OK,3
+train,wood,LOW_PRECISION,1811
+train,wood,OK,8729
+val,animals,OK,1
+val,fungi and mycetozoans,OK,3
+val,jord,OK,1266
+val,mosses,OK,32
+val,other substrate,OK,4
+val,plant material,OK,140
+val,wood,LOW_PRECISION,1
+val,wood,OK,2005

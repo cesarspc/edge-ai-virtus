@@ -1,103 +1,117 @@
-# S8: inicio de la línea multimodal
+# S8 corregida: imagen y geolocalización
 
-## Objetivo
+## Alcance y estado
 
-Estudiar si los metadatos ambientales disponibles en el momento de uso mejoran la
-clasificación de los diez géneros frente al modelo visual, manteniendo las
-particiones oficiales de v002. Este documento describe el trabajo inicial; no
-presenta una corrida ni resultados de un modelo multimodal entrenado.
+La propuesta `Propuesta_Virtus (2).pdf`, páginas 3–5, define A = imagen,
+B = imagen + geolocalización (S8), C = imagen + geolocalización + clima
+(S9) y D = las anteriores + sustrato (S10). Hábitat, elevación y fecha no
+son entradas de A/B/C en este protocolo. La fecha se conserva para auditoría.
 
-## Datos disponibles
+El commit `4a41e06` entrenó otra comparación: imagen frente a imagen con
+hábitat, sustrato, elevación y estacionalidad. Se conservan esas corridas en
+`runs/s8_multimodal_v002/` como exploratorias; **no prueban el aporte del GPS**.
+Su configuración histórica está en
+`configs/train/archive/s8_environmental_exploratory_v002.yaml` y el código
+original permanece en ese commit. No reanudar checkpoints antiguos con el
+código corregido: la comprobación de hashes lo impide.
 
-La inspección de `data/processed/v002/observations.csv` se limitó a train y val:
+La implementación corregida y sus pruebas están preparadas. **Las nuevas
+corridas A y B no se han entrenado**: en este checkout faltan las fotografías,
+el manifiesto de descarga y las tablas procesadas v002. PyTorch es CPU.
+`reports/s9/preflight.json` registra esa comprobación; no contiene métricas nuevas.
 
-| Campo | Train (17 799 observaciones) | Val (3 452 observaciones) |
-|---|---:|---:|
-| Hábitat presente | 17 799 | 3 452 |
-| Sustrato presente | 17 799 | 3 452 |
-| Elevación con calidad OK | 10 996 | 2 197 |
-| Clima ausente | 17 799 | 3 452 |
+## Comparación controlada
 
-El sustrato tiene calidad `LOW_PRECISION` en 1 811 observaciones de train y en
-una de val; la diferencia entre particiones debe investigarse antes de interpretar
-resultados. Los metadatos pueden ser datos derivados por la fuente con método
-no documentado o anotaciones humanas relacionadas con la identificación. Su
-disponibilidad y origen en el uso real deben verificarse; las correlaciones
-geográficas y ecológicas pueden generar atajos y limitar la generalización.
+| Modelo | Entrada | Semana | Configuración | Modo |
+|---|---|---|---|---|
+| A | Imagen | S8 | `configs/train/s8_multimodal_v002.yaml` | `visual` |
+| B | Imagen + GPS | S8 | misma configuración | `multimodal` |
+| C | Imagen + GPS + clima CHELSA | S9 | `configs/train/s9_climate_v002.yaml` | `multimodal` |
 
-## Implementación
+Los tres parten del mismo checkpoint visual S5-C, con la misma cohorte,
+particiones oficiales, augmentations, resolución, semilla, optimizador, pesos
+de clase y criterio de selección. S5-C nombra la candidata visual previa;
+no es el Modelo C de modalidades. B y C no se inicializan del mejor A o B:
+así evitan heredar distintas cantidades de entrenamiento. Se comparan
+regímenes de entrenamiento equivalentes con parada temprana, no un número
+forzosamente igual de épocas. Una semilla no permite afirmar significancia;
+repetir semillas antes de una selección definitiva.
 
-`scripts/train/pipeline/multimodal.py` implementa un codificador que acepta
-únicamente observaciones de train al ajustar categorías y escala de elevación.
-Incluye indicadores para categorías desconocidas, fecha ausente o de calidad no
-OK y elevación ausente o de calidad no OK. El estado del codificador debe
-guardarse con cada checkpoint para reproducir la inferencia. El hábitat y el
-sustrato se incluyen por categoría; sus marcas de calidad todavía no son
-entradas separadas. La fecha se codifica como posición cíclica en el año.
-No se emplean taxonomía, identificadores, coordenadas, año ni clima.
+La unidad de entrenamiento sigue siendo la imagen: una observación con más
+vistas tiene más peso. Selección por macro-F1 **por observación**, promediando
+las probabilidades de sus fotografías. Se guardan también métricas por imagen,
+género, top-1 y top-3. Solo se usan train y val; no se modifica ni evalúa test.
 
-El modelo inicial suma a los logits visuales una contribución tabular lineal
-inicializada en cero. Antes del entrenamiento, sus predicciones coinciden con
-las del modelo visual cargado. Una contribución aditiva permite probar una
-primera fusión sencilla, pero no modela interacciones imagen-metadatos.
+## GPS y ausencia de contexto
 
-`train_s8.py` enlaza imágenes y observaciones con validación de identificador,
-partición y etiqueta, y ofrece tres modos con la misma configuración y cohorte.
-El modo visual y el multimodal parten del checkpoint C; el modo de metadatos
-entrena una capa tabular. El entrenamiento usa imágenes como unidad, por lo que
-una observación con varias imágenes contribuye varias veces. Las métricas de
-validación también se calculan por observación promediando probabilidades.
+`pipeline/context.py` limita las entradas a una lista explícita. GPS se redondea
+a 0,1 grados y se codifica como tres coordenadas en la esfera y un indicador
+de ausencia. La resolución angular no equivale a una distancia fija ni a una
+garantía de privacidad. La codificación lineal es una primera aproximación
+de baja capacidad. Coordenadas inválidas o con calidad distinta de `OK` se
+enmascaran; la incertidumbre se conserva para auditoría y no entra al clasificador.
+`OK` significa que pasó las reglas locales, no precisión de GPS certificada.
 
-Además de la validación normal, los modos con metadatos se evalúan con todos
-los campos ausentes y con los metadatos intercambiados entre observaciones de
-forma reproducible. Son pruebas de sensibilidad: no equivalen a mediciones de
-datos ausentes o incorrectos en un entorno real. En la fusión, la rama tabular
-incluye un sesgo; por ello, la condición ausente no equivale necesariamente a
-la salida visual original.
+No entran identificadores, etiquetas, país, región, hábitat, sustrato,
+elevación, fecha ni clima a B. C añade únicamente `Bio1`–`Bio19`, con medias y
+desviaciones ajustadas en observaciones únicas de train y máscaras por variable.
+El codificador y la huella de los datos se guardan con cada checkpoint.
 
-Las tres primeras corridas S8 están completas y sus resultados se encuentran en
-`runs/s8_multimodal_v002/`. Se evaluó únicamente val; no se consultó test.
+La fusión suma un residual tabular inicializado en cero a los logits visuales.
+Se aplica dropout de modalidades de 0,2 en entrenamiento. Si falta todo el
+contexto, el residual se anula exactamente y se usa la rama visual entrenada
+de esa corrida; esto no garantiza igualdad con un A entrenado por separado.
 
-## Ejecución manual en PowerShell
+Se evalúan contexto normal, todo ausente, GPS ausente, GPS intercambiado por
+observación y GPS redondeado a un grado. C añade clima ausente e intercambiado
+independientemente del GPS. Las pruebas son sensibilidades reproducibles,
+no simulaciones certificadas del error de Android. El intercambio conserva
+juntas todas las vistas de cada observación.
 
-Desde la raíz del repositorio y con el entorno y las imágenes v002 ya
-preparados, ejecutar cada comando por separado. Los procesos comprueban los
-hashes de las imágenes, por lo que el inicio puede tardar varios minutos. Por
-defecto exigen CUDA; si se desea CPU, añadir `--device cpu`.
+## Datos, ejecución y trazabilidad
+
+El contexto vive en un anexo local `data/processed/s8_s9_context_v002/`.
+No se reescriben las tablas ni la huella de v002. El preparador lee únicamente
+los CSV originales Train y ClosedSet-Val, limita sus IDs a la cohorte congelada
+y registra hashes de fuentes, código y salidas. Antes de entrenar se verifican
+ese anexo y la integridad publicada de tablas, clases e imágenes.
 
 ```powershell
-cd D:\Dev\Virtus\edge-ai-virtus
-.\.venv\Scripts\python.exe scripts\train\train_s8.py --config configs\train\s8_multimodal_v002.yaml --mode visual
-.\.venv\Scripts\python.exe scripts\train\train_s8.py --config configs\train\s8_multimodal_v002.yaml --mode metadata
-.\.venv\Scripts\python.exe scripts\train\train_s8.py --config configs\train\s8_multimodal_v002.yaml --mode multimodal
+python scripts/data/prepare_s8_s9_context.py
+python scripts/train/run_s8_s9.py --check
+python scripts/train/run_s8_s9.py --stage s8
 ```
 
-Cada corrida muestra la carpeta creada y guarda `last.pt` al terminar cada
-época. Si se interrumpe con Ctrl+C, se pierde el trabajo de la época en curso;
-para reanudar, usar el mismo modo y configuración, y sustituir la ruta por la
-que se mostró en pantalla:
+El último comando ejecuta A y después B. Requiere las imágenes originales en
+la ubicación configurada, las tablas v002 reproducidas contra sus hashes y un
+entorno CUDA. CPU se solicita explícitamente con `--device cpu`.
+
+Para controlar cada corrida o reanudar una interrupción:
 
 ```powershell
-.\.venv\Scripts\python.exe scripts\train\train_s8.py --config configs\train\s8_multimodal_v002.yaml --mode multimodal --resume "runs\s8_multimodal_v002\NOMBRE_DE_LA_RUN\last.pt"
+python scripts/train/train_s8.py --config configs/train/s8_multimodal_v002.yaml --mode visual
+python scripts/train/train_s8.py --config configs/train/s8_multimodal_v002.yaml --mode multimodal
+python scripts/train/train_s8.py --config configs/train/s8_multimodal_v002.yaml --mode multimodal --resume "runs/s8_geolocation_v002/NOMBRE/last.pt"
 ```
 
-El mismo comando sirve para `visual` o `metadata` cambiando `--mode` y la ruta.
-La reanudación exige el mismo dispositivo, código, configuración, dataset y
-checkpoint inicial. Si se cambia el código tras una interrupción, conservar el
-estado anterior para reanudar esa corrida. Se puede añadir
-`--pause-after-epoch` para detenerse ordenadamente al final de la próxima época.
-Las corridas finalizadas no se reanudan.
+`--pause-after-epoch` permite una pausa al terminar la época. Los checkpoints
+guardan optimizador, scheduler, RNG, codificador y procedencia; las corridas
+completas no se reanudan. Las nuevas salidas se guardan en
+`runs/s8_geolocation_v002/`, separadas de las exploratorias.
 
-Cada carpeta contiene `run.json`, `progress.json`, `history.csv`, `last.pt`,
-`best.pt`, métricas y predicciones de val, `RESULTS.md` y `completed.json` al
-terminar. La selección y parada temprana usan F1 macro por observación en val.
+## Lectura de resultados disponibles
 
-## Siguientes pasos
+La auditoría de las corridas exploratorias está en
+[`reports/s9/validation/REPORT.md`](../reports/s9/validation/REPORT.md).
+Visual y fusión tienen 69 errores sobre 3.452 observaciones y macro-F1
+0,977108. Las probabilidades difieren, pero no cambian los aciertos o errores
+por observación. Esto no demuestra mejora multimodal ni evalúa geolocalización.
+El modelo solo de metadatos tiene macro-F1 0,188961.
 
-1. Comprobar la procedencia, calidad y disponibilidad en Android de cada
-   variable; investigar el cambio de calidad del sustrato entre train y val.
-2. Comparar las métricas por género y las pruebas de sensibilidad en val;
-   estudiar la variación entre semillas antes de atribuir una mejora a la fusión.
-3. Seleccionar el protocolo antes de cualquier evaluación final en test y medir
-   disponibilidad de metadatos y latencia en Android antes de concluir que es
-   viable para despliegue.
+La validación comparte celda GPS redondeada con train en 3.380/3.452 casos;
+72 quedan en celdas no vistas. Una posible mejora de B debe leerse junto a
+este solapamiento y al desglose por celdas vistas/nuevas. No se puede extrapolar
+automáticamente a Colombia ni atribuir causalidad ecológica a la ubicación.
+
+S9, la auditoría de metadatos y el contrato Android se describen en
+[`s9_clima_auditoria.md`](s9_clima_auditoria.md).

@@ -1,4 +1,4 @@
-run_name: s8_multimodal_v002
+run_name: s8_geolocation_v002
 data:
   version: v002
   source: fungitastic
@@ -34,6 +34,7 @@ training:
   class_weighting: inverse_sqrt
   amp: true
   early_stopping_patience: 3
+  metadata_dropout: 0.2
   selection_metric: val_obs_macro_f1
   deterministic: false
 evaluation:
@@ -42,6 +43,11 @@ evaluation:
   observation_aggregation: mean_prob
   evaluate_test_at_end: false
 output:
-  runs_dir: runs/s8_multimodal_v002
+  runs_dir: runs/s8_geolocation_v002
 initialization:
   checkpoint: runs/20261024T031650621510Z_s5_mobilenet_v3_large_v002_c/best.pt
+
+stage: s8
+context:
+  directory: data/processed/s8_s9_context_v002
+  feature_set: geo

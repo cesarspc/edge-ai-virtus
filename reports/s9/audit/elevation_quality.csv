@@ -1,0 +1,7 @@
+split,elevation__quality,observations
+train,MISSING,17
+train,OK,10996
+train,SUSPECT,6786
+val,MISSING,10
+val,OK,2197
+val,SUSPECT,1245

@@ -1,0 +1,4 @@
+run,feature_set,mode,observations,errors,macro_f1,accuracy,multi_image_observations,discordant_observations
+20261030T184438858210Z_s8_visual,legacy_environment,visual,3452,69,0.9771079012438568,0.9800115874855156,1712,223
+20261030T191206787347Z_s8_metadata,legacy_environment,metadata,3452,1976,0.18896137748381286,0.4275782155272306,1712,0
+20261030T193246267806Z_s8_multimodal,legacy_environment,multimodal,3452,69,0.9771079012438568,0.9800115874855156,1712,223
