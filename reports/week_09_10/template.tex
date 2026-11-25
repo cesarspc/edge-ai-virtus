@@ -1,0 +1,319 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{geometry,booktabs,tabularx,array,enumitem,amsmath,graphicx,float,caption,hyperref}
+\geometry{top=2.3cm,bottom=2.3cm,left=2.4cm,right=2.4cm}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\setlist{leftmargin=*,topsep=3pt,itemsep=3pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\emergencystretch=2em
+\raggedbottom
+
+\title{\textbf{Exploración de modelos de inteligencia artificial multimodal\\
+para la identificación de macromicetos mediante dispositivos móviles}\\[0.6em]
+\normalsize Resultados de las semanas 9 y 10: integración de clima y sustrato}
+\author{Daniel Esteban Camacho Ospina\\Cesar Augusto Pulido Cuervo}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Se evalúa el aporte incremental de geolocalización, clima y sustrato a la
+clasificación de diez géneros de macromicetos. El ensayo conserva las
+predicciones de un clasificador visual MobileNetV3-Large previamente entrenado
+y ajusta tres clasificadores de contexto mediante regresión logística. La
+fusión se realiza sobre las probabilidades, con un peso fijo de 0,1 para el
+contexto. En las 3\,452 observaciones de validación de FungiTastic
+\texttt{v002}, el control visual obtuvo un F1 macro de 0,971674; la variante
+con clima alcanzó 0,971950 y la variante con sustrato, 0,971880. Los intervalos
+de las diferencias incrementales incluyen cero y no permiten establecer una
+mejora concluyente. La evaluación externa de 4\,895 observaciones muestra que
+transferir directamente el contexto geográfico puede reducir la exactitud.
+Como el conjunto externo carece de clima y sustrato compatibles, esa evaluación
+no mide su aporte externo con datos completos. El trabajo corresponde a un
+ensayo de fusión tardía con la rama visual congelada, no a un ajuste conjunto
+de la red multimodal ni a una evaluación final independiente.
+\end{abstract}
+
+\section{Objetivo y alcance}
+Las semanas 9 y 10 se dedicaron a evaluar si el clima y el sustrato aportan
+información adicional a la imagen y la ubicación. Se conserva la secuencia
+incremental del proyecto: A, imagen; B, imagen y geolocalización; C, las
+modalidades anteriores más clima; D, las anteriores más sustrato. El modelo
+basado únicamente en coordenadas, implementado como diagnóstico en un commit
+anterior, no se identifica aquí como B: omitir la imagen impediría atribuir la
+diferencia B--C exclusivamente a la incorporación del clima.
+
+El ensayo utiliza los recursos disponibles en este equipo: metadatos de
+entrenamiento y validación, el paquete climático oficial y predicciones
+visuales previamente guardadas. Se entrenaron nuevas ramas tabulares en CPU,
+manteniendo congelado el modelo visual. Esta estrategia permite estudiar una
+fusión controlada, pero no sustituye el entrenamiento conjunto de una red
+multimodal en el equipo con GPU.
+
+El informe mantiene el nivel taxonómico del experimento: la salida es uno de
+diez \emph{géneros}, no una identificación definitiva de especie. Hábitat,
+elevación, fecha, identificadores y etiquetas taxonómicas no son entradas de
+los clasificadores de contexto de este ensayo.
+
+\section{Datos y protocolo experimental}
+\subsection{Cohortes y referencia visual}
+Se utilizaron 17\,799 observaciones de entrenamiento y 3\,452 de validación
+de FungiTastic \texttt{v002}, conservando las particiones oficiales. La
+referencia visual es MobileNetV3-Large S5, configuración C, seleccionada
+previamente por F1 macro en validación. La denominación \emph{S5-C} identifica
+ese checkpoint previo y no debe confundirse con el modelo C de modalidades.
+Es el mismo checkpoint visual en la validación interna y en el conjunto externo.
+
+Las probabilidades visuales ya estaban disponibles y no se recalcularon. Se
+comprobaron los identificadores, las etiquetas, el orden de clases y las
+cohortes antes de reutilizarlas. Para cada observación se promedian las
+probabilidades de sus fotografías, de modo que las observaciones con varias
+vistas cuentan una sola vez en el ajuste tabular y la evaluación.
+
+El F1 macro por observación es la métrica principal: promedia el F1 de los diez
+géneros con el mismo peso. Se reportan también exactitud, aciertos y errores.
+La validación ya había intervenido en la selección del modelo visual; por
+tanto, estos resultados no son independientes de todo el proceso de desarrollo.
+No se ejecutó una nueva evaluación en el test interno.
+
+\subsection{Codificación y ajuste del contexto}
+Las coordenadas válidas con calidad \texttt{OK} se redondean a 0,1 grados y se
+representan mediante tres componentes sobre la esfera, con una marca de
+ausencia. La resolución angular no equivale a una distancia fija ni constituye
+por sí sola una garantía de privacidad. El clima se representa con
+\texttt{Bio1}--\texttt{Bio19}, estandarizadas con estadísticas de entrenamiento
+y acompañadas de indicadores de ausencia. El sustrato se codifica mediante
+categorías aprendidas solo en entrenamiento, con una categoría desconocida.
+La información de calidad se utiliza para decidir qué valores son admisibles;
+no se incorpora como una categoría predictiva independiente.
+
+Las tres ramas de contexto se ajustan por separado mediante regresión
+logística multiclase, con ponderación equilibrada de clases, regularización
+\(C=1\), optimizador L-BFGS, tolerancia \(10^{-5}\) y un máximo de 1\,000
+iteraciones. El escalado y el vocabulario de categorías se obtienen solo de
+las observaciones de entrenamiento. El procedimiento no realiza búsqueda de
+hiperparámetros en validación ni en el conjunto externo.
+
+\subsection{Fusión y estimación de incertidumbre}
+Sean \(p_A(y\mid x)\) las probabilidades visuales agregadas de una observación
+y \(q_M(y\mid z_M)\) las de la rama de contexto del modelo
+\(M\in\{B,C,D\}\). La salida combinada es
+\begin{equation}
+ p_M(y\mid x,z_M)=(1-\alpha)p_A(y\mid x)+\alpha q_M(y\mid z_M),
+ \qquad \alpha=0,1.
+\end{equation}
+El peso se fijó antes de calcular los resultados y no se modificó para
+favorecer alguna variante. Cuando no existe contexto utilizable se toma
+\(\alpha=0\), recuperando exactamente la predicción visual. La combinación
+convexa conserva la normalización de las probabilidades; no implica que
+estén calibradas.
+
+Se calcularon diferencias B--A, C--B y D--C, con intervalos del 95\,\% mediante
+2\,000 remuestreos pareados de observaciones y semilla 42. Los pares conservan
+la misma observación en ambos modelos. Los intervalos describen la variación
+muestral de esta comparación; no incorporan variación entre semillas de
+entrenamiento ni corrigen el uso previo de validación.
+
+\section{Semana 9: incorporación del clima}
+\subsection{Fuente, disponibilidad y limitación temporal}
+Se descargó y verificó el paquete oficial \texttt{climaticData.zip}, de
+545\,926\,654 bytes. El descargador original solicita \texttt{climatic.zip},
+pero el servidor publica el primer nombre. Se comprobaron la integridad CRC y
+el SHA-256 del paquete, y se conservaron las fuentes y sus hashes.
+
+El producto empleado es \textbf{CHELSA}, no ERA5-Land. Se utilizan las 19
+variables bioclimáticas promedio de 1981--2010 descritas por FungiTastic
+\cite{fungitastic}. Este cambio respecto a la propuesta se hace explícito:
+el ensayo mide contexto climático de largo plazo, no las condiciones
+meteorológicas de la fecha de captura ni el microclima del espécimen.
+Los valores se conservan en su escala almacenada; no se presentan como grados
+Celsius o milímetros sin una conversión verificada. No se incluye humedad
+relativa. Las series mensuales descargadas se preservan, pero no se usan aquí.
+
+\begin{table}[H]
+\centering
+\caption{Disponibilidad del contexto en la cohorte común de FungiTastic.}
+\label{tab:coverage}
+\begin{tabular}{lrrrr}
+\toprule
+Partición & Observaciones & GPS \texttt{OK} & Clima completo & Sin clima \\
+\midrule
+Train & 17\,799 & 17\,795 & 17\,782 & 17 \\
+Validación & 3\,452 & 3\,452 & 3\,442 & 10 \\
+\bottomrule
+\end{tabular}
+\end{table}
+
+La unión se realiza por identificador de observación y conserva los registros
+sin clima, con ausencia explícita, para mantener cohortes idénticas. Hay 745
+observaciones de entrenamiento anteriores a 2011; las normales de 1981--2010
+pueden contener información posterior a esos eventos. En consecuencia, el
+análisis es retrospectivo y no reproduce estrictamente la información
+climática que habría estado disponible en cada fecha.
+
+\subsection{Resultados incrementales}
+@@VALIDATION_TABLE@@
+
+A y B presentan la misma exactitud y F1 macro en validación. C corrige dos
+errores de B e introduce uno, para un saldo de un acierto adicional. El aumento
+de F1 macro es pequeño y su intervalo incluye cero
+(tabla~\ref{tab:deltas}). No se establece una mejora concluyente al añadir el
+clima con esta codificación, arquitectura tabular y peso de fusión.
+
+@@DELTA_TABLE@@
+
+\section{Semana 10: incorporación del sustrato}
+\subsection{Auditoría y armonización}
+El sustrato describe el soporte sobre el que crece el hongo; no se equipara
+con el hábitat. En los metadatos originales, 1\,811 observaciones de train y
+una de validación carecen de \texttt{substrate} detallado y recurren a
+\texttt{metaSubstrate=wood}. La regla de curaduría las marca
+\texttt{LOW\_PRECISION}. Esa marca indica menor detalle, no un error de
+etiqueta demostrado. Las tasas son 10,1747\,\% y 0,0290\,\%, respectivamente.
+
+Para que el modelo no distinga madera detallada y madera sin especificación
+como si fueran soportes biológicos diferentes, se agrupan madera viva, madera
+muerta y madera no especificada en una categoría amplia común. Las categorías
+restantes se conservan según la curaduría y el vocabulario se ajusta solo en
+train. Los valores desconocidos o inadmisibles se representan como tales.
+No se eliminaron observaciones ni se modificaron etiquetas después de ver las
+predicciones.
+
+El desequilibrio de detalle proviene de los CSV de origen y de una partición
+temporal. El desglose por año y género confirma su presencia en varios años,
+incluidos registros recientes de train; no permite atribuirlo únicamente a la
+antigüedad ni a un cambio de formulario no documentado. Con un solo caso de
+baja precisión en validación no es posible estimar de forma fiable el desempeño
+de ese estrato por separado.
+
+\subsection{Resultados y sensibilidad}
+D obtiene el mismo número de aciertos que C. Corrige dos errores de C e
+introduce dos distintos; su F1 macro disminuye ligeramente, de 0,971950 a
+0,971880. El intervalo de D--C incluye cero, por lo que no hay evidencia de
+una mejora consistente por incorporar sustrato en este ensayo.
+
+@@SENSITIVITY_TABLE@@
+
+Las perturbaciones se aplican por observación, sin separar sus vistas. La
+ausencia total recupera el control visual por construcción. En algunos
+escenarios, retirar GPS o clima produce un F1 mayor que el de las entradas
+completas; por tanto, los resultados no respaldan una mejora monótona al
+acumular modalidades. La similitud del F1 al permutar sustrato no demuestra
+que las probabilidades sean idénticas ni que esa variable resulte inútil en
+otras formas de fusión. Estas son pruebas de sensibilidad y no simulaciones
+validadas de disponibilidad real en Android.
+
+\section{Evaluación externa y cambio de dominio}
+\subsection{Conjunto y condiciones}
+Se reutilizaron las predicciones externas del mismo checkpoint visual S5-C y
+se verificó nuevamente el SHA-256 de las 9\,649 fotografías del conjunto
+\texttt{ext\_full\_001}. Se evaluaron 4\,895 observaciones: 3\,348 de
+Colombia y 1\,547 de MIND.Funga. Dentro del grupo colombiano, 309 corresponden
+a la Orinoquía. Los grupos se contienen entre sí y no deben sumarse ni tratarse
+como pruebas independientes.
+
+Las fuentes externas no se usaron para ajustar coeficientes, el peso de fusión
+ni hiperparámetros. Sin embargo, ya habían sido evaluadas en una fase anterior
+del proyecto. Se trata de una auditoría de robustez sobre fuentes conocidas,
+no de un test externo nuevo e intacto.
+
+Los metadatos externos no contienen las variables CHELSA ni sustrato compatible
+con este ensayo. Se dejaron ausentes, sin sustituirlos por datos inferidos de
+la etiqueta. De las 4\,895 observaciones, 2\,964 tienen GPS de calidad
+\texttt{OK}; MIND.Funga no aporta ubicación. Esta evaluación mide transferencia
+geográfica y comportamiento con modalidades faltantes: \textbf{no prueba el
+aporte externo de clima y sustrato completos}.
+
+\subsection{Transferencia directa y filtro geográfico}
+@@EXTERNAL_TABLE@@
+
+En Colombia, aplicar directamente B o C reduce la exactitud del control
+visual de 88,32\,\% a 87,54\,\%. D alcanza 88,23\,\%, todavía por debajo de A.
+En la Orinoquía, A obtiene 77,02\,\%, B/C 76,05\,\% y D 77,02\,\%.
+La transferencia de asociaciones geográficas aprendidas principalmente en
+Dinamarca no puede suponerse beneficiosa en Colombia. La diferencia D--C
+externa no se interpreta como beneficio del sustrato: ese campo está ausente y
+las ramas tabulares se ajustaron con distintos conjuntos de entradas.
+
+También se evaluó un filtro previo de dominio geográfico, definido mediante
+los percentiles 0,5 y 99,5 de latitud y longitud de train. Fuera de esos límites
+se desactiva la contribución contextual. Ninguna observación externa cumple
+simultáneamente los límites; por ello las variantes filtradas coinciden con A.
+Esta igualdad es una propiedad de la regla y no una mejora predictiva ni una
+validación de un detector de dominio. El filtro no se ajustó con etiquetas
+externas y no garantiza cobertura adecuada de otras regiones.
+
+\section{Disponibilidad para uso móvil}
+La disponibilidad en el dataset no implica disponibilidad automática en una
+aplicación. Foto y fecha pueden obtenerse localmente; GPS requiere permiso y
+una localización utilizable. El clima derivado de una fuente remota se
+incorpora al sincronizar, salvo que exista un paquete local compatible. No se
+presupone que la persona conozca sustrato o hábitat: deben ser campos opcionales,
+con un estado desconocido explícito.
+
+Las rutas de ausencia evaluadas preservan la inferencia visual cuando no hay
+contexto utilizable. Aún no se ha comprobado la equivalencia de la inferencia
+en Android, su latencia, memoria, consumo ni la adquisición efectiva de los
+campos en un teléfono. Tampoco se deben intercambiar directamente las
+normales CHELSA con variables ERA5-Land sin adaptar y validar el modelo.
+
+\section{Conclusiones y trabajo siguiente}
+El ensayo de fusión tardía muestra variaciones pequeñas en validación: el
+clima produce un acierto neto adicional y el sustrato no aumenta la exactitud
+respecto a la variante climática. Los intervalos incrementales de F1 incluyen
+cero. Estos resultados no justifican afirmar una mejora estable ni descartar
+de forma general el potencial de esas modalidades.
+
+La auditoría externa evidencia que el contexto geográfico puede perjudicar
+la transferencia y que es necesario definir el comportamiento ante fuentes
+incompletas o regiones distintas. La falta de clima y sustrato externos impide
+una conclusión sobre su aporte multimodal completo fuera de FungiTastic.
+
+El trabajo siguiente comprende:
+\begin{enumerate}
+\item Repetir A/B/C/D mediante ajuste conjunto en GPU y varias semillas,
+manteniendo las mismas cohortes y controles. Comparar esos resultados por
+separado con el ensayo de rama visual congelada.
+\item Obtener contexto climático externo compatible y sustrato con
+procedencia verificable antes de atribuir una mejora multimodal en Colombia.
+\item Diseñar la evaluación prospectiva con información climática disponible
+en la fecha de cada evento y con un conjunto independiente previamente definido.
+\item Revisar errores por género, clases pequeñas y vistas discordantes, sin
+corregir etiquetas o excluir ejemplos únicamente por su predicción.
+\item Verificar adquisición de metadatos, rutas de ausencia y costo de
+inferencia en un dispositivo Android de referencia.
+\end{enumerate}
+
+\section*{Trazabilidad y reproducción}
+La configuración fija, los modelos tabulares, las métricas por condición y
+los intervalos se conservan bajo \path{reports/s9_s10/frozen_context/}.
+Las auditorías de procedencia, calidad y revisión visual permanecen en
+\path{reports/s9/}. Los parámetros de cada rama se guardan en JSON junto con
+su codificador y estadísticas de escalado. Las 21 pruebas automatizadas
+aprobadas comprueban, entre otros aspectos, ajuste exclusivo en train,
+modalidades admitidas, ausencias, alineación de cohortes y reanudación del
+entrenamiento con datos sintéticos; no sustituyen una validación predictiva.
+
+El informe se genera desde las salidas registradas, sin volver a entrenar:
+\begin{quote}\small\ttfamily
+python scripts/reports/build\_s9\_s10\_report.py
+\end{quote}
+Se entrega una fuente LaTeX autónoma y el PDF compilado. Las tablas se
+construyen directamente desde los CSV y JSON de resultados.
+
+\begin{thebibliography}{9}
+\bibitem{fungitastic}
+L. Picek y colaboradores.
+\emph{FungiTastic: A multi-modal dataset and benchmark for image categorization}.
+arXiv:2408.13632, sección 2.1.
+\url{https://arxiv.org/html/2408.13632v2}.
+\end{thebibliography}
+\end{document}

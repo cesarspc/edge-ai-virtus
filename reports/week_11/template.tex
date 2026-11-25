@@ -1,0 +1,163 @@
+\documentclass[11pt,a4paper]{article}
+\usepackage[utf8]{inputenc}
+\usepackage[T1]{fontenc}
+\usepackage[spanish,es-nodecimaldot]{babel}
+\usepackage{lmodern}
+\usepackage{geometry,booktabs,tabularx,array,enumitem,amsmath,graphicx,float,caption,hyperref}
+\geometry{top=2.3cm,bottom=2.3cm,left=2.4cm,right=2.4cm}
+\hypersetup{colorlinks=true,linkcolor=black,urlcolor=blue}
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{0.55em}
+\setlength{\tabcolsep}{4pt}
+\renewcommand{\arraystretch}{1.15}
+\setlist{leftmargin=*,topsep=3pt,itemsep=3pt}
+\newcolumntype{Y}{>{\raggedright\arraybackslash}X}
+\emergencystretch=2em
+\raggedbottom
+
+\title{\textbf{Exploración de modelos de inteligencia artificial multimodal\\
+para la identificación de macromicetos mediante dispositivos móviles}\\[0.6em]
+\normalsize Resultados de la semana 11: comparación de variantes y selección del modelo}
+\author{Daniel Esteban Camacho Ospina\\Cesar Augusto Pulido Cuervo}
+\date{}
+
+\begin{document}
+\maketitle
+
+\begin{abstract}
+Se compararon seis variantes para clasificar diez géneros de macromicetos y se
+evaluó su sensibilidad a datos contextuales ausentes, imprecisos o incorrectos.
+Imagen, GPS y clima obtuvo el mayor F1 macro en validación, con 0,971950.
+La diferencia frente a solo imagen fue pequeña y su intervalo de confianza
+incluyó cero. Se seleccionó la variante visual como configuración operativa.
+Se presentan curvas del entrenamiento visual, métricas por género, matrices
+de confusión y ejemplos Grad-CAM de aciertos y errores.
+\end{abstract}
+
+\section{Objetivo y protocolo}
+Todas las variantes comparten MobileNetV3-Large S5-C, congelada. Se ajustaron
+cinco regresiones logísticas balanceadas con 17\,799 observaciones de
+entrenamiento de FungiTastic \texttt{v002}. Se promediaron las probabilidades
+visuales de las fotos por observación. Cuando hay contexto utilizable, la
+fusión combina 90\,\% de probabilidad visual y 10\,\% de probabilidad contextual.
+La validación conserva las mismas 3\,452 observaciones para las seis variantes.
+A--D reproducen las semanas 9 y 10. E permite estudiar el clima sin GPS y F
+permite estudiar el sustrato sin clima. Cada rama contextual se ajustó con las
+variables de su combinación.
+
+\section{Comparación en validación}
+@@VALIDATION@@
+
+\clearpage
+El F1 macro promedia los F1 de los diez géneros con igual peso. C corrigió dos
+errores de A e introdujo uno. La diferencia de F1 macro fue de
+@@DELTA@@ puntos en la escala 0--100, con un intervalo de confianza del
+95\,\% de @@INTERVAL@@. El intervalo se calculó con 2\,000 remuestreos pareados
+por observación.
+
+\section{Sensibilidad a datos faltantes e imprecisos}
+@@SENSITIVITY@@
+
+La ausencia total activa la rama visual y reproduce A. C gana 0,117 puntos al
+retirar el GPS y D gana 0,108 al retirar el clima en esta cohorte. El redondeo
+a un grado modifica el GPS y conserva el clima asociado. La permutación
+reasigna bloques de metadatos entre observaciones con semilla 42 y simula
+metadatos incorrectos.
+
+\section{Evaluación externa y selección}
+@@EXTERNAL@@
+
+El conjunto externo contiene 4\,895 observaciones ya evaluadas en S9--S10.
+Colombia (3\,348) incluye Orinoquía (309). Existe GPS para parte de los registros.
+Sin clima ni sustrato compatibles, E reproduce A y el aporte de las modalidades
+completas en Colombia queda por medir. El test interno quedó fuera de este estudio.
+
+Se selecciona \textbf{A, solo imagen}, como configuración operativa por su menor
+dependencia de metadatos y la incertidumbre de la pequeña ganancia interna de C.
+El conjunto externo se usa como diagnóstico de transferencia.
+
+\section{Evaluación del modelo visual}
+\subsection{Durante el entrenamiento}
+\begin{figure}[H]
+\centering
+\includegraphics[width=\linewidth]{entrenamiento.png}
+\caption{Pérdida de entrenamiento y exactitud de validación por fotografía.
+El marcador identifica la época 16, elegida por F1 macro de validación por
+observación.}
+\label{fig:curvas}
+\end{figure}
+
+En 21 épocas, la pérdida de entrenamiento bajó de 1,343 a 0,652 y la
+exactitud de validación por fotografía subió de 89,32\,\% a 95,02\,\%.
+En la época seleccionada, la exactitud por foto fue de 94,29\,\%. A partir
+de las probabilidades archivadas se estimó una pérdida de validación de
+0,829 para esa época, usando entropía cruzada ponderada y suavizado de
+etiquetas. La estimación agrega la validación completa y usa probabilidades
+redondeadas. El historial carece de pérdida de validación y exactitud de
+entrenamiento por época. El diagnóstico de sobreajuste mediante la divergencia
+entre pérdidas requiere ambas curvas.
+
+\subsection{Después del entrenamiento}
+La precisión mide qué proporción de las predicciones de un género es correcta.
+La sensibilidad (\emph{recall}) mide qué proporción de las observaciones reales
+de ese género detecta el modelo. El F1 es la media armónica de ambas.
+@@GENERA@@
+
+\clearpage
+\subsection{Matrices de confusión}
+Las matrices de las figuras~\ref{fig:val} y~\ref{fig:ext} muestran los aciertos
+en la diagonal y los errores fuera de ella. En el externo, las confusiones más
+frecuentes de A fueron Auricularia como Trametes (106 observaciones) y como
+Pleurotus (76).
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\linewidth]{confusion.png}
+\caption{Matrices de confusión de las seis variantes en validación por observación.
+El color codifica el recuento de errores.}
+\label{fig:val}
+\end{figure}
+
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.94\linewidth]{confusion_externo.png}
+\caption{Matrices de confusión de las seis variantes en el conjunto externo.
+La escala de color se satura a partir de 12 errores.}
+\label{fig:ext}
+\end{figure}
+
+\subsection{Grad-CAM}
+\begin{figure}[H]
+\centering
+\includegraphics[width=0.95\linewidth]{gradcam.png}
+\caption{Recorte de entrada y Grad-CAM para el género predicho en tres
+fotografías externas de iNaturalist. La selección por identificador incluye un
+acierto y dos errores de géneros reales distintos.}
+\label{fig:gradcam}
+\end{figure}
+
+Los mapas resaltan regiones que favorecen el género predicho según los
+gradientes de la última etapa convolucional \cite{selvaraju2017}. En el acierto
+de Amanita aparece activación en el entorno del ejemplar. En Auricularia, parte
+de la señal coincide con los bordes de los cuerpos fructíferos. En el error de
+Xylaria, el mapa resalta la zona donde se juntan el brazo y el tronco, una
+posible señal ajena al ejemplar. La intensidad es relativa a cada foto.
+El diagnóstico es cualitativo y corresponde a la rama visual compartida.
+
+\section{Reproducción}
+Las métricas por género de las seis variantes y los resultados ante
+perturbaciones se incluyen en \texttt{reports/week\_11}. Para reproducir
+la evaluación y compilar el informe desde la raíz del repositorio:
+
+\begin{verbatim}
+python scripts/train/evaluate_s11.py
+python scripts/reports/build_s11_report.py
+\end{verbatim}
+
+\begin{thebibliography}{9}
+\bibitem{selvaraju2017}
+R. R. Selvaraju et al.
+\href{https://openaccess.thecvf.com/content_iccv_2017/html/Selvaraju_Grad-CAM_Visual_Explanations_ICCV_2017_paper.html}{Grad-CAM: Visual Explanations from Deep Networks via Gradient-Based Localization}.
+\emph{ICCV}, pp. 618--626, 2017.
+\end{thebibliography}
+\end{document}

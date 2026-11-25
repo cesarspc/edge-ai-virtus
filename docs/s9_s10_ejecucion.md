@@ -14,8 +14,9 @@ No se entrenó conjuntamente el backbone visual. Los modelos de contexto
 quedan en JSON con coeficientes, estadísticas y categorías, sin depender de
 un pickle. El estado completo del protocolo y sus hashes se conserva.
 
-Informe legible: [`REPORTE_FAMILIAR.md`](../reports/s9_s10/REPORTE_FAMILIAR.md).
-PDF: [`reporte_s9_s10_virtus.pdf`](../output/pdf/reporte_s9_s10_virtus.pdf).
+Informe LaTeX: [`main.tex`](../reports/week_09_10/main.tex).
+PDF compilado: [`main.pdf`](../reports/week_09_10/main.pdf).
+Resumen: [`REPORTE.md`](../reports/s9_s10/REPORTE.md).
 
 ## Hallazgos
 
@@ -46,8 +47,10 @@ python scripts/train/run_s9_s10_frozen.py --external
 python scripts/reports/build_s9_s10_report.py
 ```
 
-El generador PDF requiere `requirements-report.txt`; en esta sesión ReportLab
-está instalado localmente bajo `tmp/report_dependencies`, que el script detecta.
+El generador del informe utiliza la biblioteca estándar de Python y pdfLaTeX
+(MiKTeX o TeX Live). Genera una fuente autónoma desde la plantilla y las tablas
+guardadas, y compila el documento en dos pasadas. `--source-only` genera solo
+la fuente. La tipografía y estructura siguen el informe de las semanas 7 y 8.
 Los resultados, sensibilidades y bootstrap se guardan en
 `reports/s9_s10/frozen_context/`. La configuración está en
 `configs/experiments/s9_s10_frozen_context.yaml`. El test interno no se evalúa.
@@ -84,7 +87,7 @@ python -m pytest tests/test_multimodal.py tests/test_context.py tests/test_conte
 21 pruebas aprobadas: codificación train-only, modalidades permitidas, sustrato
 amplio, ausencias, mezcla de probabilidades, cohortes guardadas, bootstrap y
 ciclo de entrenamiento/pausa/reanudación de S9 y S10 con datos sintéticos.
-El PDF final tiene cuatro páginas, con fuentes incrustadas y revisión visual.
+El PDF en LaTeX tiene siete páginas, con fuentes incrustadas y revisión visual.
 
 Continúan disponibles las auditorías y revisión visual anteriores en `reports/s9/`;
 no se borraron ni se reetiquetaron observaciones para mejorar resultados.

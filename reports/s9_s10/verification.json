@@ -1,14 +1,20 @@
 {
   "tests_passed": 21,
   "test_command": "python -m pytest tests/test_multimodal.py tests/test_context.py tests/test_context_training.py tests/test_s9_audit.py tests/test_s9_s10_frozen.py -q",
-  "pdf_pages": 4,
-  "pdf_visual_review": "all four pages inspected; latest layout changes rechecked",
+  "pdf_pages": 7,
+  "pdf_visual_review": "all seven pages rendered and inspected; no clipped tables or text",
   "external_images_freshly_hash_verified": 9649,
   "internal_test_evaluations": 0,
   "artifacts": {
-    "output\\pdf\\reporte_s9_s10_virtus.pdf": "0bcdfc6a0dd10be8b9d422743af90c2b58d81db36f73ffef12b6cea960f6dd69",
-    "reports\\s9_s10\\REPORTE_FAMILIAR.md": "216a3f9575834380d747eabbe071faaf51b9ef366e0434058c2b130d7fd6e7ba",
-    "reports\\s9_s10\\frozen_context\\protocol.json": "87a9a940b0f095d10fd4ebaca9da662c1e0b3496058e172ddca4a2aa319380ef",
-    "reports\\s9_s10\\frozen_context\\completed.json": "af4dbe12fe9aa7ec4573115185144de437cc5e0b71f460bfd4b8d54cefd16edb"
-  }
+    "reports/week_09_10/main.tex": "d943870694264b445754277f57741a76199d3ad277d78ed6f7e21f252c60d7c6",
+    "reports/week_09_10/main.pdf": "901aae19a941726f68c0d09d1507c68157468425852f21ec9a7c741b3b950088",
+    "reports/week_09_10/template.tex": "97dcf571ca011e9318999e228ea423f4772ef38c2c9be66704de9c346bc5cffe",
+    "output/pdf/reporte_s9_s10_virtus.pdf": "901aae19a941726f68c0d09d1507c68157468425852f21ec9a7c741b3b950088",
+    "reports/s9_s10/REPORTE.md": "2ebed7572ef657c299d79a895602816030dd665167c7d97e0c226b15c11e9dd6",
+    "reports/s9_s10/frozen_context/protocol.json": "87a9a940b0f095d10fd4ebaca9da662c1e0b3496058e172ddca4a2aa319380ef",
+    "reports/s9_s10/frozen_context/completed.json": "af4dbe12fe9aa7ec4573115185144de437cc5e0b71f460bfd4b8d54cefd16edb"
+  },
+  "pdf_engine": "MiKTeX pdfLaTeX, two passes",
+  "report_style_reference": "reports/week_07_08/main.tex",
+  "experiment_retrained_for_format_change": false
 }

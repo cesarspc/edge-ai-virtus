@@ -2,7 +2,7 @@
 
 > Actualización del 13-11-2026: se ejecutó un ensayo S9/S10 con la parte visual congelada,
 > ramas de contexto entrenadas en CPU y evaluación externa de Colombia/Orinoquía.
-> Ver el [reporte de resultados](../reports/s9_s10/REPORTE_FAMILIAR.md).
+> Ver el [reporte de resultados](../reports/week_09_10/main.tex).
 > Las referencias a entrenamiento pendiente más abajo corresponden al ajuste conjunto en GPU.
 
 ## Alcance y estado

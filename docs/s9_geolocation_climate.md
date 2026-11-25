@@ -2,7 +2,7 @@
 
 > Documento del commit `be1036b`: su B es un diagnóstico de GPS sin imagen.
 > El ensayo incremental vigente de S9/S10 usa A/B/C/D con una misma parte visual;
-> resultados y límites en [`reports/s9_s10/REPORTE_FAMILIAR.md`](../reports/s9_s10/REPORTE_FAMILIAR.md).
+> resultados y límites en el [informe de S9/S10](../reports/week_09_10/main.tex).
 > Se conserva el código de este diagnóstico para reproducibilidad; no sustituye B = foto + GPS.
 
 ## Diseño acordado
